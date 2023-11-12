@@ -1,0 +1,39 @@
+const express = require("express");
+const app = express();
+const routerApi = require("./routes/index.Routes");
+const cors = require("cors");
+
+const {
+  logErrors,
+  errorHandler,
+  boomErrorHandler,
+  sequeliszeErrorhandler,
+  writeToLogFile,
+} = require("./middlewares/error.handler");
+
+const port = 3120 || process.env.PORT;
+
+const corsOption = {
+  origin: process.env.CORS_ORIGIN_ALLOWED,
+  exposedHeaders: ["token"],
+};
+
+app.use(express.json());
+
+app.use(cors(corsOption));
+
+app.get("/", (req, res) => {
+  res.send("Hola mi server en express");
+});
+
+routerApi(app);
+
+app.use(writeToLogFile);
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(sequeliszeErrorhandler);
+app.use(errorHandler);
+
+app.listen(port, () => {
+  console.log("Mi port " + port);
+});

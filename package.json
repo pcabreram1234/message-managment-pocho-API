@@ -1,0 +1,40 @@
+{
+  "name": "message-managment-pocho-api",
+  "version": "1.0.0",
+  "description": "API para la conexion con la APP de mensajes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "API_start": "nodemon server/index.js",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:reverte": "sequelize-cli db:migrate:undo",
+    "migrations:reverte:all": "sequelize-cli db:seed:undo:all",
+    "migrations:run": "sequelize-cli db:migrate",
+    "seeders:generate": "sequelize-cli seed:generate --name",
+    "seeders:run": "sequelize-cli db:seed:all"
+  },
+  "keywords": [
+    "Docker",
+    "API",
+    "Message",
+    "Managment"
+  ],
+  "author": "Phillip Cabrera",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^9.1.4",
+    "@hapi/joi": "^17.1.1",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15",
+    "sequelize": "^6.19.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.5.2"
+  }
+}
