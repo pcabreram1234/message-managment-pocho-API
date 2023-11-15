@@ -9,7 +9,6 @@ function logErrors(err, req, res, next) {
 function writeToLogFile(error, req, res, next) {
   const date = new Date();
   fs.open(file, (err) => {
-    console.log(error);
     const { message } = error;
     const data = error ? message : res;
     fs.writeFile(

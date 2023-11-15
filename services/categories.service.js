@@ -69,22 +69,38 @@ class CategoryService {
   }
 
   async getDistinctCategories(categories, userId) {
+    console.log(`Las categorias son ${typeof categories}`);
+    let rta;
     let categoriesIds = [];
-    categories.forEach((category) => {
-      categoriesIds.push(category.id);
-    });
-    const rta = await models.Category.findAll({
-      where: { id: { [Op.notIn]: categoriesIds } },
-      include: [
-        {
-          model: models.User,
-          attributes: ["token", "id"],
-          where: {
-            id: userId,
+    if (typeof categories !== "string") {
+      categories.forEach((category) => {
+        categoriesIds.push(category.id);
+      });
+      rta = await models.Category.findAll({
+        where: { id: { [Op.notIn]: categoriesIds } },
+        include: [
+          {
+            model: models.User,
+            attributes: ["token", "id"],
+            where: {
+              id: userId,
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
+    } else {
+      rta = await models.Category.findAll({
+        where: { UserId: userId },
+        include: [
+          {
+            model: models.User,
+            attributes: ["token", "id"],
+            where: { id: userId },
+          },
+        ],
+      });
+    }
+
     return rta;
   }
 }

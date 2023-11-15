@@ -30,7 +30,9 @@ const options = {
 };
 
 sequelize.sync(options).then(async (resp) => {
-  await MandatoryData();
+  if (process.env.FORCE_SYNC) {
+    await MandatoryData();
+  }
 });
 
 module.exports = sequelize;
