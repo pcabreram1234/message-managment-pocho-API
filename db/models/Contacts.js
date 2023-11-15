@@ -29,7 +29,7 @@ const ContactModel = {
     type: Sequelize.JSON,
     defaultValue: [],
     get() {
-      const rawValue = JSON.parse(this.getDataValue("categories"));
+      const rawValue = this.getDataValue("categories");
       return rawValue.length > 0 ? rawValue : [];
     },
   },
