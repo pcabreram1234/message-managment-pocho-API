@@ -22,12 +22,27 @@ router.get("/", verifyToken, async (req, resp, next) => {
 
 router.get("/contactsEmail", verifyToken, async (req, resp, next) => {
   try {
-    const contacts = await service.find();
+    const contacts = await service.find(req.user.id);
     resp.json(
       contacts.map((contact) => {
         return contact.email;
       })
     );
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/distinctContacts", verifyToken, async (req, resp, next) => {
+  try {
+    console.log(req.body);
+    const contactsId = req.body.data.map((contact) => contact.id);
+    const contacts = await service.findDistinctContacts(
+      req.user.id,
+      contactsId
+    );
+
+    return resp.json({ contacts });
   } catch (error) {
     next(error);
   }

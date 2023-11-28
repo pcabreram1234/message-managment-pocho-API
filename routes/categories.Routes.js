@@ -71,7 +71,7 @@ router.patch("/editCategory", verifyToken, async (req, resp, next) => {
     const categoryUpdated = await service.editCategory(data);
     resp.setHeader("token", req.token);
     resp.json({ result: categoryUpdated[0] });
-  } catch (error) {
+  } catch (error) { 
     next(error);
   }
 });

@@ -4,7 +4,6 @@ const { Message, MessageModel } = require("./Messages");
 const { Category, CategoryModel } = require("./Categories");
 const { MessageConfig, MessageConfigModel } = require("./MessageCofing");
 const { User, UserModel } = require("./Users");
-const { MandatoryData } = require("../data/MandatoryData");
 
 async function setupModesl(sequelize) {
   /* Creating tables */

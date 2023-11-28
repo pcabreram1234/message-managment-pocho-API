@@ -12,21 +12,6 @@ const MessageModel = {
   message: {
     type: DataTypes.TEXT,
   },
-  categories: {
-    allowNull: true,
-    type: DataTypes.JSON,
-    unique: false,
-    defaultValue: [],
-  },
-  associate_to: {
-    allowNull: true,
-    type: DataTypes.JSON,
-    defaultValue: [],
-    get() {
-      const rawValue = JSON.parse(this.getDataValue("associate_to"));
-      return rawValue.length > 0 ? rawValue : [];
-    },
-  },
   createdAt: {
     allowNull: false,
     type: "timestamp",
@@ -45,6 +30,10 @@ const MessageModel = {
 class Message extends Model {
   static associate(models) {
     this.belongsTo(models.User);
+    this.belongsToMany(models.Contact, { through: "messages_contacts" });
+    this.belongsToMany(models.Category, {
+      through: "messages_categories",
+    });
   }
 
   static config(sequelize) {

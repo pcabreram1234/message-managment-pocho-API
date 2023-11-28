@@ -20,7 +20,8 @@ router.get("/", verifyToken, async (req, resp, next) => {
     /* Añadiendo al log el resultado de la operación exitosa */
     handleLogs(file, `Fetching ${messages.length} messages`);
     resp.setHeader("token", req.token);
-    resp.json(messages);
+    console.log(messages);
+    resp.json({ result: messages });
   } catch (error) {
     next(error);
   }

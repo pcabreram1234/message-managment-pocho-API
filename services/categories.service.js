@@ -20,7 +20,7 @@ class CategoryService {
   async findByName(name) {
     const rta = await models.Category.findAndCountAll({
       where: {
-        categorie_name: { [Op.substring]: [name] },
+        categorie_name: name,
       },
       limit: 1,
     });
@@ -69,7 +69,6 @@ class CategoryService {
   }
 
   async getDistinctCategories(categories, userId) {
-    console.log(`Las categorias son ${typeof categories}`);
     let rta;
     let categoriesIds = [];
     if (typeof categories !== "string") {
@@ -77,30 +76,10 @@ class CategoryService {
         categoriesIds.push(category.id);
       });
       rta = await models.Category.findAll({
-        where: { id: { [Op.notIn]: categoriesIds } },
-        include: [
-          {
-            model: models.User,
-            attributes: ["token", "id"],
-            where: {
-              id: userId,
-            },
-          },
-        ],
-      });
-    } else {
-      rta = await models.Category.findAll({
-        where: { UserId: userId },
-        include: [
-          {
-            model: models.User,
-            attributes: ["token", "id"],
-            where: { id: userId },
-          },
-        ],
+        where: { id: { [Op.notIn]: categoriesIds }, UserId: userId },
+        attributes: ["categorie_name", "id"],
       });
     }
-
     return rta;
   }
 }

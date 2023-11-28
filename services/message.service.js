@@ -1,11 +1,23 @@
 const { models } = require("../libs/sequelize");
-const { Op } = require("sequelize");
+const { Op, Model } = require("sequelize");
 const boom = require("@hapi/boom");
 
 class MessageService {
   async find(user_id) {
     const rta = await models.Message.findAll({
-      where: { userId: user_id },
+      where: { UserId: user_id },
+      include: [
+        {
+          model: models.Category,
+          attributes: ["categorie_name", "id"],
+          through: { attributes: [] },
+        },
+        {
+          model: models.Contact,
+          attributes: ["email","id"],
+          through: { attributes: [] },
+        },
+      ],
     });
     return rta;
   }

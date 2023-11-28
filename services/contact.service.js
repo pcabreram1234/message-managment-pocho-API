@@ -2,13 +2,29 @@ const { models } = require("../libs/sequelize");
 const { Op } = require("sequelize");
 
 class ContactService {
-  async find() {
-    const rta = await models.Contact.findAll();
+  async find(userId) {
+    const rta = await models.Contact.findAll({
+      where: { UserId: userId },
+      attributes: ["email", "id"],
+    });
     return rta;
   }
 
   async findOne(id) {
     const rta = await models.Contact.findByPk(id);
+    return rta;
+  }
+
+  async findDistinctContacts(userId, contactsId) {
+    const rta = await models.Contact.findAll({
+      where: {
+        id: {
+          [Op.notIn]: [contactsId],
+        },
+        UserId: userId,
+      },
+      attributes: ["email", "id"],
+    });
     return rta;
   }
 

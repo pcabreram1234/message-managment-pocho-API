@@ -24,15 +24,6 @@ const ContactModel = {
     type: DataTypes.CHAR,
     unique: true,
   },
-  categories: {
-    allowNull: true,
-    type: Sequelize.JSON,
-    defaultValue: [],
-    get() {
-      const rawValue = this.getDataValue("categories");
-      return rawValue.length > 0 ? rawValue : [];
-    },
-  },
   createdAt: {
     allowNull: false,
     type: "timestamp",
@@ -51,6 +42,7 @@ const ContactModel = {
 class Contact extends Model {
   static associate(models) {
     this.belongsTo(models.User);
+    this.belongsToMany(models.Message, { through: "messages_contacts" });
   }
 
   static config(sequelize) {

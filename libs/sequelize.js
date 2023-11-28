@@ -24,15 +24,15 @@ const sequelize = new Sequelize(URI, {
 setupModesl(sequelize);
 
 const options = {
-  alter: process.env.FORCE_SYNC,
+  alter: false,
   force: false,
   logging: console.log,
 };
 
 sequelize.sync(options).then(async (resp) => {
-  if (process.env.FORCE_SYNC) {
-    await MandatoryData();
-  }
+  //   await MandatoryData();
+  //   if (process.env.FORCE_SYNC) {
+  //   }
 });
 
 module.exports = sequelize;

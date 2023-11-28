@@ -14,15 +14,6 @@ const CategoryModel = {
     type: DataTypes.STRING(255),
     length: 50,
   },
-  associate_to: {
-    allowNull: true,
-    type: Sequelize.JSON,
-    defaultValue: [],
-    get() {
-      const rawValue = JSON.parse(this.getDataValue("associate_to"));
-      return rawValue.length > 0 ? rawValue : [];
-    },
-  },
   createdAt: {
     allowNull: false,
     type: "timestamp",
@@ -40,6 +31,8 @@ const CategoryModel = {
 class Category extends Model {
   static associate(models) {
     this.belongsTo(models.User);
+    this.belongsToMany(models.Message, { through: "messages_categories" });
+    this.hasMany(models.messages_categories);
   }
 
   static config(sequelize) {
