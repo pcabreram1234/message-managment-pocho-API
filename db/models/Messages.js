@@ -16,21 +16,23 @@ const MessageModel = {
     allowNull: false,
     type: "timestamp",
     field: "created_at",
-    defaultValue: Sequelize.fn("NOW"),
+    defaultValue: Sequelize.fn("CURRENT_TIMESTAMP"),
   },
   updatedAt: {
     allowNull: false,
     type: "timestamp",
     field: "updated_at",
     defaultValue: Sequelize.fn("NOW"),
-    onUpdate: Sequelize.literal("CURRENT_TIMESTAMP()"),
+    onUpdate: Sequelize.literal("CURRENT_TIMESTAMP"),
   },
 };
 
 class Message extends Model {
   static associate(models) {
     this.belongsTo(models.User);
-    this.belongsToMany(models.Contact, { through: "messages_contacts" });
+    this.belongsToMany(models.Contact, {
+      through: "messages_contacts",
+    });
     this.belongsToMany(models.Category, {
       through: "messages_categories",
     });
@@ -42,6 +44,7 @@ class Message extends Model {
       tableName: MESSAGE_TABLE,
       modelName: "Message",
       timestamps: true,
+      paranoid: true,
     };
   }
 }

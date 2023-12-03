@@ -17,7 +17,7 @@ const CategoryModel = {
   createdAt: {
     allowNull: false,
     type: "timestamp",
-    defaultValue: Sequelize.fn("NOW"),
+    defaultValue: Sequelize.fn("CURRENT_TIMESTAMP"),
   },
   updatedAt: {
     allowNull: false,
@@ -31,8 +31,9 @@ const CategoryModel = {
 class Category extends Model {
   static associate(models) {
     this.belongsTo(models.User);
-    this.belongsToMany(models.Message, { through: "messages_categories" });
-    this.hasMany(models.messages_categories);
+    this.belongsToMany(models.Message, {
+      through: { model: "messages_categories" },
+    });
   }
 
   static config(sequelize) {
@@ -41,6 +42,7 @@ class Category extends Model {
       tableName: CATEGORY_TABLE,
       modelName: "Category",
       timestamps: true,
+      paranoid: true,
     };
   }
 }

@@ -4479,3 +4479,464 @@ Mon Nov 27 2023 22:04:07 GMT-0400 (hora estándar del Atlántico):Fetching 4 mes
 Mon Nov 27 2023 22:04:07 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
 Tue Nov 28 2023 12:01:25 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
 Tue Nov 28 2023 12:01:57 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:20:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:38:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:38:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:39:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:50:02 GMT-0400 (hora estándar del Atlántico):Cannot read properties of null (reading 'id')
+Tue Nov 28 2023 21:50:02 GMT-0400 (hora estándar del Atlántico):Cannot read properties of null (reading 'id')
+Tue Nov 28 2023 21:50:05 GMT-0400 (hora estándar del Atlántico):Cannot read properties of null (reading 'id')
+Tue Nov 28 2023 21:50:05 GMT-0400 (hora estándar del Atlántico):Cannot read properties of null (reading 'id')
+Tue Nov 28 2023 21:50:06 GMT-0400 (hora estándar del Atlántico):Cannot read properties of null (reading 'id')
+Tue Nov 28 2023 21:50:07 GMT-0400 (hora estándar del Atlántico):Cannot read properties of null (reading 'id')
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Tue Nov 28 2023 21:41:24 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:32:46 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:33:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:54:10 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:54:17 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Wed Nov 29 2023 08:54:37 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Wed Nov 29 2023 08:54:36 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Wed Nov 29 2023 08:54:45 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Wed Nov 29 2023 08:54:54 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Wed Nov 29 2023 08:54:55 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Wed Nov 29 2023 08:54:54 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Wed Nov 29 2023 08:54:56 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Wed Nov 29 2023 08:54:54 GMT-0400 (hora estándar del Atlántico):Wed Nov 29 2023 08:54:57 GMT-0400 (hora estándar del Atlántico) sended as a date to verify the current date vs the date inputed by the user
+Wed Nov 29 2023 08:54:54 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:54:57 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Wed Nov 29 2023 08:54:58 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Wed Nov 29 2023 08:54:54 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Wed Nov 29 2023 08:55:06 GMT-0400 (hora estándar del Atlántico):WHERE parameter "UserId" has invalid "undefined" value
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Wed Nov 29 2023 08:55:45 GMT-0400 (hora estándar del Atlántico):Unknown column 'Message.associate_to' in 'where clause'
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 08:55:27 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 09:37:35 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 11:55:42 GMT-0400 (hora estándar del Atlántico):associate_to is not defined
+Wed Nov 29 2023 11:56:06 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 11:56:06 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 12:04:06 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 12:04:06 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 12:04:06 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 12:04:06 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 12:04:06 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 12:04:06 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 12:09:51 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 12:09:51 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 12:12:42 GMT-0400 (hora estándar del Atlántico):this.build(...).save is not a function
+Wed Nov 29 2023 12:13:37 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 12:16:00 GMT-0400 (hora estándar del Atlántico):Cannot read properties of undefined (reading 'transaction')
+Wed Nov 29 2023 14:18:46 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 14:19:08 GMT-0400 (hora estándar del Atlántico):models.Message.getmessages_contacts is not a function
+Wed Nov 29 2023 14:19:35 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:20:04 GMT-0400 (hora estándar del Atlántico):models.messages_contacts.associations is not a function
+Wed Nov 29 2023 14:20:14 GMT-0400 (hora estándar del Atlántico):models.messages_contacts.associations is not a function
+Wed Nov 29 2023 14:22:01 GMT-0400 (hora estándar del Atlántico):models.Message.getContacts is not a function
+Wed Nov 29 2023 14:22:12 GMT-0400 (hora estándar del Atlántico):models.Message.getContacts is not a function
+Wed Nov 29 2023 14:22:25 GMT-0400 (hora estándar del Atlántico):models.Message.getContact is not a function
+Wed Nov 29 2023 14:23:09 GMT-0400 (hora estándar del Atlántico):models.Message.getMessagesContacts is not a function
+Wed Nov 29 2023 14:23:30 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:23:44 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:24:40 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:27:55 GMT-0400 (hora estándar del Atlántico):commit is not defined
+Wed Nov 29 2023 14:28:07 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:28:25 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:29:18 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:29:55 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:31:54 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:45:41 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:47:53 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:47:53 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Wed Nov 29 2023 14:47:53 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 14:47:53 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 14:47:53 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Wed Nov 29 2023 14:47:53 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:06:49 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Wed Nov 29 2023 15:06:49 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:06:49 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Wed Nov 29 2023 15:06:49 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Wed Nov 29 2023 15:06:49 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Wed Nov 29 2023 15:48:39 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 10:52:18 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 10:58:08 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 10:58:08 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 10:58:08 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 10:58:08 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 10:58:08 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 10:58:08 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 10:58:08 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 10:58:08 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:06:22 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:11 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 11:40:50 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 14:13:21 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 15:50:55 GMT-0400 (hora estándar del Atlántico):Fetching 0 messages
+Thu Nov 30 2023 15:50:55 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 15:50:55 GMT-0400 (hora estándar del Atlántico):Fetching 0 messages
+Thu Nov 30 2023 15:50:55 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 15:50:55 GMT-0400 (hora estándar del Atlántico):Fetching 0 messages
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Message with the id:2 was marked as inactive or destroyed
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 3 messages
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 15:57:31 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:55:59 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:55:59 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:55:59 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 16:55:59 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:55:59 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 16:57:29 GMT-0400 (hora estándar del Atlántico):Column 'ContactId' cannot be null
+Thu Nov 30 2023 16:57:33 GMT-0400 (hora estándar del Atlántico):Column 'ContactId' cannot be null
+Thu Nov 30 2023 16:57:34 GMT-0400 (hora estándar del Atlántico):Column 'ContactId' cannot be null
+Thu Nov 30 2023 16:57:45 GMT-0400 (hora estándar del Atlántico):Column 'ContactId' cannot be null
+Thu Nov 30 2023 16:55:59 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Thu Nov 30 2023 16:55:59 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Thu Nov 30 2023 16:58:12 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Message with the id:1,2 was marked as inactive or destroyed
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 3 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 3 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 3 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 3 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 3 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:03:25 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:10:30 GMT-0400 (hora estándar del Atlántico):Message with the id:1,2 was marked as inactive or destroyed
+Fri Dec 01 2023 16:11:55 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:12:13 GMT-0400 (hora estándar del Atlántico):id is not defined
+Fri Dec 01 2023 16:13:18 GMT-0400 (hora estándar del Atlántico):id is not defined
+Fri Dec 01 2023 16:14:50 GMT-0400 (hora estándar del Atlántico):id is not defined
+Fri Dec 01 2023 16:11:55 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:11:55 GMT-0400 (hora estándar del Atlántico):Messages with the id:1,2 were marked as inactives or destroyed
+Fri Dec 01 2023 16:19:15 GMT-0400 (hora estándar del Atlántico):Messages with the id:1,2 were marked as inactives or destroyed
+Fri Dec 01 2023 16:19:15 GMT-0400 (hora estándar del Atlántico):Fetching 2 messages
+Fri Dec 01 2023 16:19:15 GMT-0400 (hora estándar del Atlántico):Fetching 2 messages
+Fri Dec 01 2023 16:19:15 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Updating the message with id:2
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 categories
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Updating the message with id:1
+Fri Dec 01 2023 16:47:04 GMT-0400 (hora estándar del Atlántico):Fetching 4 messages

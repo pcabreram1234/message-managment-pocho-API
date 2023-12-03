@@ -28,7 +28,7 @@ const ContactModel = {
     allowNull: false,
     type: "timestamp",
     field: "created_at",
-    defaultValue: DataTypes.NOW(),
+    defaultValue: Sequelize.fn("CURRENT_TIMESTAMP"),
   },
   updatedAt: {
     allowNull: false,
@@ -42,7 +42,6 @@ const ContactModel = {
 class Contact extends Model {
   static associate(models) {
     this.belongsTo(models.User);
-    this.belongsToMany(models.Message, { through: "messages_contacts" });
   }
 
   static config(sequelize) {
@@ -53,6 +52,7 @@ class Contact extends Model {
       timestamps: true,
       charset: "utf8",
       collate: "utf8_general_ci",
+      paranoid: true,
     };
   }
 }

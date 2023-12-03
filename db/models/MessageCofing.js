@@ -47,14 +47,14 @@ const MessageConfigModel = {
     allowNull: false,
     type: "timestamp",
     field: "created_at",
-    defaultValue: Sequelize.fn("NOW"),
+    defaultValue: Sequelize.fn("CURRENT_TIMESTAMP"),
   },
   updatedAt: {
     allowNull: false,
     type: "timestamp",
     field: "updated_at",
     defaultValue: Sequelize.fn("NOW"),
-    onUpdate: Sequelize.literal("CURRENT_TIMESTAMP()"),
+    onUpdate: Sequelize.literal("CURRENT_TIMESTAMP"),
   },
 };
 
@@ -68,6 +68,7 @@ class MessageConfig extends Model {
       tableName: MESSAGE_CONFIG_TABLE,
       modelName: "MessageConfig",
       timestamps: true,
+      paranoid: true,
     };
   }
 }

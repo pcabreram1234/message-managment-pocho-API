@@ -4,7 +4,7 @@ class CategoryService {
   async find(id) {
     const rta = await models.Category.findAll({
       where: {
-        userId: id,
+        UserId: id,
       },
     });
     return rta;

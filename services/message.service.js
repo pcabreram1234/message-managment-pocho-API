@@ -14,7 +14,7 @@ class MessageService {
         },
         {
           model: models.Contact,
-          attributes: ["email","id"],
+          attributes: ["email", "id"],
           through: { attributes: [] },
         },
       ],
@@ -51,14 +51,38 @@ es necesario que en este metodo tambien se retorne */
 
   async updateMessage(id, data) {
     if (this.find(id) !== null) {
+      const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
+        where: { MessageId: id },
+      });
+
       const rta = await models.Message.update(
         {
           message: data.message,
-          categories: data.categories,
-          associate_to: data.associate_to,
         },
         { where: { id: id } }
       );
+
+      const rtaInsertMessagesContacts =
+        await models.messages_contacts.bulkCreate(
+          data.associate_to.map((contact) => ({
+            ContactId: contact.id,
+            MessageId: id,
+          }))
+        );
+
+      const rtaDeleteMessagesCategories =
+        await models.messages_categories.destroy({
+          where: { MessageId: id },
+        });
+
+      const rtaInsertMessagesCategories =
+        await models.messages_categories.bulkCreate(
+          data.categories.map((category) => ({
+            CategoryId: category.id,
+            MessageId: id,
+          }))
+        );
+
       const result = rta == 1 ? 1 : boom.badData("Message can not be modified");
       return result;
     } else {
@@ -87,11 +111,17 @@ es necesario que en este metodo tambien se retorne */
     return rta;
   }
 
-  async deleteMessage(id) {
+  async deleteMessage(ids) {
+    console.log(ids);
     if (this.find(id) !== null) {
       const rta = await models.Message.destroy({
         where: { id: id },
         limit: 1,
+      });
+      const rtaDeleteMessagesCategories =
+        await models.messages_categories.destroy({ where: { MessageId: id } });
+      const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
+        where: { MessageId: id },
       });
       const result = rta == 1 ? 1 : boom.badRequest("Messsage not found");
       return result;
@@ -104,6 +134,24 @@ es necesario que en este metodo tambien se retorne */
     const rta = await models.Message.destroy({
       where: { id: { [Op.or]: ids } },
     });
+
+    const rtaDeleteMessagesCategories =
+      await models.messages_categories.destroy({
+        where: {
+          MessageId: {
+            [Op.in]: ids,
+          },
+        },
+      });
+
+    const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
+      where: {
+        MessageId: {
+          [Op.in]: ids,
+        },
+      },
+    });
+
     return rta;
   }
 

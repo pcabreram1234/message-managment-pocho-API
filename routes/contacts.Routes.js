@@ -13,7 +13,7 @@ const service = new ContactService();
 
 router.get("/", verifyToken, async (req, resp, next) => {
   try {
-    const contacts = await service.find();
+    const contacts = await service.find(req.user.id);
     resp.json(contacts);
   } catch (error) {
     next(error);

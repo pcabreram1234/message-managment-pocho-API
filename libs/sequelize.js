@@ -29,10 +29,6 @@ const options = {
   logging: console.log,
 };
 
-sequelize.sync(options).then(async (resp) => {
-  //   await MandatoryData();
-  //   if (process.env.FORCE_SYNC) {
-  //   }
-});
+sequelize.sync(options);
 
 module.exports = sequelize;

@@ -60,7 +60,7 @@ const UserModel = {
     comment: "Password to store",
   },
   createdAt: {
-    defaultValue: Sequelize.fn("NOW"),
+    defaultValue: Sequelize.fn("CURRENT_TIMESTAMP"),
     allowNull: false,
     type: "timestamp",
     field: "created_at",
@@ -70,7 +70,7 @@ const UserModel = {
     type: "timestamp",
     field: "updated_at",
     defaultValue: Sequelize.fn("NOW"),
-    onUpdate: Sequelize.literal("CURRENT_TIMESTAMP()"),
+    onUpdate: Sequelize.literal("CURRENT_TIMESTAMP"),
   },
 };
 
@@ -89,6 +89,7 @@ class User extends Model {
       modelName: "User",
       timestamps: true,
       charset: "utf8",
+      paranoid: true,
       collate: "utf8_general_ci",
     };
   }

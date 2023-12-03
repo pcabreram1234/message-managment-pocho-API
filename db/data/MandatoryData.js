@@ -7,6 +7,7 @@ const { User } = require("../models/Users");
 const { Category } = require("../models/Categories");
 const { Contact } = require("../models/Contacts");
 const { Message } = require("../models/Messages");
+
 const categories = [
   {
     id: 1,
@@ -93,10 +94,10 @@ const users = [
     active: true,
     password: userAuth.syncGenHash(),
     token_active: true,
-    created_at: new Date(),
     email: "pcabreram1234@gmail.com",
   },
 ];
+
 
 const MandatoryData = async () => {
   await User.bulkCreate(users).then(() => {
@@ -118,4 +119,8 @@ const MandatoryData = async () => {
 
 module.exports = {
   MandatoryData,
+  categories,
+  contacts,
+  messages,
+  users,
 };
