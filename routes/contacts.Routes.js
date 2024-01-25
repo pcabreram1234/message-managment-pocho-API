@@ -54,11 +54,12 @@ router.post(
   validatorHandler(createContactSchema, "body"),
   async (req, resp, next) => {
     try {
-      const body = req.body.data;
-      const newContact = await service.addContact(body);
+      const { data } = req.body;
+      const newContact = await service.addContact(data);
       resp.json({ result: newContact });
     } catch (error) {
-      writeToLogFile(error);
+      // writeToLogFile(error);
+      console.log(error);
       next(error);
       resp.status(400);
     }

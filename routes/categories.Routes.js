@@ -43,10 +43,12 @@ router.post("/addCategory", verifyToken, async (req, resp, next) => {
   try {
     const data = {
       categorie_name: req.body.data.categorie_name,
-      associateTo: req.body.data.associateTo,
-      user_id: req.user.id,
+      UserId: req.user.id,
     };
-    const existCategory = await service.findByName(data.categorie_name);
+    const existCategory = await service.findByName(
+      data.categorie_name,
+      data.UserId
+    );
     if (existCategory.count > 0) {
       return resp.status(409).json({ message: `This category already exists` });
     }
@@ -101,7 +103,7 @@ router.get(
   async (req, resp, next) => {
     try {
       const { name } = req.params;
-      const verifyCategory = await service.findByName(name);
+      const verifyCategory = await service.findByName(name, req.user.id);
       resp.setHeader("token", req.token);
       resp.json({ result: verifyCategory });
     } catch (error) {

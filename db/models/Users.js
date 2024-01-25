@@ -80,6 +80,7 @@ class User extends Model {
     this.hasMany(models.Contact);
     this.hasMany(models.Message);
     this.hasMany(models.MessageConfig);
+    this.belongsToMany(models.Contact, { through: "UserContacts" });
   }
 
   static config(sequelize) {

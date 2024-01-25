@@ -14,7 +14,8 @@ require("dotenv").config();
 
 router.get("/", verifyToken, async (req, resp, next) => {
   try {
-    const configuration = await service.find();
+    const { id } = req.user;
+    const configuration = await service.find(id);
     resp.json({ result: configuration });
   } catch (error) {
     next(error);

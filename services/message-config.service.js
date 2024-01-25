@@ -2,8 +2,10 @@ const { models } = require("../libs/sequelize");
 const { Op, DataTypes } = require("sequelize");
 
 class MessageConfigService {
-  async find() {
-    const rta = await models.MessageConfig.findAndCountAll();
+  async find(id) {
+    const rta = await models.MessageConfig.findAndCountAll({
+      where: { UserId: id },
+    });
     return rta;
   }
 
@@ -70,21 +72,27 @@ class MessageConfigService {
   }
 
   async addMessage(data) {
+    console.log(data);
     let result = {
       rowsInserted: 0,
     };
-    const { send_to } = data;
 
+    const { send_to } = data;
     for (const contact of send_to) {
       const rta = await models.MessageConfig.create({
-        send_to: contact,
-        userId: data.user_id,
-        ...data,
+        message_id: data.message_id,
+        message: data.message,
+        categories: data.categories,
+        send_on_date: data.send_on_date,
+        send_to: contact.email,
+        UserId: data.user_id,
       });
-      if (rta.message_id) {
+
+      if (rta.id) {
         result.rowsInserted += 1;
       }
     }
+
     return result;
   }
 
@@ -97,6 +105,7 @@ class MessageConfigService {
     for (const message of messages) {
       let rta;
       for (const contact of message.send_to) {
+        console.log(contact);
         result.contacts += 1;
         rta = await models.MessageConfig.create({
           message_id: message.message_id,
@@ -104,13 +113,13 @@ class MessageConfigService {
           categories: message.categories,
           send_on_date: message.send_on_date,
           send_to: contact,
+          UserId: message.user_id,
         });
         if (rta.message_id) {
           result.rowsInserted += 1;
         }
       }
     }
-    console.log(result);
     return result;
   }
 

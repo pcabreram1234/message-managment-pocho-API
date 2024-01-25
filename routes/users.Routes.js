@@ -60,7 +60,6 @@ router.post("/adduser", verifyToken, logErrors, async (req, res, next) => {
   try {
     const body = req.body.data;
     const newUser = await service.addUser(body);
-    console.log(newUser);
     res.json(newUser);
   } catch (error) {
     next(error);

@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const { models } = require("../libs/sequelize");
-const ms = require("ms");
 
 async function verifyToken(req, res, next) {
   const token =
@@ -25,6 +24,7 @@ async function verifyToken(req, res, next) {
     );
     req.user = user.dataValues;
     req.token = tokenUpdated;
+    res.set("token", req.token);
   } catch (err) {
     return res.status(401).json({ error: err });
   }

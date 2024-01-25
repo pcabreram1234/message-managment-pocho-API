@@ -46,11 +46,12 @@ class UserService {
 
   async addUser(data) {
     const { user_name, type_user, password, email } = data;
-    const userExist = await this.findOne(user_name);
+    const userExist = await this.verifyUserExist(user_name, email);
     if (userExist) {
-      return boom.badData(`The user ${user_name} already exists`);
+      return boom.badData(
+        `The user ${user_name} or the email ${email} already exist`
+      );
     }
-
     const hashedPass = await bcrypt.hash(password, parseInt(saltRounds));
     const rta = await models.User.create({
       user_name: user_name,
@@ -93,6 +94,15 @@ class UserService {
       );
       return rta;
     }
+  }
+
+  async verifyUserExist(user_name, email) {
+    const rta = await models.User.findOne({
+      where: {
+        [Op.or]: [{ user_name: user_name }, { email: email }],
+      },
+    });
+    return rta;
   }
 
   async deleteUser(data) {

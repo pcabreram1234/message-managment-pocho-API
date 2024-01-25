@@ -16,8 +16,7 @@ function writeToLogFile(error, req, res, next) {
       `${date}:${data.toString()}\n`,
       { encoding: "utf8", flag: "a" },
       (err) => {
-        res.send(data);
-        console.log(res);
+        console.log(err);
       }
     );
   });

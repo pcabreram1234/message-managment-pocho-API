@@ -23,7 +23,21 @@ class MessageService {
   }
 
   async findOne(id) {
-    const rta = await models.Message.findByPk(id);
+    const rta = await models.Message.findOne({
+      where: { id: id },
+      include: [
+        {
+          model: models.Category,
+          attributes: ["categorie_name", "id"],
+          through: { attributes: [] },
+        },
+        {
+          model: models.Contact,
+          attributes: ["email", "id"],
+          through: { attributes: [] },
+        },
+      ],
+    });
     return rta;
   }
 
@@ -101,7 +115,7 @@ es necesario que en este metodo tambien se retorne */
   }
 
   async getMesageAssociateAtCategory(id) {
-    const rta = await models.Message.findAndCountAll({
+    const rta = await models.messages_categories.findAndCountAll({
       where: {
         categories: {
           [Op.substring]: [id],
@@ -182,9 +196,12 @@ es necesario que en este metodo tambien se retorne */
     return rta;
   }
 
-  async findMessagesAssociated(contact) {
+  async findMessagesAssociated(id) {
     const rta = await models.Message.findAndCountAll({
-      where: { associate_to: { [Op.substring]: contact } },
+      include: {
+        model: models.Contact,
+        where: { id: { [Op.substring]: id } },
+      },
     });
     return rta;
   }

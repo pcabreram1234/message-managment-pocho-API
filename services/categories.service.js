@@ -17,10 +17,11 @@ class CategoryService {
     return rta;
   }
 
-  async findByName(name) {
+  async findByName(name, UserId) {
     const rta = await models.Category.findAndCountAll({
       where: {
         categorie_name: name,
+        UserId: UserId,
       },
       limit: 1,
     });
@@ -28,21 +29,15 @@ class CategoryService {
   }
 
   async addCategory(data) {
-    const { categorie_name, associateTo, user_id } = data;
-    const rta = await models.Category.create({
-      categorie_name: categorie_name,
-      associate_to: associateTo,
-      userId: user_id,
-    });
+    const rta = await models.Category.create(data);
     return rta;
   }
 
   async editCategory(data) {
-    const { id, categorie_name, associateTo } = data;
+    const { id, categorie_name } = data;
     const rta = await models.Category.update(
       {
         categorie_name: categorie_name,
-        associate_to: associateTo,
       },
       {
         where: {
