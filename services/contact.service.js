@@ -3,16 +3,10 @@ const { Op } = require("sequelize");
 
 class ContactService {
   async find(userId) {
-    const rta = await models.User.findOne({
-      attributes: [],
-      where: { id: userId },
-      include: {
-        model: models.Contact,
-        attributes: ["email", "id", "name", "phone_number"],
-        through: { attributes: [] },
-      },
+    const rta = await models.Contact.findAll({
+      where: { UserId: userId },
     });
-    return rta.Contacts;
+    return rta;
   }
 
   async findOne(id) {
@@ -41,7 +35,6 @@ class ContactService {
   }
 
   async findByEmail(email) {
-    existInUserContact;
     const rta = await models.Contact.findOne({ where: { email: email } });
     return rta;
   }
@@ -54,37 +47,8 @@ class ContactService {
   }
 
   async addContact(body) {
-    // Primero verificar si dicho contacto existe en la tabla Contacts
-    // Si existe verificar si existe tambien en la tabla UsersContacts
-    // Si existe en la tabla Contacts pero en la tbala UsersContacts no con ese UserId Agregarlo en esta última
-    // Si existe en las dos tablas y en la tabla UsersContacts con ese mismo UserId lanzar error de que ya está guardado
-    // Si no existe en la tabla UsersContacts con ese UserId agregarlo
-    //
-
-    const existContact = await this.findByEmail(body.email);
-    if (existContact !== null) {
-      const existInUserContact = await this.findInUserContact(
-        existContact.UserId,
-        existContact.id
-      );
-      if (existInUserContact !== null) {
-        boom.locked("This contact already exist");
-      } else {
-        const addContactInUserContact = await models.UserContacts.create({
-          UserId: body.UserId,
-          ContactId: existContact.id,
-        });
-        return addContactInUserContact;
-      }
-    } else {
-      const rta = await models.Contact.create(body).then(async (resp) => {
-        const addContactInUserContact = await models.UserContacts.create({
-          UserId: resp.UserId,
-          ContactId: resp.ContactId,
-        });
-        return rta;
-      });
-    }
+    const newContact = await models.Contact.create(body);
+    return newContact;
   }
 
   async editContact(body) {

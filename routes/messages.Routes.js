@@ -20,7 +20,6 @@ router.get("/", verifyToken, async (req, resp, next) => {
     /* Añadiendo al log el resultado de la operación exitosa */
     handleLogs(file, `Fetching ${messages.length} messages`);
     resp.setHeader("token", req.token);
-    console.log(messages);
     resp.json({ result: messages });
   } catch (error) {
     next(error);
@@ -50,12 +49,11 @@ router.post(
 router.patch(
   "/editMessage/",
   verifyToken,
-  validatorHandler(getMessageSchema, "params"),
   validatorHandler(updateMessageSchema, "body"),
   async (req, resp, next) => {
     try {
       const body = req.body.data;
-      const id = body.id;
+      const { id } = body;
       const messageUpdated = await service.updateMessage(id, body);
       handleLogs(file, `Updating the message with id:${id}`);
       resp.setHeader("token", req.token);
@@ -96,6 +94,7 @@ router.delete(
   async (req, resp, next) => {
     try {
       const { id } = req.body.data;
+
       const messageToDelete = await service.deleteMessage(id);
       handleLogs(
         file,
@@ -116,6 +115,7 @@ router.delete(
   async (req, resp, next) => {
     try {
       const { id } = req.body.data;
+      console.log(id);
       const messageToDelete = await service.deleteMessages(id);
       handleLogs(
         file,

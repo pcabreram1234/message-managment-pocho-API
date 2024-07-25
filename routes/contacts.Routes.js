@@ -55,13 +55,13 @@ router.post(
   async (req, resp, next) => {
     try {
       const { data } = req.body;
-      const newContact = await service.addContact(data);
+      const id = req.user.id;
+      const newContact = await service.addContact({ ...data, UserId: id });
       resp.json({ result: newContact });
     } catch (error) {
-      // writeToLogFile(error);
       console.log(error);
-      next(error);
       resp.status(400);
+      next(error);
     }
   }
 );

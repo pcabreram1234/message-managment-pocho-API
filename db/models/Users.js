@@ -76,11 +76,11 @@ const UserModel = {
 
 class User extends Model {
   static associate(models) {
-    this.hasMany(models.Category);
     this.hasMany(models.Contact);
     this.hasMany(models.Message);
+    this.hasMany(models.Category);
     this.hasMany(models.MessageConfig);
-    this.belongsToMany(models.Contact, { through: "UserContacts" });
+    // this.belongsTo(models.Contact, { through: "UserContacts" });
   }
 
   static config(sequelize) {

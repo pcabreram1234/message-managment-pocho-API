@@ -1,4 +1,3 @@
-const { array } = require("joi");
 const { Model, DataTypes, Sequelize } = require("sequelize");
 const MESSAGE_TABLE = "messages";
 
@@ -30,11 +29,16 @@ const MessageModel = {
 class Message extends Model {
   static associate(models) {
     this.belongsTo(models.User);
+    // this.belongsTo(models.Contact);
     this.belongsToMany(models.Contact, {
       through: "messages_contacts",
     });
     this.belongsToMany(models.Category, {
       through: "messages_categories",
+      foreignKey: "MessageId",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+      timestamps: true,
     });
   }
 

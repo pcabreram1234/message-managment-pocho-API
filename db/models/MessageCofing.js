@@ -19,7 +19,7 @@ const MessageConfigModel = {
   },
   categories: {
     allowNull: true,
-    type: Sequelize.JSON,
+    type: DataTypes.JSON,
   },
   send_to: {
     allowNull: true,
@@ -28,7 +28,7 @@ const MessageConfigModel = {
   },
   send_on_date: {
     allowNull: false,
-    type: "datetime",
+    type: DataTypes.DATE,
     defaultValue: Sequelize.fn("NOW"),
   },
   message_status: {
@@ -45,13 +45,13 @@ const MessageConfigModel = {
   },
   createdAt: {
     allowNull: false,
-    type: "timestamp",
+    type: DataTypes.DATE,
     field: "created_at",
     defaultValue: Sequelize.fn("CURRENT_TIMESTAMP"),
   },
   updatedAt: {
     allowNull: false,
-    type: "timestamp",
+    type: DataTypes.DATE,
     field: "updated_at",
     defaultValue: Sequelize.fn("NOW"),
     onUpdate: Sequelize.literal("CURRENT_TIMESTAMP"),

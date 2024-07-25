@@ -28,11 +28,11 @@ app.get("/", (req, res) => {
 
 routerApi(app);
 
+app.use(errorHandler);
 app.use(writeToLogFile);
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(sequeliszeErrorhandler);
-app.use(errorHandler);
 
 app.listen(port, () => {
   console.log("Mi port " + port);

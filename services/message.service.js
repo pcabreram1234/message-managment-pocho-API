@@ -46,14 +46,25 @@ class MessageService {
     const { message, categories, associateTo, userId } = body;
     const rta = await models.Message.create({
       message: message,
-      categories: categories,
-      associate_to: associateTo,
       UserId: userId,
     });
-    /* Retornamos las columnas afectadas por esta transaccion */
-    /* A pesar de haber colocado el return en el metodo returnRowCount
-es necesario que en este metodo tambien se retorne */
-    return this.returnRowCount("id", rta);
+
+    associateTo.forEach(async (contact) => {
+      const rtaMessageContacts = await models.messages_contacts.create({
+        MessageId: rta.getDataValue("id"),
+        ContactId: contact.id,
+      });
+    });
+
+    categories.forEach(async (category) => {
+      const rtaInsertMessagesCategories =
+        await models.messages_categories.create({
+          CategoryId: category.id,
+          MessageId: rta.getDataValue("id"),
+        });
+    });
+
+    return rta.getDataValue("id");
   }
 
   async returnRowCount(attr, rta) {
@@ -64,11 +75,7 @@ es necesario que en este metodo tambien se retorne */
   }
 
   async updateMessage(id, data) {
-    if (this.find(id) !== null) {
-      const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
-        where: { MessageId: id },
-      });
-
+    if ((await this.find(id)) !== null) {
       const rta = await models.Message.update(
         {
           message: data.message,
@@ -76,27 +83,32 @@ es necesario que en este metodo tambien se retorne */
         { where: { id: id } }
       );
 
+      const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
+        where: { MessageId: id },
+        force: true,
+      });
+
       const rtaInsertMessagesContacts =
         await models.messages_contacts.bulkCreate(
-          data.associate_to.map((contact) => ({
-            ContactId: contact.id,
-            MessageId: id,
-          }))
+          data.Contacts.map((contact) => {
+            console.log(contact);
+            return { ContactId: contact.id, MessageId: id };
+          })
         );
 
       const rtaDeleteMessagesCategories =
         await models.messages_categories.destroy({
           where: { MessageId: id },
+          force: true,
         });
 
       const rtaInsertMessagesCategories =
         await models.messages_categories.bulkCreate(
-          data.categories.map((category) => ({
+          data.Categories.map((category) => ({
             CategoryId: category.id,
             MessageId: id,
           }))
         );
-
       const result = rta == 1 ? 1 : boom.badData("Message can not be modified");
       return result;
     } else {
@@ -127,26 +139,41 @@ es necesario que en este metodo tambien se retorne */
 
   async deleteMessage(ids) {
     console.log(ids);
-    if (this.find(id) !== null) {
-      const rta = await models.Message.destroy({
-        where: { id: id },
-        limit: 1,
-      });
-      const rtaDeleteMessagesCategories =
-        await models.messages_categories.destroy({ where: { MessageId: id } });
-      const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
-        where: { MessageId: id },
-      });
-      const result = rta == 1 ? 1 : boom.badRequest("Messsage not found");
-      return result;
+
+    const deleteMessages = await models.Message.destroy({
+      where: {
+        id: {
+          [Op.in]: [ids],
+        },
+      },
+    });
+
+    const deleteMessagesCategories = await models.messages_categories.destroy({
+      where: {
+        MessageId: ids.map((id) => id.toString()),
+      },
+      force: true,
+    });
+
+    const deleteMessagesContacts = await models.messages_contacts.destroy({
+      where: { MessageId: ids.map((id) => id.toString()) },
+      force: true,
+    });
+
+    console.log(`El resultado es ${deleteMessages}`);
+    if (deleteMessages > 0) {
+      return deleteMessages;
     } else {
       boom.notFound("Message not Found, try again");
     }
   }
 
   async deleteMessages(ids) {
+    if (!Array.isArray(ids)) {
+      ids = [ids];
+    }
     const rta = await models.Message.destroy({
-      where: { id: { [Op.or]: ids } },
+      where: { id: { [Op.in]: ids } },
     });
 
     const rtaDeleteMessagesCategories =
@@ -156,6 +183,7 @@ es necesario que en este metodo tambien se retorne */
             [Op.in]: ids,
           },
         },
+        force: true,
       });
 
     const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
@@ -164,6 +192,7 @@ es necesario que en este metodo tambien se retorne */
           [Op.in]: ids,
         },
       },
+      force: true,
     });
 
     return rta;

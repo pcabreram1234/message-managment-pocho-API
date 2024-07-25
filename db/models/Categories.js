@@ -32,7 +32,10 @@ class Category extends Model {
   static associate(models) {
     this.belongsTo(models.User);
     this.belongsToMany(models.Message, {
-      through: { model: "messages_categories" },
+      through: "messages_categories",
+      foreignKey: "CategoryId",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     });
   }
 

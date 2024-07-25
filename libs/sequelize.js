@@ -14,6 +14,7 @@ const sequelize = new Sequelize(URI, {
   password: PASSWORD,
   dialect: config.dialect,
   timezone: "-04:00",
+
   define: {
     timestamps: true,
     createdAt: true,
@@ -29,6 +30,11 @@ const options = {
   logging: console.log,
 };
 
-sequelize.sync(options);
+sequelize
+  .sync(options)
+  .then((resp) => {})
+  .catch((err) => {
+    console.log(err);
+  });
 
 module.exports = sequelize;

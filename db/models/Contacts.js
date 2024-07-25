@@ -41,11 +41,13 @@ const ContactModel = {
 
 class Contact extends Model {
   static associate(models) {
-    // this.belongsTo(models.User);
+    this.belongsTo(models.User);
     this.belongsToMany(models.Message, {
       through: "messages_contacts",
+      foreignKey: "ContactId",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     });
-    this.belongsToMany(models.User, { through: "UserContacts" });
   }
 
   static config(sequelize) {
