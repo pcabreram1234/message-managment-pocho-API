@@ -43,7 +43,8 @@ router.post(
   async (req, resp, next) => {
     try {
       const data = req.body.data;
-      const newMessage = await service.addMessage(data);
+      const UserId = req.user.id;
+      const newMessage = await service.addMessage({ ...data, UserId: UserId });
       handleLogs(
         file,
         `Message ${data.message} to be sended to ${data.send_to} on ${data.send_on_date} was sucessful configurated`
@@ -65,7 +66,11 @@ router.post(
       // Como el objeto data esta en formato string primero lo parseamos a JSON
       // Luego ese JSON lo parseamos a objeto para poder iterar sobre el
       const messages = JSON.parse(JSON.stringify(data));
-      const newMessage = await service.addMEssages(messages);
+      const UserId = req.user.id;
+      const newMessage = await service.addMEssages({
+        messages,
+        UserId: UserId,
+      });
       handleLogs(
         file,
         `Message ${data.message} to be sended to ${data.send_to} on ${data.send_on_date} was sucessful configurated`

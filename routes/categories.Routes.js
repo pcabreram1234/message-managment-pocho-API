@@ -45,13 +45,7 @@ router.post("/addCategory", verifyToken, async (req, resp, next) => {
       categorie_name: req.body.data.categorie_name,
       UserId: req.user.id,
     };
-    const existCategory = await service.findByName(
-      data.categorie_name,
-      data.UserId
-    );
-    if (existCategory.count > 0) {
-      return resp.status(409).json({ message: `This category already exists` });
-    }
+
     const newCategory = await service.addCategory(data);
     handleLogs(file, `Category:${data.categorie_name} was sucessful added`);
     resp.setHeader("token", req.token);

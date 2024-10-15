@@ -17,7 +17,6 @@ const ContactModel = {
     allowNull: false,
     type: DataTypes.STRING,
     length: 50,
-    unique: true,
   },
   phone_number: {
     allowNull: true,
@@ -42,11 +41,11 @@ const ContactModel = {
 class Contact extends Model {
   static associate(models) {
     this.belongsTo(models.User);
+    this.belongsToMany(models.User, {
+      through: { model: "users_contacts" },
+    });
     this.belongsToMany(models.Message, {
-      through: "messages_contacts",
-      foreignKey: "ContactId",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      through: { model: "messages_contacts" },
     });
   }
 

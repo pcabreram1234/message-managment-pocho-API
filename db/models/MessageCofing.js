@@ -21,23 +21,23 @@ const MessageConfigModel = {
     allowNull: true,
     type: DataTypes.JSON,
   },
-  send_to: {
+  recipient: {
     allowNull: true,
     defaultValue: [],
-    type: Sequelize.JSON,
+    type: Sequelize.TEXT,
   },
-  send_on_date: {
+  scheduled_date: {
     allowNull: false,
     type: DataTypes.DATE,
     defaultValue: Sequelize.fn("NOW"),
   },
-  message_status: {
+  status: {
     allowNull: false,
     type: DataTypes.ENUM("sended", "pending", "error"),
     defaultValue: "pending",
     get() {
       // Returning the first Char to Upper and the remaing in lowerCase
-      const rawValue = this.getDataValue("message_status");
+      const rawValue = this.getDataValue("status");
       const startChar = rawValue.charAt(0).toUpperCase();
       const remaingChars = rawValue.slice(1);
       return `${startChar}${remaingChars}`;

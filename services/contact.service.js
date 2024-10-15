@@ -3,10 +3,15 @@ const { Op } = require("sequelize");
 
 class ContactService {
   async find(userId) {
-    const rta = await models.Contact.findAll({
-      where: { UserId: userId },
+    const rta = await models.User.findAll({
+      where: { id: userId },
+      attributes: [],
+      include: {
+        model: models.Contact,
+        through: { attributes: [] },
+      },
     });
-    return rta;
+    return rta[0].Contacts;
   }
 
   async findOne(id) {
@@ -34,8 +39,10 @@ class ContactService {
     return row.count;
   }
 
-  async findByEmail(email) {
-    const rta = await models.Contact.findOne({ where: { email: email } });
+  async findByEmail(email, UserId) {
+    const rta = await models.Contact.findOne({
+      where: { email: email, UserId: UserId },
+    });
     return rta;
   }
 
@@ -48,17 +55,48 @@ class ContactService {
 
   async addContact(body) {
     const newContact = await models.Contact.create(body);
-    return newContact;
+    // const existContact = await this.findByEmail(body.email, body.UserId);
+    // const contactEmail = existContact?.dataValues?.email;
+    // const idEmail = existContact?.dataValues?.id;
+    // const existInUserContact = await models.UserContact.findOne({
+    //   where: {
+    //     UserId: body.UserId,
+    //   },
+    // });
+    // if (contactEmail) {
+    //   if (!existInUserContact) {
+    //     const userContacts = await models.UserContact.create({
+    //       UserId: body.UserId,
+    //       ContactId: idEmail,
+    //     });
+    //     return userContacts;
+    //   } else {
+    //     throw new Error("This contact already exists");
+    //   }
+    // } else {
+    //   console.log(body);
+
+    //   if (!existInUserContact) {
+    //     const userContacts = await models.UserContact.create({
+    //       UserId: body.UserId,
+    //       ContactId: idEmail,
+    //     });
+    //     return userContacts;
+    //   } else {
+    //     throw new Error("This contact already exists");
+    //   }
+    // }
   }
 
   async editContact(body) {
-    const { id, name, phone, categories } = body;
+    const { id, name, phone, categories, email } = body;
     if (this.findOne(id) !== null) {
       const rta = await models.Contact.update(
         {
           name: name,
           phone_number: phone,
           categories: categories,
+          email: email,
         },
         {
           where: { id: id },
@@ -73,12 +111,25 @@ class ContactService {
 
   async deleteContact(id) {
     const rta = await models.Contact.destroy({ where: { id: id } });
+    const rtaContacts = await models.UserContact.destroy({
+      where: {
+        ContactId: id,
+      },
+    });
     return rta;
   }
 
   async deleteContacts(ids) {
     const rta = await models.Contact.destroy({
       where: { id: { [Op.or]: ids } },
+    });
+
+    const rtaContacts = await models.UserContact.destroy({
+      where: {
+        ContactId: {
+          [Op.in]: ids,
+        },
+      },
     });
     return rta;
   }

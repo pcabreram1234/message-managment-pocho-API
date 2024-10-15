@@ -44,25 +44,26 @@ class MessageService {
   async addMessage(body) {
     /* Ejecutamos la consulta para agregar la BD */
     const { message, categories, associateTo, userId } = body;
+
     const rta = await models.Message.create({
       message: message,
       UserId: userId,
     });
 
-    associateTo.forEach(async (contact) => {
-      const rtaMessageContacts = await models.messages_contacts.create({
-        MessageId: rta.getDataValue("id"),
-        ContactId: contact.id,
-      });
-    });
+    // associateTo.forEach(async (contact) => {
+    //   const rtaMessageContacts = await models.messages_contacts.create({
+    //     MessageId: rta.getDataValue("id"),
+    //     ContactId: contact.id,
+    //   });
+    // });
 
-    categories.forEach(async (category) => {
-      const rtaInsertMessagesCategories =
-        await models.messages_categories.create({
-          CategoryId: category.id,
-          MessageId: rta.getDataValue("id"),
-        });
-    });
+    // categories.forEach(async (category) => {
+    //   const rtaInsertMessagesCategories =
+    //     await models.messages_categories.create({
+    //       CategoryId: category.id,
+    //       MessageId: rta.getDataValue("id"),
+    //     });
+    // });
 
     return rta.getDataValue("id");
   }

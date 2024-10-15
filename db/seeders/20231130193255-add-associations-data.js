@@ -92,6 +92,33 @@ module.exports = {
         updatedAt: Sequelize.fn("CURRENT_TIMESTAMP"),
       },
     ]);
+
+    await queryInterface.bulkInsert("users_contacts", [
+      {
+        UserId: 1,
+        ContactId: 1,
+        createdAt: Sequelize.fn("CURRENT_TIMESTAMP"),
+        updatedAt: Sequelize.fn("CURRENT_TIMESTAMP"),
+      },
+      {
+        UserId: 1,
+        ContactId: 2,
+        createdAt: Sequelize.fn("CURRENT_TIMESTAMP"),
+        updatedAt: Sequelize.fn("CURRENT_TIMESTAMP"),
+      },
+      {
+        UserId: 1,
+        ContactId: 3,
+        createdAt: Sequelize.fn("CURRENT_TIMESTAMP"),
+        updatedAt: Sequelize.fn("CURRENT_TIMESTAMP"),
+      },
+      {
+        UserId: 1,
+        ContactId: 4,
+        createdAt: Sequelize.fn("CURRENT_TIMESTAMP"),
+        updatedAt: Sequelize.fn("CURRENT_TIMESTAMP"),
+      },
+    ]);
   },
 
   async down(queryInterface, Sequelize) {

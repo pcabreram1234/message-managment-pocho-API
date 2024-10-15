@@ -15,6 +15,8 @@ router.get("/", verifyToken, async (req, res, next) => {
     if (users !== null) {
       const getUsers = await service.find();
       res.json(getUsers);
+    } else {
+      res.json(users);
     }
   } catch (error) {
     next(error);

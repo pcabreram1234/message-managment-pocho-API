@@ -32,7 +32,9 @@ const options = {
 
 sequelize
   .sync(options)
-  .then((resp) => {})
+  .then((resp) => {
+    console.log(resp.models);
+  })
   .catch((err) => {
     console.log(err);
   });

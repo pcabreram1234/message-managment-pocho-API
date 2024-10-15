@@ -59,7 +59,7 @@ class UserService {
       email: email,
       password: hashedPass,
     });
-    return rta;
+    return rta.dataValues["id"];
   }
 
   async editUser(data) {

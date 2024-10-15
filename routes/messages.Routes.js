@@ -33,7 +33,11 @@ router.post(
   async (req, resp, next) => {
     try {
       const { data } = req.body;
-      const newMesage = await service.addMessage(data);
+      const { id } = req.user;
+      const newMesage = await service.addMessage({
+        ...data,
+        userId: id,
+      });
       /* Como el resultado de newMessage no es un JSON se debe usar el metodo send 
       del objecto response para enviarlo, ahora bien al enviarlo se envia en formato objeto */
       /* Añadiendo al log el resultado de la operación exitosa */

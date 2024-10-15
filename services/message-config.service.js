@@ -23,9 +23,9 @@ class MessageConfigService {
         where: {
           [Op.and]: [
             { message_id: message_id },
-            { send_to: { [Op.substring]: [contact] } },
+            { recipient: { [Op.substring]: [contact] } },
             {
-              send_on_date: {
+              scheduled_date: {
                 [Op.substring]: [dateToCompare],
               },
             },
@@ -51,9 +51,9 @@ class MessageConfigService {
           where: {
             [Op.and]: [
               { message_id: message.message_id },
-              { send_to: { [Op.substring]: [contact] } },
+              { recipient: { [Op.substring]: [contact] } },
               {
-                send_on_date: {
+                scheduled_date: {
                   [Op.substring]: [dateToCompare],
                 },
               },
@@ -72,7 +72,6 @@ class MessageConfigService {
   }
 
   async addMessage(data) {
-    console.log(data);
     let result = {
       rowsInserted: 0,
     };
@@ -80,12 +79,8 @@ class MessageConfigService {
     const { send_to } = data;
     for (const contact of send_to) {
       const rta = await models.MessageConfig.create({
-        message_id: data.message_id,
-        message: data.message,
-        categories: data.categories,
-        send_on_date: data.send_on_date,
-        send_to: contact.email,
-        UserId: data.user_id,
+        ...data,
+        recipient: contact.email,
       });
 
       if (rta.id) {
@@ -96,24 +91,20 @@ class MessageConfigService {
     return result;
   }
 
-  async addMEssages(messages) {
+  async addMEssages(data) {
     let result = {
       rowsInserted: 0,
       contacts: 0,
     };
 
-    for (const message of messages) {
+    for (const message of data.messages) {
       let rta;
       for (const contact of message.send_to) {
-        console.log(contact);
         result.contacts += 1;
         rta = await models.MessageConfig.create({
-          message_id: message.message_id,
-          message: message.message,
-          categories: message.categories,
-          send_on_date: message.send_on_date,
-          send_to: contact,
-          UserId: message.user_id,
+          ...message,
+          recipient: contact,
+          UserId: data.UserId,
         });
         if (rta.message_id) {
           result.rowsInserted += 1;
