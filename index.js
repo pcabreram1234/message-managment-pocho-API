@@ -34,6 +34,9 @@ app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(sequeliszeErrorhandler);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log("Mi port " + port);
 });
+
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
