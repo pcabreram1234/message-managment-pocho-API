@@ -8,12 +8,12 @@ module.exports = {
       watch_options: {
         followSymlinks: false, // Mejora el rendimiento deshabilitando el seguimiento de enlaces simbólicos
       },
-      log_file: "./logs/service.log", // Ruta del archivo de logs
+      log_file: "/logs/service.log", // Ruta del archivo de logs
       time: true, // Agrega la marca de tiempo a los logs
       restart_delay: 3000, // Retraso en milisegundos antes de reiniciar tras un fallo
-      env: {
-        NODE_ENV: "production", // Define variables de entorno (puedes agregar más si es necesario)
-      },
+      // env: {
+      //   NODE_ENV: "production", // Define variables de entorno (puedes agregar más si es necesario)
+      // },
       attach: true,
     },
   ],
