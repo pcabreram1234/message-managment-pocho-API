@@ -13,9 +13,9 @@ module.exports = {
       log_file: path.resolve(__dirname + "/logs/service.log"), // Ruta del archivo de logs
       time: true, // Agrega la marca de tiempo a los logs
       restart_delay: 3000, // Retraso en milisegundos antes de reiniciar tras un fallo
-      // env: {
-      //   NODE_ENV: "production", // Define variables de entorno (puedes agregar más si es necesario)
-      // },
+      env: {
+        NODE_ENV: "production", // Define variables de entorno (puedes agregar más si es necesario)
+      },
       attach: true,
     },
   ],

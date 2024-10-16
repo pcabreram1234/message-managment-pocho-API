@@ -11,7 +11,7 @@ const {
   writeToLogFile,
 } = require("./middlewares/error.handler");
 
-const port = 3120 || process.env.PORT;
+const port = process.env.PORT || 3120;
 
 const corsOption = {
   origin: process.env.CORS_ORIGIN_ALLOWED,
