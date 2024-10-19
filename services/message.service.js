@@ -50,20 +50,20 @@ class MessageService {
       UserId: userId,
     });
 
-    // associateTo.forEach(async (contact) => {
-    //   const rtaMessageContacts = await models.messages_contacts.create({
-    //     MessageId: rta.getDataValue("id"),
-    //     ContactId: contact.id,
-    //   });
-    // });
+    associateTo.forEach(async (contact) => {
+      const rtaMessageContacts = await models.messages_contacts.create({
+        MessageId: rta.getDataValue("id"),
+        ContactId: contact.id,
+      });
+    });
 
-    // categories.forEach(async (category) => {
-    //   const rtaInsertMessagesCategories =
-    //     await models.messages_categories.create({
-    //       CategoryId: category.id,
-    //       MessageId: rta.getDataValue("id"),
-    //     });
-    // });
+    categories.forEach(async (category) => {
+      const rtaInsertMessagesCategories =
+        await models.messages_categories.create({
+          CategoryId: category.id,
+          MessageId: rta.getDataValue("id"),
+        });
+    });
 
     return rta.getDataValue("id");
   }
