@@ -1,5 +1,6 @@
 const fs = require("fs");
 const { file } = require("../utils/globals");
+const { verifyToken } = require("./auth.handler");
 
 function logErrors(err, req, res, next) {
   console.error(err);
@@ -39,14 +40,29 @@ function boomErrorHandler(err, req, res, next) {
 }
 
 function sequeliszeErrorhandler(err, req, res, next) {
-  /* Determinar si el objeto error tiene la propiedad errors, 
-  de ser asi es debe guardar en un array los mensajes de estas para despues
-  enviarlos al servidor */
-  if (err.errors) {
-    const messagesErrors = err.errors.map((error) => {
-      return error.message;
+  verifyToken(req, res, next);
+  if (
+    err instanceof Sequelize.ValidationError ||
+    err instanceof Sequelize.DatabaseError
+  ) {
+    // Manejar errores específicos de Sequelize
+    console.error("Error de Sequelize:", err);
+    return res.status(400).json({
+      error: "Datos inválidos " + err,
+      // details: err.errors.map((e) => e.message),
     });
-    res.json({ message: messagesErrors });
+  } else if (err instanceof Error && err.name === "SequelizeDatabaseError") {
+    // Manejar otros errores de base de datos
+    console.error("Error de base de datos:", err);
+    return res.status(500).json({
+      error: "Error al acceder a la base de datos",
+    });
+  } else {
+    // Manejar otros tipos de errores
+    console.error("Error inesperado:", err);
+    return res.status(500).json({
+      error: "Error interno del servidor",
+    });
   }
 }
 

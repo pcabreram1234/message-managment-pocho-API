@@ -46,7 +46,7 @@ const UserModel = {
   },
   active: {
     type: DataTypes.BOOLEAN,
-    defaultValue: true,
+    defaultValue: false,
     allowNull: false,
     get() {
       const rawValue = this.getDataValue("active");

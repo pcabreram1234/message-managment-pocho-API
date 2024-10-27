@@ -10,6 +10,11 @@ const {
 } = require("./Messages_Contacts");
 
 const {
+  VerificationToken,
+  VerificationTokenModel,
+} = require("./VerificationTokenEmail");
+
+const {
   MessageCategories,
   MessageCategoriesModel,
 } = require("./Messages_Categories");
@@ -37,6 +42,7 @@ async function setupModesl(sequelize) {
   MessageConfig.init(MessageConfigModel, MessageConfig.config(sequelize));
 
   FailedMessage.init(FailedMessageModel, FailedMessage.config(sequelize));
+  VerificationToken.init(VerificationTokenModel,VerificationToken.config(sequelize))
 
   // Hooks
   initBDHooks();
@@ -50,6 +56,7 @@ async function setupModesl(sequelize) {
   // MessageContacts.associate(sequelize.models);
   MessageCategories.associate(sequelize.models);
   MessageConfig.associate(sequelize.models);
+  VerificationToken.associate(sequelize.models)
 }
 
 module.exports = { setupModesl };

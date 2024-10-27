@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automatic Mail</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .email-container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .header {
+        background-color: #1155cc;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+      .header h1 {
+        margin: 0;
+      }
+      .content {
+        padding: 20px;
+      }
+      .content p {
+        font-size: 16px;
+        color: #333333;
+        line-height: 1.5;
+      }
+      .footer {
+        text-align: center;
+        /* padding: 3px; */
+        font-size: 12px;
+        color: #666666;
+        background-color: #eeeeee;
+      }
+      .button {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #1155cc;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Header del correo -->
+      <div class="header">
+        <h1>Wellcome to Pocho's Messages Managment System (PMMS)</h1>
+      </div>
+
+      <!-- Contenido del correo -->
+      <div class="content">
+        <!-- Aquí se insertará el mensaje programado por el usuario -->
+
+        <p>Click the button below to activate your account:</p>
+        <a href="{{URL_DE_ACTIVACION}}" class="btn">Activate your account</a>
+        <p>
+          This link is valid for 24 hours. If you have not requested this
+          action, simply ignore this email..
+        </p>
+        <p>
+          If you have any questions, please feel free to contact us at {{Support_Email}}.
+        </p>
+        <p>Greetings,<br />The PMMS Team</p>
+
+        <!-- Footer del correo -->
+        <div class="footer">
+          <p>Thank you for using our service.</p>
+          <a href="{{URL_SITIO_LANDING}}" class="button" target="_blank">
+            Visit our Platform
+          </a>
+        </div>
+        © 2024 Message Management Pocho. All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>

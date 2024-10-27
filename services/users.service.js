@@ -22,10 +22,10 @@ class UserService {
     return rta;
   }
 
-  async findOne(user_name) {
+  async findOne(email) {
     const rta = await models.User.findOne({
       where: {
-        user_name: user_name,
+        email: email,
         active: true,
       },
     });
@@ -46,11 +46,10 @@ class UserService {
 
   async addUser(data) {
     const { user_name, type_user, password, email } = data;
-    const userExist = await this.verifyUserExist(user_name, email);
-    if (userExist) {
-      return boom.badData(
-        `The user ${user_name} or the email ${email} already exist`
-      );
+    const userExist = await this.verifyUserExist(email);
+    // console.log("El valor de userExist es " + userExist.id);
+    if (userExist?.id) {
+      return boom.badData(`The email ${email} already exist`);
     }
     const hashedPass = await bcrypt.hash(password, parseInt(saltRounds));
     const rta = await models.User.create({
@@ -96,10 +95,10 @@ class UserService {
     }
   }
 
-  async verifyUserExist(user_name, email) {
+  async verifyUserExist(email) {
     const rta = await models.User.findOne({
       where: {
-        [Op.or]: [{ user_name: user_name }, { email: email }],
+        email: email,
       },
     });
     return rta;

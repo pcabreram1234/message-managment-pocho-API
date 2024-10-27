@@ -6,6 +6,10 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const { verifyToken } = require("../middlewares/auth.handler");
+const { verifyLandigHeader } = require("../middlewares/cors.validate");
+const {
+  sendEmailToNewUserService,
+} = require("../services/sendMessage.service");
 
 const service = new UserService();
 
@@ -23,24 +27,26 @@ router.get("/", verifyToken, async (req, res, next) => {
   }
 });
 
-router.post("/login", logErrors, async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
     const body = req.body.data;
-    const { password, user_name } = body;
-    const resp = await service.findOne(user_name);
+    const { password, email } = body;
+    const resp = await service.findOne(email);
     if (!resp) {
-      return res.status(511).json({ error: "User does not exist" });
+      return res
+        .status(511)
+        .json({ error: "User does not exist or no actived" });
     }
 
     const isValid = await bcrypt.compare(password, resp.password);
-
+    console.log(isValid);
     if (isValid) {
-      const data = await service.findOne(resp.user_name);
-      const { id, type_user, user_name } = data.dataValues;
-      // valido
+      // const data = await service.findOne(resp.email);
+      const { id, type_user, email } = resp.dataValues;
+      // valido b
       const tokenToSign = jwt.sign(
         {
-          user_name: user_name,
+          email: email,
           id: id,
           type_user: type_user,
           created_at: new Date(),
@@ -48,6 +54,7 @@ router.post("/login", logErrors, async (req, res, next) => {
         process.env.TOKEN_KEY,
         { expiresIn: "1h" }
       );
+      console.log(tokenToSign);
       res.json({ token: tokenToSign });
     } else {
       res.status(511).json({ error: "Password incorrect" });
@@ -84,6 +91,44 @@ router.post("/edituser", verifyToken, logErrors, async (req, res, next) => {
 router.delete("/deleteuser", verifyToken, logErrors, async (req, res, next) => {
   try {
   } catch (error) {}
+});
+
+router.post("/signup", async (req, res, next) => {
+  try {
+    const newUserervice = new sendEmailToNewUserService();
+    const { email, password } = req.body;
+    const name = email.split("@")[0];
+
+    // Valida los datos de usuario
+    if (!email || !password) {
+      return res.status(400).json({ error: "Datos incompletos" });
+    }
+
+    const newUser = await service.addUser({
+      email: email,
+      user_name: name,
+      type_user: "guest",
+      password: password,
+    });
+
+    console.log(newUser);
+    if (newUser?.isBoom === true) {
+      return res.status(409).json({ error: newUser?.output?.payload?.message });
+    }
+
+    // // Respuesta exitosa
+    const rta = await newUserervice.sendEmail(newUser, email);
+    if (rta.error || rta?.messageStatus === "error") {
+      return res
+        .status(500)
+        .json({ error: rta?.error || "Problems trying to send the message" });
+    } else {
+      return res.status(201).json({ messageStatus: "sended" });
+    }
+    res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

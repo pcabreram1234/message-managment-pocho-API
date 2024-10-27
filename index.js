@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const routerApi = require("./routes/index.Routes");
 const cors = require("cors");
+require("dotenv").config();
 
 const {
   logErrors,
@@ -14,8 +15,12 @@ const {
 const port = process.env.PORT || 3120;
 
 const corsOption = {
-  origin: process.env.CORS_ORIGIN_ALLOWED,
+  origin: [
+    process.env.CORS_ORIGIN_ALLOWED,
+    process.env.LOGIN_CORS_ORIGIN_ALLOWED,
+  ],
   exposedHeaders: ["token"],
+  methods: ["GET", "POST", "DELETE", "PATCH"],
 };
 
 app.use(express.json());
@@ -28,11 +33,11 @@ app.get("/", (req, res) => {
 
 routerApi(app);
 
-app.use(errorHandler);
-app.use(writeToLogFile);
 app.use(logErrors);
-app.use(boomErrorHandler);
+app.use(errorHandler);
 app.use(sequeliszeErrorhandler);
+app.use(writeToLogFile);
+app.use(boomErrorHandler);
 
 const server = app.listen(port, () => {
   console.log("Mi port " + port);

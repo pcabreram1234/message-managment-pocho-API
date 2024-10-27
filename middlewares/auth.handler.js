@@ -11,11 +11,11 @@ async function verifyToken(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
     const user = await models.User.findOne({
-      where: { user_name: decoded.user_name, id: decoded.id },
+      where: { email: decoded.email, id: decoded.id, active: true },
     });
     const tokenUpdated = jwt.sign(
       {
-        user_name: user.dataValues.user_name,
+        email: user.dataValues.email,
         id: user.dataValues.id,
         type_user: user.dataValues.type_user,
       },
