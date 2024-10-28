@@ -17,7 +17,7 @@ class sendEmailToNewUserService {
     try {
       await this.saveTokenForUser(userId, token, expirationDate);
       // Crea la URL con el token
-      const verificationUrl = `${BASE_URL}/verify?token=${token}`;
+      const verificationUrl = `${BASE_URL}verifyUser?token=${token}`;
       // Crear el transportador con la configuración necesaria
       const transporter = nodemailer.createTransport({
         port: 465,
@@ -78,7 +78,7 @@ class sendEmailToNewUserService {
   }
 
   async saveTokenForUser(userId, token, expiresAt) {
-    const rta = await models.VerificationToken.create({
+    const rta = await models.verification_token.create({
       token: token,
       expiresAt: expiresAt,
       userId: userId,

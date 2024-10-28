@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
-const VERIFICATION_TOKEN_TABLE = "VerificationToken";
+const VERIFICATION_TOKEN_TABLE = "verification_tokens";
 
 const VerificationTokenModel = {
   token: {
@@ -11,12 +11,16 @@ const VerificationTokenModel = {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  verified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 };
 
 class VerificationToken extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: "userId", as: "user" });
-    this.hasOne(models.VerificationToken, {
+    this.hasOne(models.verification_token, {
       foreignKey: "userId",
       as: "verificationToken",
     });
@@ -26,7 +30,7 @@ class VerificationToken extends Model {
     return {
       sequelize,
       tableName: VERIFICATION_TOKEN_TABLE,
-      modelName: "VerificationToken",
+      modelName: "verification_token",
       timestamps: true,
       paranoid: true,
     };

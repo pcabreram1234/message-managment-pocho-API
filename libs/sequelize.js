@@ -29,7 +29,7 @@ const options = {
   force: false,
   logging: console.log,
 };
-
+// MandatoryData();
 sequelize
   .sync(options)
   .then((resp) => {

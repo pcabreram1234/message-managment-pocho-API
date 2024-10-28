@@ -6,10 +6,12 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const { verifyToken } = require("../middlewares/auth.handler");
-const { verifyLandigHeader } = require("../middlewares/cors.validate");
 const {
   sendEmailToNewUserService,
 } = require("../services/sendMessage.service");
+const {
+  VerifyTokenService,
+} = require("../services/verificationAcount.service");
 
 const service = new UserService();
 
@@ -125,9 +127,55 @@ router.post("/signup", async (req, res, next) => {
     } else {
       return res.status(201).json({ messageStatus: "sended" });
     }
-    res.status(201).json(newUser);
   } catch (error) {
     next(error);
+  }
+});
+
+router.get("/verify", async (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    return res.status(400).json({ error: "Token is required." });
+  }
+
+  try {
+    const tokenService = new VerifyTokenService();
+    // Busca el token en la base de datos
+    const userToken = await tokenService.verifyToken(token);
+
+    // Verifica si el token existe y si no ha expirado
+
+    if (!userToken || userToken.length === 0) {
+      return res.status(400).json({ error: "Invalid token.", status: "error" });
+    }
+
+    if (userToken?.expiresAt < new Date()) {
+      return res
+        .status(400)
+        .json({ error: "Expired token.", status: "expired" });
+    }
+
+    if (userToken?.expiresAt > new Date() && userToken?.verified === true) {
+      return res
+        .status(400)
+        .json({ error: "Invalid token.", status: "verified" });
+    }
+
+    // Aquí puedes marcar al usuario como verificado o realizar alguna acción adicional
+    await tokenService.verifyUser(userToken?.userId);
+    await tokenService.updateVerifyToken(token.toString());
+
+    console.log(token);
+    console.log(userToken);
+    return res
+      .status(200)
+      .json({ message: "Email verified successfully!", status: "success" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred.", status: "error" });
   }
 });
 
