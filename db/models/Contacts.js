@@ -21,7 +21,6 @@ const ContactModel = {
   phone_number: {
     allowNull: true,
     type: DataTypes.CHAR,
-    unique: true,
   },
   createdAt: {
     allowNull: false,

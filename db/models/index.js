@@ -47,9 +47,6 @@ async function setupModesl(sequelize) {
     VerificationToken.config(sequelize)
   );
 
-  // Hooks
-  initBDHooks();
-
   /* Relations setup */
   User.associate(sequelize.models);
   Contact.associate(sequelize.models);
@@ -60,6 +57,9 @@ async function setupModesl(sequelize) {
   MessageCategories.associate(sequelize.models);
   MessageConfig.associate(sequelize.models);
   VerificationToken.associate(sequelize.models);
+
+  // Hooks
+  initBDHooks();
 }
 
 module.exports = { setupModesl };

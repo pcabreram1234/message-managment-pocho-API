@@ -55,37 +55,7 @@ class ContactService {
 
   async addContact(body) {
     const newContact = await models.Contact.create(body);
-    // const existContact = await this.findByEmail(body.email, body.UserId);
-    // const contactEmail = existContact?.dataValues?.email;
-    // const idEmail = existContact?.dataValues?.id;
-    // const existInUserContact = await models.UserContact.findOne({
-    //   where: {
-    //     UserId: body.UserId,
-    //   },
-    // });
-    // if (contactEmail) {
-    //   if (!existInUserContact) {
-    //     const userContacts = await models.UserContact.create({
-    //       UserId: body.UserId,
-    //       ContactId: idEmail,
-    //     });
-    //     return userContacts;
-    //   } else {
-    //     throw new Error("This contact already exists");
-    //   }
-    // } else {
-    //   console.log(body);
-
-    //   if (!existInUserContact) {
-    //     const userContacts = await models.UserContact.create({
-    //       UserId: body.UserId,
-    //       ContactId: idEmail,
-    //     });
-    //     return userContacts;
-    //   } else {
-    //     throw new Error("This contact already exists");
-    //   }
-    // }
+    return newContact;
   }
 
   async editContact(body) {
@@ -111,11 +81,6 @@ class ContactService {
 
   async deleteContact(id) {
     const rta = await models.Contact.destroy({ where: { id: id } });
-    const rtaContacts = await models.UserContact.destroy({
-      where: {
-        ContactId: id,
-      },
-    });
     return rta;
   }
 

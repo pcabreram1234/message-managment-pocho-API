@@ -1,5 +1,5 @@
 const { Contact } = require("../models/Contacts");
-const { UserContact } = require("../models/UserContacts");
+const { User } = require("../models/Users");
 
 const initContactHooks = async () => {
   Contact.addHook("beforeCreate", async (contact, options) => {
@@ -23,19 +23,11 @@ const initContactHooks = async () => {
   Contact.addHook("afterCreate", async (contact, options) => {
     const { dataValues } = contact;
     const { id, UserId } = dataValues;
-    const existInUserContact = await UserContact.findOne({
-      where: {
-        UserId: UserId,
-        ContactId: id,
-      },
-    });
-
-    if (existInUserContact === null) {
-      await UserContact.create({
-        UserId: UserId,
-        ContactId: id,
-      });
-    }
+    const user = await User.findByPk(UserId);
+    console.log(options);
+    console.log(UserId);
+    await contact.addUser(user);
+    console.log(contact);
   });
 };
 
