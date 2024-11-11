@@ -120,6 +120,7 @@ router.post("/login", async (req, res, next) => {
         httpOnly: process.env.COOKIES_HTTPONLY,
         secure: process.env.NODE_ENV === "production",
         maxAge: 1000 * 60 * 60,
+        sameSite: "None",
       });
       res.set("token", tokenToSign);
       res.json({ message: "Wellcome", email: email });
