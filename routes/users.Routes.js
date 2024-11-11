@@ -117,8 +117,8 @@ router.post("/login", async (req, res, next) => {
       );
       // console.log(tokenToSign);
       res.cookie("token", tokenToSign, {
-        // httpOnly: true,
-        // secure: process.env.NODE_ENV === "production",
+        httpOnly: process.env.COOKIES_HTTPONLY,
+        secure: process.env.NODE_ENV === "production",
         maxAge: 1000 * 60 * 60,
       });
       res.set("token", tokenToSign);
