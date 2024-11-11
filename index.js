@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const routerApi = require("./routes/index.Routes");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const {
@@ -21,11 +22,13 @@ const corsOption = {
   ],
   exposedHeaders: ["token"],
   methods: ["GET", "POST", "DELETE", "PATCH"],
+  credentials: true,
 };
 
 app.use(express.json());
 
 app.use(cors(corsOption));
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("Hola mi server en express");

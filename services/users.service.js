@@ -68,31 +68,15 @@ class UserService {
       return boom.unauthorized("Your are not login as an admin");
     }
 
-    const existUser = await models.User.findOne({
-      where: {
-        id: {
-          [Op.ne]: [id],
-        },
-        [Op.or]: [{ user_name: user_name }, { email: email }],
+    const rta = await models.User.update(
+      {
+        type_user: type_user,
+        user_name: user_name,
+        email: email,
       },
-    });
-
-    if (existUser !== null) {
-      return boom.conflict(
-        `The user ${user_name} and/or the email ${email} already exist`
-      );
-    } else {
-      console.log(existUser);
-      const rta = await models.User.update(
-        {
-          type_user: type_user,
-          user_name: user_name,
-          email: email,
-        },
-        { where: { id: id } }
-      );
-      return rta;
-    }
+      { where: { id: id } }
+    );
+    return rta;
   }
 
   async verifyUserExist(email) {
