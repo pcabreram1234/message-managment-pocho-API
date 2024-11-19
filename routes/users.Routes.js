@@ -119,7 +119,7 @@ router.post("/login", async (req, res, next) => {
       // console.log(tokenToSign);
       res.cookie("token", tokenToSign, {
         httpOnly: process.env.COOKIES_HTTPONLY,
-        secure: process.env.NODE_ENV === "production",
+        secure: process.env.COOKIES_SECURE,
         maxAge: 1000 * 60 * 60,
         sameSite: "none",
       });
