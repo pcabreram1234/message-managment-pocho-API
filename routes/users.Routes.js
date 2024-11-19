@@ -17,7 +17,8 @@ const service = new UserService();
 
 router.get("/", verifyToken, async (req, res, next) => {
   try {
-    const users = await service.isAdmUser(req.user);
+    const users = await service.isAdmUser(req.user.id);
+    console.log(users);
     if (users !== null) {
       const getUsers = await service.find();
       res.json(getUsers);
@@ -120,7 +121,7 @@ router.post("/login", async (req, res, next) => {
         httpOnly: process.env.COOKIES_HTTPONLY,
         secure: process.env.NODE_ENV === "production",
         maxAge: 1000 * 60 * 60,
-        sameSite: "None",
+        sameSite: "none",
       });
       res.set("token", tokenToSign);
       res.json({ message: "Wellcome", email: email });
@@ -150,7 +151,7 @@ router.post("/edituser", verifyToken, logErrors, async (req, res, next) => {
     const data = { id, type_user, user_name, email, type_user_request };
     res.setHeader("token", req.token);
     const userToEdit = await service.editUser(data);
-    return res.json(userToEdit);
+    return res.json({ result: userToEdit });
   } catch (error) {
     next(error);
   }
@@ -158,7 +159,18 @@ router.post("/edituser", verifyToken, logErrors, async (req, res, next) => {
 
 router.delete("/deleteuser", verifyToken, logErrors, async (req, res, next) => {
   try {
-  } catch (error) {}
+    const { data } = req.body;
+    const { id } = data;
+    const userRequestId = req.user.id;
+
+    const userToDelete = await service.deleteUser({
+      idToDelete: id,
+      user_name_request: userRequestId,
+    });
+    res.json({ result: userToDelete });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post("/signup", async (req, res, next) => {
@@ -193,6 +205,22 @@ router.post("/signup", async (req, res, next) => {
     } else {
       return res.status(201).json({ messageStatus: "sended" });
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/logoff", verifyToken, async (req, res, next) => {
+  try {
+    // Eliminar la cookie configurándola con fecha de expiración pasada
+    res.clearCookie("token", {
+      httpOnly: process.env.COOKIES_HTTPONLY,
+      secure: process.env.COOKIES_SECURE,
+      sameSite: "none", // importante para cross-site cookies
+    });
+
+    // Responder con un mensaje de éxito
+    res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     next(error);
   }

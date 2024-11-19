@@ -27,8 +27,8 @@ async function verifyToken(req, res, next) {
     res.cookie("token", tokenUpdated, {
       httpOnly: process.env.COOKIES_HTTPONLY,
       secure: process.env.COOKIES_SECURE,
-      maxAge: 1000 * 60 * 60,
-      sameSite: "None",
+      maxAge: (1000 * 60 * 60),
+      sameSite: "none",
     });
     res.set("token", req.token);
   } catch (err) {

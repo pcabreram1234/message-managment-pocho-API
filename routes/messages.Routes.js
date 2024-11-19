@@ -93,7 +93,7 @@ router.patch(
 );
 
 router.delete(
-  "/deleteMessage/",
+  "/deleteMessage",
   verifyToken,
   validatorHandler(getMessageSchema, "body"),
   async (req, resp, next) => {
@@ -114,7 +114,7 @@ router.delete(
 );
 
 router.delete(
-  "/deleteMessages/",
+  "/deleteMessages",
   verifyToken,
   validatorHandler(getMessageSchema, "body"),
   async (req, resp, next) => {

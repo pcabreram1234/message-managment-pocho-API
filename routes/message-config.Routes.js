@@ -57,7 +57,7 @@ router.post(
 );
 
 router.post(
-  "/addMesagesConfiguration/",
+  "/addMesagesConfiguration",
   verifyToken,
   validatorHandler(create_message_configuration_schema, "body"),
   async (req, resp, next) => {
@@ -83,7 +83,7 @@ router.post(
 );
 
 router.post(
-  "/verifyMessage/",
+  "/verifyMessage",
   verifyToken,
   validatorHandler(create_message_configuration_schema, "body"),
   async (req, resp, next) => {

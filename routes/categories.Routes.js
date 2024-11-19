@@ -24,7 +24,7 @@ router.get("/", verifyToken, async (req, resp, next) => {
   }
 });
 
-router.post("/distinctCategories/", verifyToken, async (req, resp, next) => {
+router.post("/distinctCategories", verifyToken, async (req, resp, next) => {
   try {
     const categories = req.body.data;
     const user_id = req.user.id;

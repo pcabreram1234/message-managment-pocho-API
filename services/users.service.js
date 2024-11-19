@@ -32,11 +32,10 @@ class UserService {
     return rta;
   }
 
-  async isAdmUser(data) {
-    const { user_name } = data;
+  async isAdmUser(userId) {
     const rta = await models.User.findOne({
       where: {
-        user_name: user_name,
+        id: userId,
         type_user: "adm",
         active: 1,
       },
@@ -45,7 +44,7 @@ class UserService {
   }
 
   async addUser(data) {
-    const { user_name, type_user, password, email } = data;
+    const { user_name, type_user, password, email, active } = data;
     const userExist = await this.verifyUserExist(email);
     // console.log("El valor de userExist es " + userExist.id);
     if (userExist?.id) {
@@ -57,6 +56,7 @@ class UserService {
       type_user: type_user,
       email: email,
       password: hashedPass,
+      active: active,
     });
     return rta.dataValues["id"];
   }
@@ -76,7 +76,7 @@ class UserService {
       },
       { where: { id: id } }
     );
-    return rta;
+    return rta[0];
   }
 
   async verifyUserExist(email) {
@@ -89,12 +89,13 @@ class UserService {
   }
 
   async deleteUser(data) {
+    console.log(data);
     const { idToDelete, user_name_request } = data;
-    const isAdmUser = this.isAdmUser(user_name_request);
-    if (isAdmUser) {
-      return boom.badData(`The user ${user_name} already exists`);
+    const isAdmUser = await this.isAdmUser(user_name_request);
+    if (!isAdmUser) {
+      return boom.badData(`The user ${user_name} is not an admin`);
     }
-
+    console.log(data);
     const rta = await models.User.destroy({
       where: {
         id: idToDelete,

@@ -1,5 +1,6 @@
 const { models } = require("../libs/sequelize");
 const { Op } = require("sequelize");
+const boom = require("@hapi/boom");
 
 class ContactService {
   async find(userId) {
