@@ -19,6 +19,7 @@ const corsOption = {
   origin: [
     process.env.CORS_ORIGIN_ALLOWED,
     process.env.SIGNUP_CORS_ORIGIN_ALLOWED,
+    process.env.FULL_SIGNUP_CORS_ORIGIN_ALLOWED,
   ],
   exposedHeaders: ["token"],
   methods: ["GET", "POST", "DELETE", "PATCH"],
