@@ -118,6 +118,7 @@ router.post("/login", async (req, res, next) => {
         secure: process.env.COOKIES_SECURE,
         maxAge: 1000 * 60 * 60,
         sameSite: process.env.COOKIES_SAME_SITE,
+        domain:process.env.CORS_ORIGIN_ALLOWED
       });
       res.set("token", tokenToSign);
       res.json({ message: "Wellcome", email: email });
@@ -212,6 +213,8 @@ router.post("/logoff", verifyToken, async (req, res, next) => {
       httpOnly: process.env.COOKIES_HTTPONLY,
       secure: process.env.COOKIES_SECURE,
       sameSite: process.env.COOKIES_SAME_SITE,
+      domain:process.env.CORS_ORIGIN_ALLOWED
+      
     });
 
     // Responder con un mensaje de éxito
