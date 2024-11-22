@@ -35,7 +35,6 @@ router.get("/contactsEmail", verifyToken, async (req, resp, next) => {
 
 router.post("/distinctContacts", verifyToken, async (req, resp, next) => {
   try {
-    console.log(req.body);
     const contactsId = req.body.data.map((contact) => contact.id);
     const contacts = await service.findDistinctContacts(
       req.user.id,
@@ -59,7 +58,6 @@ router.post(
       const newContact = await service.addContact({ ...data, UserId: id });
       resp.json({ result: newContact });
     } catch (error) {
-      console.log(error);
       resp.status(400);
       next(error);
     }
@@ -105,7 +103,6 @@ router.delete(
   async (req, resp, next) => {
     try {
       const id = req.body.data;
-      console.log(id);
       const deleteContacts = await service.deleteContacts(id);
       resp.json({ result: deleteContacts });
     } catch (error) {

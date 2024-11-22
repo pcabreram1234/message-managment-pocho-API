@@ -18,7 +18,6 @@ const service = new UserService();
 router.get("/", verifyToken, async (req, res, next) => {
   try {
     const users = await service.isAdmUser(req.user.id);
-    console.log(users);
     if (users !== null) {
       const getUsers = await service.find();
       res.json(getUsers);
@@ -64,13 +63,10 @@ router.get("/verify", async (req, res) => {
     await tokenService.verifyUser(userToken?.userId);
     await tokenService.updateVerifyToken(token.toString());
 
-    console.log(token);
-    console.log(userToken);
     return res
       .status(200)
       .json({ message: "Email verified successfully!", status: "success" });
   } catch (error) {
-    console.log(error);
     return res
       .status(500)
       .json({ error: "An error occurred.", status: "error" });
@@ -78,6 +74,7 @@ router.get("/verify", async (req, res) => {
 });
 
 router.get("/check-auth", verifyToken, async (req, res, next) => {
+  console.log("/check-auth");
   try {
     return res.status(200).json({
       result: req.user,
@@ -116,12 +113,11 @@ router.post("/login", async (req, res, next) => {
         process.env.TOKEN_KEY,
         { expiresIn: "1h" }
       );
-      // console.log(tokenToSign);
       res.cookie("token", tokenToSign, {
         httpOnly: process.env.COOKIES_HTTPONLY,
         secure: process.env.COOKIES_SECURE,
         maxAge: 1000 * 60 * 60,
-        sameSite: "none",
+        sameSite: process.env.COOKIES_SAME_SITE,
       });
       res.set("token", tokenToSign);
       res.json({ message: "Wellcome", email: email });
@@ -191,7 +187,6 @@ router.post("/signup", async (req, res, next) => {
       password: password,
     });
 
-    console.log(newUser);
     if (newUser?.isBoom === true) {
       return res.status(409).json({ error: newUser?.output?.payload?.message });
     }
@@ -216,7 +211,7 @@ router.post("/logoff", verifyToken, async (req, res, next) => {
     res.clearCookie("token", {
       httpOnly: process.env.COOKIES_HTTPONLY,
       secure: process.env.COOKIES_SECURE,
-      sameSite: "none", // importante para cross-site cookies
+      sameSite: process.env.COOKIES_SAME_SITE,
     });
 
     // Responder con un mensaje de éxito

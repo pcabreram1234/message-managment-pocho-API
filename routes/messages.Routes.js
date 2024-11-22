@@ -17,7 +17,6 @@ require("dotenv").config();
 router.get("/", verifyToken, async (req, resp, next) => {
   try {
     const messages = await service.find(req.user.id);
-    console.log(req);
     /* Añadiendo al log el resultado de la operación exitosa */
     handleLogs(file, `Fetching ${messages.length} messages`);
     resp.setHeader("token", req.token);
@@ -120,7 +119,8 @@ router.delete(
   async (req, resp, next) => {
     try {
       const { id } = req.body.data;
-      console.log(id);
+     
+      
       const messageToDelete = await service.deleteMessages(id);
       handleLogs(
         file,
