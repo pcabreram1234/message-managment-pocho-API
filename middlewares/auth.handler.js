@@ -29,13 +29,13 @@ async function verifyToken(req, res, next) {
     );
     req.user = user.dataValues;
     req.token = tokenUpdated;
-    res.cookie("token", tokenUpdated, {
-      httpOnly: process.env.COOKIES_HTTPONLY,
-      secure: process.env.COOKIES_SECURE,
-      maxAge: 1000 * 60 * 60,
-      sameSite: process.env.COOKIES_SAME_SITE,
-      domain: process.env.CORS_DOMAIN_ALLOWED,
-    });
+    // res.cookie("token", tokenUpdated, {
+    //   httpOnly: process.env.COOKIES_HTTPONLY,
+    //   secure: process.env.COOKIES_SECURE,
+    //   maxAge: 1000 * 60 * 60,
+    //   sameSite: process.env.COOKIES_SAME_SITE,
+    //   domain: process.env.CORS_DOMAIN_ALLOWED,
+    // });
     res.set("token", req.token);
   } catch (err) {
     return res.status(401).json({ error: err });

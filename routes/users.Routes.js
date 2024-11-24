@@ -113,13 +113,13 @@ router.post("/login", async (req, res, next) => {
         process.env.TOKEN_KEY,
         { expiresIn: "1h" }
       );
-      res.cookie("token", tokenToSign, {
-        httpOnly: process.env.COOKIES_HTTPONLY,
-        secure: process.env.COOKIES_SECURE,
-        maxAge: 1000 * 60 * 60,
-        sameSite: process.env.COOKIES_SAME_SITE,
-        domain:process.env.CORS_DOMAIN_ALLOWED
-      });
+      // res.cookie("token", tokenToSign, {
+      //   httpOnly: process.env.COOKIES_HTTPONLY,
+      //   secure: process.env.COOKIES_SECURE,
+      //   maxAge: 1000 * 60 * 60,
+      //   sameSite: process.env.COOKIES_SAME_SITE,
+      //   domain:process.env.CORS_DOMAIN_ALLOWED
+      // });
       res.set("token", tokenToSign);
       res.json({ message: "Wellcome", email: email });
     } else {
@@ -209,13 +209,13 @@ router.post("/signup", async (req, res, next) => {
 router.post("/logoff", verifyToken, async (req, res, next) => {
   try {
     // Eliminar la cookie configurándola con fecha de expiración pasada
-    res.clearCookie("token", {
-      httpOnly: process.env.COOKIES_HTTPONLY,
-      secure: process.env.COOKIES_SECURE,
-      sameSite: process.env.COOKIES_SAME_SITE,
-      domain:process.env.CORS_DOMAIN_ALLOWED
+    // res.clearCookie("token", {
+    //   httpOnly: process.env.COOKIES_HTTPONLY,
+    //   secure: process.env.COOKIES_SECURE,
+    //   sameSite: process.env.COOKIES_SAME_SITE,
+    //   domain:process.env.CORS_DOMAIN_ALLOWED
       
-    });
+    // });
 
     // Responder con un mensaje de éxito
     res.status(200).json({ message: "Logged out successfully" });
