@@ -2,8 +2,9 @@ const jwt = require("jsonwebtoken");
 const { models } = require("../libs/sequelize");
 
 async function verifyToken(req, res, next) {
-  const token = req.cookies?.token;
-  req.headers["authorization"] ||
+  const token =
+    req.cookies?.token ||
+    req.headers["authorization"] ||
     req.headers["token"] ||
     req.body.token ||
     req.query.token ||
