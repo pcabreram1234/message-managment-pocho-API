@@ -11,7 +11,7 @@ const initCategoryHooks = async () => {
     });
 
     if (existCategory.count > 0) {
-      throw new Error("This email already exists");
+      throw new Error("This Category already exists");
     }
   });
 
@@ -24,7 +24,7 @@ const initCategoryHooks = async () => {
     });
 
     if (existCategory.count > 0) {
-      throw new Error("This email already exists");
+      throw new Error("This Category already exists");
     }
   });
 };

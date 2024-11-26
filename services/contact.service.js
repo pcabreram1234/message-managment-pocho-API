@@ -71,10 +71,11 @@ class ContactService {
         },
         {
           where: { id: id },
+          individualHooks: true,
         }
       );
-      const result = rta == 1 ? 1 : boom.badData("Contact can not be modified");
-      return result;
+      // const result = rta[0] == 1 ? 1 : boom.badData("Contact can not be modified");
+      return rta[0];
     } else {
       boom.notFound("Contact not Found, try again");
     }

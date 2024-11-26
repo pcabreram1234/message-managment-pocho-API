@@ -39,7 +39,7 @@ async function verifyToken(req, res, next) {
     // });
     res.set("token", req.token);
   } catch (err) {
-    return res.status(401).json({ error: err });
+    return res.status(401).json({ error: err, message: "Login Time Expired" });
   }
   return next();
 }

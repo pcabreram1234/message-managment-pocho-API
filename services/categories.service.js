@@ -43,6 +43,7 @@ class CategoryService {
         where: {
           id: id,
         },
+        individualHooks: true,
       }
     );
     return rta;

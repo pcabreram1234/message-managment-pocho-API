@@ -65,7 +65,6 @@ router.patch("/editCategory", verifyToken, async (req, resp, next) => {
       );
     });
     const categoryUpdated = await service.editCategory(data);
-    resp.setHeader("token", req.token);
     resp.json({ result: categoryUpdated[0] });
   } catch (error) {
     next(error);
@@ -81,7 +80,6 @@ router.get(
       const { id } = req.params;
       const contactsAsociate = await service.findAsociateTo(id);
       const response = contactsAsociate;
-      resp.setHeader("token", req.token);
       resp.json(response);
     } catch (error) {
       next(error);
@@ -98,7 +96,6 @@ router.get(
     try {
       const { name } = req.params;
       const verifyCategory = await service.findByName(name, req.user.id);
-      resp.setHeader("token", req.token);
       resp.json({ result: verifyCategory });
     } catch (error) {
       next(error);
@@ -121,7 +118,6 @@ router.delete(
         file,
         `Category with the id:${data.id} was marked as inactives or destroyed`
       );
-      resp.setHeader("token", req.token);
       resp.json({ result: deleteCategory });
     } catch (error) {
       next(error);
@@ -142,7 +138,6 @@ router.delete(
         file,
         `Categories with the ids:${id} were marked as inactives or destroyed`
       );
-      resp.setHeader("token", req.token);
       resp.json({ result: deleteContacts });
     } catch (error) {
       next(error);
