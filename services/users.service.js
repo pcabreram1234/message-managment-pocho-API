@@ -48,7 +48,7 @@ class UserService {
     const userExist = await this.verifyUserExist(email);
     // console.log("El valor de userExist es " + userExist.id);
     if (userExist?.id) {
-      return boom.badData(`The email ${email} already exist`);
+      return boom.badData({ error: `The email ${email} already exist` });
     }
     const hashedPass = await bcrypt.hash(password, parseInt(saltRounds));
     const rta = await models.User.create({
