@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "API_start": "nodemon server/index.js",
+    "API_start": "nodemon index.js",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:reverte": "sequelize-cli db:migrate:undo",
     "migrations:reverte:all": "sequelize-cli db:seed:undo:all",

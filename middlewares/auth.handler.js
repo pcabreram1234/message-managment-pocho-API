@@ -17,13 +17,14 @@ async function verifyToken(req, res, next) {
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
     const user = await models.User.findOne({
       where: { email: decoded.email, id: decoded.id, active: true },
-      attributes: ["email", "user_name", "type_user", "id"],
+      attributes: ["email", "user_name", "type_user", "id", "updatedAt"],
     });
     const tokenUpdated = jwt.sign(
       {
         email: user.dataValues.email,
         id: user.dataValues.id,
         type_user: user.dataValues.type_user,
+        updatedAt: user.dataValues.updatedAt,
       },
       process.env.TOKEN_KEY,
       { expiresIn: "1h" }

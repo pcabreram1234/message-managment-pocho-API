@@ -101,13 +101,14 @@ router.post("/login", async (req, res, next) => {
     const isValid = await bcrypt.compare(password, resp.password);
     if (isValid) {
       // const data = await service.findOne(resp.email);
-      const { id, type_user, email } = resp.dataValues;
+      const { id, type_user, email, updatedAt } = resp.dataValues;
       // valido b
       const tokenToSign = jwt.sign(
         {
           email: email,
           id: id,
           type_user: type_user,
+          updatedAt: updatedAt,
         },
         process.env.TOKEN_KEY,
         { expiresIn: "1h" }
