@@ -28,6 +28,7 @@
     "@sideway/address": "^5.0.0",
     "@sideway/formula": "^3.0.1",
     "@sideway/pinpoint": "^2.0.0",
+    "aws-serverless-express": "^3.4.0",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
