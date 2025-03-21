@@ -76,11 +76,27 @@ class MessageConfigService {
       rowsInserted: 0,
     };
 
+    const isEmptyRecipient = data?.send_to?.length === 0;
+
+    const isEmptyScheduledDate =
+      data.send_on_date === "" ||
+      data.send_on_date === null ||
+      data.send_on_date === undefined;
+
+    if (isEmptyRecipient) {
+      throw new Error("The recipient is required.");
+    }
+
+    if (isEmptyScheduledDate) {
+      throw new Error("The scheduled date is invalid.");
+    }
+
     const { send_to } = data;
     for (const contact of send_to) {
       const rta = await models.MessageConfig.create({
         ...data,
         recipient: contact.email,
+        scheduled_date: data.send_on_date,
       });
 
       if (rta.id) {
@@ -96,8 +112,23 @@ class MessageConfigService {
       rowsInserted: 0,
       contacts: 0,
     };
+    
 
     for (const message of data.messages) {
+      const isEmptyRecipient = message?.send_to?.length === 0;
+
+      const isEmptyScheduledDate =
+      message.send_on_date === "" ||
+      message.send_on_date === null ||
+      message.send_on_date === undefined;
+  
+      if (isEmptyRecipient) {
+        throw new Error("The recipient is required.");
+      }
+  
+      if (isEmptyScheduledDate) {
+        throw new Error("The scheduled date is invalid.");
+      }
       let rta;
       for (const contact of message.send_to) {
         result.contacts += 1;
@@ -105,6 +136,7 @@ class MessageConfigService {
           ...message,
           recipient: contact,
           UserId: data.UserId,
+          scheduled_date: message.send_on_date,
         });
         if (rta.message_id) {
           result.rowsInserted += 1;

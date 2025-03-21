@@ -27,7 +27,7 @@ async function verifyToken(req, res, next) {
         updatedAt: user.dataValues.updatedAt,
       },
       process.env.TOKEN_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
     req.user = user.dataValues;
     req.token = tokenUpdated;
