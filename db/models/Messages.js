@@ -40,6 +40,8 @@ class Message extends Model {
       onUpdate: "CASCADE",
       timestamps: true,
     });
+
+    this.hasMany(models.MessageConfig);
   }
 
   static config(sequelize) {

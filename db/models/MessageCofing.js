@@ -9,11 +9,15 @@ const MessageConfigModel = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  message_id: {
-    allowNull: false,
-    index: true,
-    type: DataTypes.INTEGER,
-  },
+  // message_id: {
+  //   allowNull: false,
+  //   index: true,
+  //   type: DataTypes.INTEGER,
+  //   references: {
+  //     model: "Message", // Nombre del modelo principal
+  //     key: "id", // Nombre del campo en el modelo principal
+  //   },
+  // },
   message: {
     type: DataTypes.TEXT,
   },
@@ -61,6 +65,7 @@ const MessageConfigModel = {
 class MessageConfig extends Model {
   static associate(models) {
     this.belongsTo(models.User);
+    this.belongsTo(models.Message);
   }
   static config(sequelize) {
     return {

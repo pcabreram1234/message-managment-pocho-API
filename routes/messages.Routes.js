@@ -58,6 +58,7 @@ router.patch(
     try {
       const body = req.body.data;
       const { id } = body;
+      console.log(body);
       const messageUpdated = await service.updateMessage(id, body);
       handleLogs(file, `Updating the message with id:${id}`);
       resp.setHeader("token", req.token);
@@ -119,8 +120,7 @@ router.delete(
   async (req, resp, next) => {
     try {
       const { id } = req.body.data;
-     
-      
+
       const messageToDelete = await service.deleteMessages(id);
       handleLogs(
         file,

@@ -48,7 +48,7 @@ class UserService {
     const userExist = await this.verifyUserExist(email);
     // console.log("El valor de userExist es " + userExist.id);
     if (userExist?.id) {
-      return ({ error: `The email ${email} already exist` });
+      return { error: `The email ${email} already exist` };
     }
     const hashedPass = await bcrypt.hash(password, parseInt(saltRounds));
     const rta = await models.User.create({
@@ -79,6 +79,41 @@ class UserService {
     return rta[0];
   }
 
+  async editOwnUser(data) {
+    const { id, user_name, email, newPassword, oldPassword } = data;
+
+    const user = await models.User.findOne({
+      where: { id },
+      attributes: ["id", "password"],
+    });
+
+    if (!user) {
+      throw new Error("User not exists");
+    }
+
+    let updatedFields = { user_name, email };
+
+    // Si el usuario quiere cambiar la contraseña
+    if (oldPassword && newPassword) {
+      console.log("Usuario quiere cambiar su contraseña");
+      const isValid = await bcrypt.compare(oldPassword, user.password);
+      if (!isValid) {
+        throw new Error("Old Password Incorrect");
+      }
+      const hashedPassword = await bcrypt.hash(
+        newPassword,
+        parseInt(saltRounds)
+      );
+      updatedFields.password = hashedPassword;
+    }
+
+    const [updatedCount] = await models.User.update(updatedFields, {
+      where: { id },
+    });
+
+    return updatedCount;
+  }
+
   async verifyUserExist(email) {
     const rta = await models.User.findOne({
       where: {
@@ -103,6 +138,53 @@ class UserService {
     });
     return rta;
   }
+
+
+  async deleteUserSoft(userId) {
+    const user = await models.User.findByPk(userId);
+
+    if (!user) throw new Error('User not exists');
+
+    // Borrar contactos
+    await models.Contact.update({ deletedAt: new Date() }, { where: { UserId: userId } });
+
+    // Borrar mensajes
+    await models.Message.update({ deletedAt: new Date() }, { where: { UserId: userId } });
+
+    // Borrar configuración de mensajes
+    await models.MessageConfig.update({ deletedAt: new Date() }, { where: { UserId: userId } });
+
+    // Borrar mensajes fallidos
+    await models.FailedMessage.update({ deletedAt: new Date() }, { where: { user_id: userId } });
+
+    // Borrar tokens
+    await models.verification_token.update({ deletedAt: new Date() }, { where: { UserId: userId } });
+
+    // Borrar relaciones many-to-many
+    // await models.users_contacts.destroy({where: {UserId: userId,},});
+
+  //  // 1. Buscar los mensajes del usuario
+  //   const messages = await models.Message.findAll({
+  //     where: { UserId: userId },
+  //     attributes: ["id"],
+  //   });
+
+  //   // 2. Obtener los IDs de esos mensajes
+  //   const messageIds = messages.map((msg) => msg.id);
+
+  //     // 3. Eliminar en messages_contacts los registros relacionados
+  //   await models.messages_contacts.destroy({
+  //     where: {
+  //       MessageId: messageIds, // usa `in` automáticamente
+  //     },
+  //   });
+
+    // Finalmente marcar el usuario como eliminado
+   const rta= await models.User.destroy({where:{id:userId}}) 
+   return rta;  
+
+  }
+
 }
 
 module.exports = { UserService };

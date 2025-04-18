@@ -59,7 +59,7 @@ class CategoryService {
 
   async deleteCategories(ids) {
     const rta = await models.Category.destroy({
-      where: { id: { [Op.or]: ids } },
+      where: { id: ids },
     });
     return rta;
   }

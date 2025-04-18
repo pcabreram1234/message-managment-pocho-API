@@ -92,7 +92,6 @@ class MessageService {
       const rtaInsertMessagesContacts =
         await models.messages_contacts.bulkCreate(
           data.Contacts.map((contact) => {
-            console.log(contact);
             return { ContactId: contact.id, MessageId: id };
           })
         );

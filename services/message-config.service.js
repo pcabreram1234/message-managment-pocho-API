@@ -5,6 +5,7 @@ class MessageConfigService {
   async find(id) {
     const rta = await models.MessageConfig.findAndCountAll({
       where: { UserId: id },
+      include: [{ all: true }],
     });
     return rta;
   }
@@ -16,13 +17,13 @@ class MessageConfigService {
 
   async findExistentMessage(data) {
     let result = { rows: [], count: 0 };
-    const { message_id, send_to, send_on_date } = data;
+    const { MessageId, send_to, send_on_date } = data;
     const dateToCompare = send_on_date.toString().slice(0, 10);
     for (const contact of send_to) {
       const rta = await models.MessageConfig.findAndCountAll({
         where: {
           [Op.and]: [
-            { message_id: message_id },
+            { MessageId: MessageId },
             { recipient: { [Op.substring]: [contact] } },
             {
               scheduled_date: {
@@ -50,7 +51,7 @@ class MessageConfigService {
         const rta = await models.MessageConfig.findAndCountAll({
           where: {
             [Op.and]: [
-              { message_id: message.message_id },
+              { MessageId: message.MessageId },
               { recipient: { [Op.substring]: [contact] } },
               {
                 scheduled_date: {
@@ -72,6 +73,7 @@ class MessageConfigService {
   }
 
   async addMessage(data) {
+    console.log(data);
     let result = {
       rowsInserted: 0,
     };
@@ -112,20 +114,20 @@ class MessageConfigService {
       rowsInserted: 0,
       contacts: 0,
     };
-    
 
     for (const message of data.messages) {
+      console.log(data.messages);
       const isEmptyRecipient = message?.send_to?.length === 0;
 
       const isEmptyScheduledDate =
-      message.send_on_date === "" ||
-      message.send_on_date === null ||
-      message.send_on_date === undefined;
-  
+        message.send_on_date === "" ||
+        message.send_on_date === null ||
+        message.send_on_date === undefined;
+
       if (isEmptyRecipient) {
         throw new Error("The recipient is required.");
       }
-  
+
       if (isEmptyScheduledDate) {
         throw new Error("The scheduled date is invalid.");
       }
@@ -138,7 +140,7 @@ class MessageConfigService {
           UserId: data.UserId,
           scheduled_date: message.send_on_date,
         });
-        if (rta.message_id) {
+        if (rta.MessageId) {
           result.rowsInserted += 1;
         }
       }
@@ -151,6 +153,30 @@ class MessageConfigService {
       where: { id: rta.getDataValue(attr) },
     });
     return row.count;
+  }
+
+  async getUserStatistics(id) {
+    const [sendedMessages, scheduledMessages, failedMessages] =
+      await Promise.all([
+        this.models.MessageConfig.count({
+          where: { status: "sended", UserId: id },
+        }),
+        this.models.MessageConfig.count({
+          where: { status: "pending", UserId: id },
+        }),
+        this.models.FailedMessage.count({
+          where: {
+            status: { [Op.in]: ["Error", "Permanent Failure"] },
+            user_id: id, // si aplica también el userId
+          },
+        }),
+      ]);
+
+    return {
+      sended: sendedMessages,
+      scheduled: scheduledMessages,
+      failed: failedMessages,
+    };
   }
 }
 

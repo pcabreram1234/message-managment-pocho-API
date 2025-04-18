@@ -7,6 +7,17 @@ const initContactHooks = async () => {
     const { dataValues } = contact;
     const { name, UserId, email, phone_number } = dataValues;
 
+    const digitsOnly = phone_number.replace(/\D/g, "");
+
+    if (digitsOnly.length !== 10) {
+      throw new Error("Phone number must have 10 digits");
+    }
+
+    contact.phone_number = `${digitsOnly.substring(
+      0,
+      3
+    )}-${digitsOnly.substring(3, 6)}-${digitsOnly.substring(6)}`;
+
     const existName = await Contact.findOne({
       where: {
         name: name,
@@ -45,42 +56,47 @@ const initContactHooks = async () => {
   });
 
   Contact.addHook("beforeUpdate", async (contact, optios) => {
-    const { dataValues } = contact;
-    const { name, email, id, phone_number, UserId } = dataValues;
-    const findName = await Contact.findOne({
-      where: {
-        name: name,
-        UserId: UserId,
-        id: { [Op.notIn]: [id] },
-      },
-    });
+    const { id, UserId, name, email, phone_number } = contact;
+    console.log(contact);
+    const existingContact = await Contact.findByPk(id);
+    if (!existingContact) throw new Error("Contact not found");
 
-    if (findName !== null) {
-      throw new Error("This contact name already exists");
+    if (
+      name === existingContact.name &&
+      email === existingContact.email &&
+      phone_number === existingContact.phone_number
+    ) {
+      console.log("SIn cambios");
+      return; // No cambios, no se realiza validación
     }
 
-    const findEmail = await Contact.findOne({
-      where: {
-        email: email,
-        UserId: UserId,
-        id: { [Op.notIn]: [id] },
-      },
-    });
+    const updates = {};
+    if (name !== existingContact.name) updates.name = name;
+    if (email !== existingContact.email) updates.email = email;
+    if (phone_number !== existingContact.phone_number)
+      updates.phone_number = phone_number;
 
-    if (findEmail !== null) {
-      throw new Error("This email already exists");
-    }
+    if (Object.keys(updates).length > 0) {
+      const duplicate = await Contact.findOne({
+        where: {
+          UserId,
+          [Op.or]: [
+            updates.name ? { name: updates.name } : {},
+            updates.email ? { email: updates.email } : {},
+            updates.phone_number ? { phone_number: updates.phone_number } : {},
+          ],
+          id: { [Op.not]: id },
+        },
+      });
 
-    const findPhoneNumber = await Contact.findOne({
-      where: {
-        phone_number: phone_number,
-        UserId: UserId,
-        id: { [Op.notIn]: [id] },
-      },
-    });
-
-    if (findPhoneNumber !== null) {
-      throw new Error("This phone number already exists");
+      if (duplicate) {
+        if (duplicate.name === updates.name)
+          throw new Error("This contact name already exists");
+        if (duplicate.email === updates.email)
+          throw new Error("This email already exists");
+        if (duplicate.phone_number === updates.phone_number)
+          throw new Error("This phone number already exists");
+      }
     }
   });
 };

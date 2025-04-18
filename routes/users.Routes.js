@@ -223,4 +223,24 @@ router.post("/logoff", verifyToken, async (req, res, next) => {
   }
 });
 
+router.post("/editOwnUser", verifyToken, async (req, res, next) => {
+  try {
+    const data = req.body.data;
+    const userEdited = await service.editOwnUser(data);
+    res.json({ result: userEdited });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/closeAccount", verifyToken, async (req, res, next) => {
+  try {
+    const id = req.body.data;
+    const userToCloseAccount = await service.deleteUserSoft(id);
+    res.json({ result: userToCloseAccount });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

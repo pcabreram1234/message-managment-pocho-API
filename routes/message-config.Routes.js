@@ -116,4 +116,14 @@ router.post(
   }
 );
 
+router.get("/getUserStatistics", verifyToken, async (req, resp, next) => {
+  try {
+    const { id } = req.user;
+    const userStatistics = await service.getUserStatistics(id);
+    resp.json(userStatistics);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
