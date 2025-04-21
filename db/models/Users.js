@@ -80,6 +80,7 @@ class User extends Model {
     this.hasMany(models.Message);
     this.hasMany(models.Category);
     this.hasMany(models.MessageConfig);
+    this.hasMany(models.Campaign);
     this.belongsToMany(models.Contact, {
       through: { model: "users_contacts" },
     });

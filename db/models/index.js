@@ -4,10 +4,6 @@ const { Message, MessageModel } = require("./Messages");
 const { Category, CategoryModel } = require("./Categories");
 const { MessageConfig, MessageConfigModel } = require("./MessageCofing");
 const { User, UserModel } = require("./Users");
-const {
-  MessageContacts,
-  MessageContactsModel,
-} = require("./Messages_Contacts");
 
 const {
   VerificationToken,
@@ -19,11 +15,15 @@ const {
   MessageCategoriesModel,
 } = require("./Messages_Categories");
 
-const { UserContact, UserContactModel } = require("../models/UserContacts");
 const {
   FailedMessage,
   FailedMessageModel,
 } = require("../models/FailedMessages");
+
+const { Campaign, CampaignModel } = require("./Campaigns");
+const { CampaignMessage, CampaignMessageModel } = require("./CampaignMessages");
+const {CampaignRecipient,CampaignRecipientModel} = require("./CampaignRecipients");
+const { MessageLog, MessageLogModel } = require("./MessageLog");
 
 const { initBDHooks } = require("../hooks/index");
 
@@ -47,6 +47,11 @@ async function setupModesl(sequelize) {
     VerificationToken.config(sequelize)
   );
 
+  Campaign.init(CampaignModel, Campaign.config(sequelize));
+  CampaignMessage.init(CampaignMessageModel, CampaignMessage.config(sequelize));
+  CampaignRecipient.init(CampaignRecipientModel, CampaignRecipient.config(sequelize));
+  MessageLog.init(MessageLogModel, MessageLog.config(sequelize));
+
   /* Relations setup */
   User.associate(sequelize.models);
   Contact.associate(sequelize.models);
@@ -57,6 +62,10 @@ async function setupModesl(sequelize) {
   MessageCategories.associate(sequelize.models);
   MessageConfig.associate(sequelize.models);
   VerificationToken.associate(sequelize.models);
+  Campaign.associate(sequelize.models);
+  CampaignMessage.associate(sequelize.models);
+  CampaignRecipient.associate(sequelize.models);
+  MessageLog.associate(sequelize.models);
 
   // Hooks
   initBDHooks();

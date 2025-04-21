@@ -156,23 +156,27 @@ class MessageConfigService {
   }
 
   async getUserStatistics(id) {
-    const [sendedMessages, scheduledMessages, failedMessages] =
+    const [sendedMessages, scheduledMessages, failedMessages, allMessages] =
       await Promise.all([
-        this.models.MessageConfig.count({
+        models.MessageConfig.count({
           where: { status: "sended", UserId: id },
         }),
-        this.models.MessageConfig.count({
+        models.MessageConfig.count({
           where: { status: "pending", UserId: id },
         }),
-        this.models.FailedMessage.count({
+        models.FailedMessage.count({
           where: {
             status: { [Op.in]: ["Error", "Permanent Failure"] },
             user_id: id, // si aplica también el userId
           },
         }),
+        models.Message.count({
+          where: { UserId: id },
+        }),
       ]);
 
     return {
+      allMessages: allMessages,
       sended: sendedMessages,
       scheduled: scheduledMessages,
       failed: failedMessages,

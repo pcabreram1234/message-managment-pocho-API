@@ -42,6 +42,7 @@ class Message extends Model {
     });
 
     this.hasMany(models.MessageConfig);
+    this.hasMany(models.CampaignMessage);
   }
 
   static config(sequelize) {

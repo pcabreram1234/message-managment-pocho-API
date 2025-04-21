@@ -46,6 +46,7 @@ class Contact extends Model {
     this.belongsToMany(models.Message, {
       through: { model: "messages_contacts" },
     });
+    this.hasMany(models.CampaignRecipient);
   }
 
   static config(sequelize) {
