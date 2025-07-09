@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require("sequelize");
+const { Model, DataTypes, Sequelize } = require("sequelize");
 const CAMPAIGN_MESSSAGES_TABLE = "campaign_messages";
 
 const CampaignMessageModel = {
@@ -7,6 +7,19 @@ const CampaignMessageModel = {
   send_time: DataTypes.DATE,
   channel: DataTypes.ENUM("SMS", "WhatsApp", "Email"),
   delay_type: DataTypes.ENUM("fixed", "relative"),
+  createdAt: {
+    allowNull: false,
+    type: "timestamp",
+    field: "created_at",
+    defaultValue: Sequelize.fn("CURRENT_TIMESTAMP"),
+  },
+  updatedAt: {
+    allowNull: false,
+    type: "timestamp",
+    field: "updated_at",
+    defaultValue: Sequelize.fn("NOW"),
+    onUpdate: Sequelize.literal("CURRENT_TIMESTAMP"),
+  },
 };
 
 class CampaignMessage extends Model {
