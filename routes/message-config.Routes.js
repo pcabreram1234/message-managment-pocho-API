@@ -126,4 +126,87 @@ router.get("/getUserStatistics", verifyToken, async (req, resp, next) => {
   }
 });
 
+router.get("/findSendedMessages", verifyToken, async (req, resp, next) => {
+  try {
+    const { id } = req.user;
+    const sendedMessages = await service.findSendedMessages(id);
+    resp.json(sendedMessages);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(
+  "/findMessagesSendedPerWeek",
+  verifyToken,
+  async (req, resp, next) => {
+    try {
+      const { id } = req.user;
+      const sendedMessages = await service.findMessagesSendedPerWeek(id);
+      resp.json(sendedMessages);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get("/findMessagesAboutToSent", verifyToken, async (req, resp, next) => {
+  try {
+    console.log("hola");
+    const { id } = req.user;
+    const sendedMessages = await service.findMessagesAboutToSent(id);
+    resp.json(sendedMessages);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/scheduleMessages", verifyToken, async (req, resp, next) => {
+  try {
+    const userId = req.user?.id;
+    const { data } = req.body;
+    const scheduledMessages = await service.scheduleMessages({
+      userId: userId,
+      ...data,
+    });
+    resp.json(scheduledMessages);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/scheduleCustomMessage", verifyToken, async (req, resp, next) => {
+  try {
+    const userId = req.user?.id;
+    const { data } = req.body;
+    const scheduledCustomMessage = await service.schduleCustomMessage({
+      userId: userId,
+      ...data,
+    });
+    resp.json(scheduledCustomMessage);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(
+  "/sendMessage/:messageConfigId/:failedMessageId",
+  verifyToken,
+  async (req, resp, next) => {
+    try {
+      const userId = req.user?.id;
+      const { messageConfigId, failedMessageId } = req.params;
+      const attemptToSendMessage = await service.sendMessage({
+        failedMessageId: failedMessageId,
+        messageConfigId: messageConfigId.toString(),
+        userId: userId,
+      });
+
+      resp.json(attemptToSendMessage);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = router;
