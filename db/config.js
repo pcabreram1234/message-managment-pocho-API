@@ -6,11 +6,17 @@ const URI = `mysql://${USER}:${PASSWORD}@${config.host}:${config.port}/${config.
 
 module.exports = {
   development: {
-    url: URI,
-    dialect: config.dialect,
+    username: USER,
+    password: PASSWORD,
+    database: config.database,
+    host: config.host,
+    dialect: "mysql",
   },
   production: {
-    url: URI,
-    dialect: config.dialect,
+    username: USER,
+    password: PASSWORD,
+    database: config.database,
+    host: config.host,
+    dialect: "mysql", 
   },
 };
