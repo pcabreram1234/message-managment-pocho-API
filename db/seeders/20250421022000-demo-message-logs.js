@@ -6,7 +6,7 @@ module.exports = {
     await queryInterface.bulkInsert("message_logs", [
       {
         campaign_id: 1,
-        contact_id: 101,
+        contact_id: 1,
         message_id: 1,
         sent_at: new Date(),
         status: "success",
@@ -17,7 +17,7 @@ module.exports = {
       },
       {
         campaign_id: 2,
-        contact_id: 102,
+        contact_id: 2,
         message_id: 2,
         sent_at: new Date(),
         status: "failed",
