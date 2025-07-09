@@ -22,8 +22,12 @@ const {
 
 const { Campaign, CampaignModel } = require("./Campaigns");
 const { CampaignMessage, CampaignMessageModel } = require("./CampaignMessages");
-const {CampaignRecipient,CampaignRecipientModel} = require("./CampaignRecipients");
+const {
+  CampaignRecipient,
+  CampaignRecipientModel,
+} = require("./CampaignRecipients");
 const { MessageLog, MessageLogModel } = require("./MessageLog");
+const { Integration, IntegrationModel } = require("./Integrations");
 
 const { initBDHooks } = require("../hooks/index");
 
@@ -49,8 +53,12 @@ async function setupModesl(sequelize) {
 
   Campaign.init(CampaignModel, Campaign.config(sequelize));
   CampaignMessage.init(CampaignMessageModel, CampaignMessage.config(sequelize));
-  CampaignRecipient.init(CampaignRecipientModel, CampaignRecipient.config(sequelize));
+  CampaignRecipient.init(
+    CampaignRecipientModel,
+    CampaignRecipient.config(sequelize)
+  );
   MessageLog.init(MessageLogModel, MessageLog.config(sequelize));
+  Integration.init(IntegrationModel, Integration.config(sequelize));
 
   /* Relations setup */
   User.associate(sequelize.models);
@@ -66,6 +74,8 @@ async function setupModesl(sequelize) {
   CampaignMessage.associate(sequelize.models);
   CampaignRecipient.associate(sequelize.models);
   MessageLog.associate(sequelize.models);
+  Integration.associate(sequelize.models);
+  FailedMessage.associate(sequelize.models);
 
   // Hooks
   initBDHooks();
