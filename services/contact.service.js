@@ -4,15 +4,12 @@ const boom = require("@hapi/boom");
 
 class ContactService {
   async find(userId) {
-    const rta = await models.User.findAll({
-      where: { id: userId },
-      attributes: [],
-      include: {
-        model: models.Contact,
-        through: { attributes: [] },
+    const rta = await models.Contact.findAll({
+      where: {
+        UserId: userId,
       },
     });
-    return rta[0].Contacts;
+    return rta;
   }
 
   async findOne(id) {
@@ -99,6 +96,58 @@ class ContactService {
       },
     });
     return rta;
+  }
+
+  async verifyExtingContacts(data, userId) {
+    const allNames = data.map((r) => r?.name).filter(Boolean);
+    const allPhones = data.map((r) => r?.phone_number).filter(Boolean);
+    const allEmails = data.map((r) => r?.email).filter(Boolean);
+    const conditions = [];
+
+    if (allNames.length > 0) {
+      conditions.push({ name: { [Op.in]: allNames } });
+    }
+    if (allPhones.length > 0) {
+      conditions.push({ phone_number: { [Op.in]: allPhones } });
+    }
+    if (allEmails.length > 0) {
+      conditions.push({ email: { [Op.in]: allEmails } });
+    }
+
+    const notToUpLoadContacts = await models.Contact.findAll({
+      where: {
+        UserId: userId,
+        [Op.or]: conditions,
+      },
+    });
+
+    const namesFound = new Set((notToUpLoadContacts || []).map((n) => n.name));
+    const phonesFound = new Set(
+      (notToUpLoadContacts || []).map((n) => n.phone_number)
+    );
+    const emailsFound = new Set(
+      (notToUpLoadContacts || []).map((n) => n.email)
+    );
+
+    return data
+      .filter(
+        (d) =>
+          !namesFound.has(d.name) &&
+          !phonesFound.has(d.phone_number) &&
+          !emailsFound.has(d.email)
+      )
+      .map((el) => ({
+        name: el?.name,
+        email: el?.email,
+        phone_number: el?.phone_number,
+        UserId: userId,
+      }));
+  }
+
+  async uploadContacts(data, userId) {
+    const contactsToInsert = await this.verifyExtingContacts(data, userId);
+    const newContacts = await models.Contact.bulkCreate(contactsToInsert);
+    return { newContacts };
   }
 }
 
