@@ -1,5 +1,10 @@
+require("dotenv").config();
 const { models } = require("../libs/sequelize");
-const { Op, DataTypes } = require("sequelize");
+const { Op, literal, fn } = require("sequelize");
+const nodemailer = require("nodemailer");
+const fs = require("fs");
+const path = require("path");
+const days = require("dayjs");
 
 class MessageConfigService {
   async find(id) {
@@ -12,6 +17,42 @@ class MessageConfigService {
 
   async findOne(id) {
     const rta = await models.MessageConfig.findByPk(id);
+    return rta;
+  }
+
+  async findSendedMessages(userId) {
+    const rta = await models.MessageConfig.findAndCountAll({
+      where: {
+        UserId: userId,
+      },
+    });
+    return rta;
+  }
+
+  async findMessagesSendedPerWeek(userId) {
+    const rta = await models.MessageConfig.findAll({
+      where: {
+        status: "sended",
+        UserId: userId,
+      },
+      attributes: [
+        [
+          literal(
+            `CONCAT(YEAR(scheduled_date), '-W', LPAD(WEEK(scheduled_date, 3), 2, '0'))`
+          ),
+          "week",
+        ],
+        [fn("COUNT", "*"), "count"],
+      ],
+      group: [
+        literal(
+          `CONCAT(YEAR(scheduled_date), '-W', LPAD(WEEK(scheduled_date, 3), 2, '0'))`
+        ),
+      ],
+      order: [literal(`MIN(scheduled_date) ASC`)],
+      raw: true,
+    });
+
     return rta;
   }
 
@@ -156,31 +197,265 @@ class MessageConfigService {
   }
 
   async getUserStatistics(id) {
-    const [sendedMessages, scheduledMessages, failedMessages, allMessages] =
-      await Promise.all([
-        models.MessageConfig.count({
-          where: { status: "sended", UserId: id },
-        }),
-        models.MessageConfig.count({
-          where: { status: "pending", UserId: id },
-        }),
-        models.FailedMessage.count({
-          where: {
-            status: { [Op.in]: ["Error", "Permanent Failure"] },
-            user_id: id, // si aplica también el userId
-          },
-        }),
-        models.Message.count({
-          where: { UserId: id },
-        }),
-      ]);
+    const [
+      sendedMessages,
+      scheduledMessages,
+      failedMessages,
+      allMessages,
+      contacts,
+      activeCampaigns,
+      pausedCampaigns,
+    ] = await Promise.all([
+      models.MessageConfig.count({
+        where: { status: "sended", UserId: id },
+      }),
+      models.MessageConfig.count({
+        where: { status: "pending", UserId: id },
+      }),
+      models.FailedMessage.count({
+        where: {
+          status: { [Op.in]: ["Error", "Permanent Failure"] },
+          user_id: id, // si aplica también el userId
+        },
+      }),
+      models.Message.count({
+        where: { UserId: id },
+      }),
+      models.Contact.count({ where: { UserId: id } }),
+      models.Campaign.count({ where: { status: "active", UserId: id } }),
+      models.Campaign.count({ where: { status: "paused", UserId: id } }),
+    ]);
 
     return {
       allMessages: allMessages,
       sended: sendedMessages,
       scheduled: scheduledMessages,
       failed: failedMessages,
+      Contacts: contacts,
+      ActiveCampaigns: activeCampaigns,
+      PausedCampaigs: pausedCampaigns,
     };
+  }
+
+  async findMessagesAboutToSent(userId) {
+    const rta = await models.MessageConfig.findAll({
+      where: {
+        UserId: userId,
+        status: "pending",
+      },
+      attributes: ["message", "scheduled_date", "recipient", "status"],
+      order: [["scheduled_date", "ASC"]],
+    });
+
+    return rta;
+  }
+
+  async scheduleMessages(data) {
+    let result = {
+      rowsInserted: 0,
+    };
+    const { userId, message, contacts, startDate, endDate, categories } = data;
+    const formatedStartDate = days(startDate);
+    const formatedEndDate = days(endDate);
+    const daysToScheduled = formatedEndDate.diff(formatedStartDate, "days");
+    const now = days();
+
+    for (let index = 0; index <= daysToScheduled; index++) {
+      const currentDate = formatedStartDate.add(index, "day");
+      const currentDateTime = currentDate
+        .hour(now.hour())
+        .minute(now.minute())
+        .second(now.second())
+        .add("30", "seconds")
+        .millisecond(now.millisecond());
+
+      for (const contact of contacts) {
+        const recipient = await models.Contact.findByPk(contact, {
+          attributes: ["email"],
+        });
+        const saveMessage = await models.Message.findAll({
+          attributes: ["message", "id"],
+          where: {
+            id: message,
+          },
+        });
+
+        for (const m of saveMessage) {
+          const newScheduledMessage = await models.MessageConfig.create({
+            UserId: userId,
+            message: m?.message,
+            MessageId: m?.id,
+            recipient: recipient.email,
+            scheduled_date: currentDateTime,
+            categories: categories,
+          });
+          const { id } = newScheduledMessage.dataValues;
+          if (id) {
+            console.log("Se le debe subir uno al contador");
+            result.rowsInserted += 1;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  async schduleCustomMessage(data) {
+    let result = {
+      rowsInserted: 0,
+    };
+    const {
+      userId,
+      message,
+      contacts,
+      startDate,
+      endDate,
+      saveMessage,
+      categories,
+    } = data;
+
+    let messageId = null;
+
+    if (saveMessage) {
+      const messageToSave = models.Message.create({
+        UserId: userId,
+        message: message,
+      });
+      const { id } = (await messageToSave).dataValues;
+      messageId = id;
+    }
+
+    const formatedStartDate = days(startDate);
+    const formatedEndDate = days(endDate);
+    const daysToScheduled = formatedEndDate.diff(formatedStartDate, "days");
+    const now = days();
+
+    for (let index = 0; index <= daysToScheduled; index++) {
+      const currentDate = formatedStartDate.add(index, "day");
+      const currentDateTime = currentDate
+        .hour(now.hour())
+        .minute(now.minute())
+        .second(now.second())
+        .add("30", "seconds")
+        .millisecond(now.millisecond());
+
+      for (const contact of contacts) {
+        const recipient = await models.Contact.findByPk(contact, {
+          attributes: ["email"],
+        });
+
+        const newScheduledMessage = await models.MessageConfig.create(
+          {
+            UserId: userId,
+            message: message,
+            MessageId: messageId ?? null,
+            recipient: recipient.email,
+            scheduled_date: currentDateTime,
+            categories: categories,
+          },
+          { hooks: saveMessage }
+        );
+        const { id } = newScheduledMessage.dataValues;
+        if (id) {
+          console.log("Se le debe subir uno al contador");
+          result.rowsInserted += 1;
+        }
+      }
+    }
+    return result;
+  }
+
+  async sendMessage(data) {
+    const { failedMessageId, messageConfigId, userId } = data;
+    const whereClause = {
+      id: failedMessageId,
+      user_id: userId,
+    };
+    console.log("El valor de messageConfigId es: " + messageConfigId);
+    console.log(typeof messageConfigId);
+
+    if (messageConfigId !== null && messageConfigId !== "null") {
+      whereClause.MessageConfig_Id = messageConfigId;
+    }
+
+    console.log(whereClause);
+
+    const rta = await models.FailedMessage.findOne({
+      where: whereClause,
+      attributes: [
+        "id",
+        "message_id",
+        "user_id",
+        "recipient",
+        "message_content",
+        "attempts",
+      ],
+    });
+
+    console.log(rta.attempts);
+
+    // Crear el transportador con la configuración necesaria
+    const transporter = nodemailer.createTransport({
+      port: process.env.NODEMAILER_PORT,
+      host: process.env.NODEMAILER_HOST,
+      secure: true,
+      auth: {
+        user: process.env.NODEMAILER_USER,
+        pass: process.env.NODEMAILER_PASSWORD,
+      },
+    });
+
+    await transporter.verify();
+    const templatePath = path.join(
+      __dirname,
+      "..",
+      "/templates/",
+      "mail_template.html"
+    );
+    let emailTemplate = fs.readFileSync(templatePath, "utf8");
+
+    emailTemplate = emailTemplate.replace(
+      "{{MENSAJE_PROGRAMADO}}",
+      rta?.message_content
+    );
+
+    // Enviar el correo de forma asincrónica
+    const info = await transporter.sendMail({
+      from: process.env.NODEMAILER_FROM, // Dirección del remitente
+      to: rta?.recipient, // Dirección de destino
+      subject: "PMMS - Pocho`s Messages Managment System", // Asunto del correo
+      text: rta?.message_content.toString(),
+      html: emailTemplate,
+    });
+
+    if (info.messageId) {
+      if (messageConfigId !== null && messageConfigId !== "null") {
+        const updateMessageConfig = await models.MessageConfig.update(
+          {
+            status: "sended",
+          },
+          { where: { id: messageConfigId } }
+        );
+      }
+      const updateFailedMessage = await models.FailedMessage.update(
+        {
+          status: "Sended",
+          attempts: rta.attempts + 1,
+        },
+        {
+          where: whereClause,
+        }
+      );
+      return { result: "Message Sended" };
+    }
+  }
+
+  async scheduleMessagesToLaunchCamapign(messages) {
+    const rta = await models.MessageConfig.bulkCreate(messages, {
+      validate: true,
+    });
+    return rta;
   }
 }
 
