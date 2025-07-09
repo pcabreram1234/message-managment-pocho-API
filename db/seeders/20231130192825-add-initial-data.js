@@ -16,9 +16,9 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.delete("users");
-    await queryInterface.delete("categories");
-    await queryInterface.delete("contacts");
-    await queryInterface.delete("messages");
+    await queryInterface.delete("messages", null, {});
+    await queryInterface.delete("categories", null, {});
+    await queryInterface.delete("contacts", null, {});
+    await queryInterface.delete("users", null, {});
   },
 };
