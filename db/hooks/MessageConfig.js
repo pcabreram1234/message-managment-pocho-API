@@ -48,7 +48,6 @@ const initMessageConfigHooks = async () => {
     if (!messageWithUser) {
       throw new Error("User associated with the message not found.");
     }
-    console.log(message)
   });
 
   MessageConfig.addHook("afterCreate", async (message, options) => {
@@ -61,6 +60,7 @@ const initMessageConfigHooks = async () => {
       recipient: message.recipient,
       message_content: message.message,
       scheduled_date: message.scheduled_date,
+      MessageConfig_Id: message.id,
     });
 
     console.log("Registro creado en FailedMessage.");
