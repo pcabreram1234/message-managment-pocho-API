@@ -6,7 +6,6 @@ const {
   updateContactSchema,
   getContactSchema,
 } = require("../schemas/contact.Schemas");
-const { writeToLogFile } = require("../middlewares/error.handler");
 const { verifyToken } = require("../middlewares/auth.handler");
 const router = express.Router();
 const service = new ContactService();
@@ -111,5 +110,16 @@ router.delete(
     }
   }
 );
+
+router.post("/uploadContacts", verifyToken, async (req, resp, next) => {
+  try {
+    const id = req.user.id;
+    const data = req.body.data;
+    const uploadedContacts = await service.uploadContacts(data, id);
+    resp.json(uploadedContacts);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
