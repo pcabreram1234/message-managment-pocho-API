@@ -89,15 +89,14 @@ const messages = [
 ];
 const users = [
   {
+    id: 1,
     user_name: "pcabreram",
     type_user: "adm",
     active: true,
     password: userAuth.syncGenHash(),
-    token_active: true,
     email: "pcabreram1234@gmail.com",
   },
 ];
-
 
 const MandatoryData = async () => {
   await User.bulkCreate(users).then(() => {
