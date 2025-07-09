@@ -6,7 +6,7 @@ module.exports = {
     await queryInterface.bulkInsert("campaign_recipients", [
       {
         campaign_id: 1,
-        contact_id: 101,
+        ContactId: 1,
         status: "pending",
         last_attempt_at: null,
         error_message: null,
@@ -15,7 +15,7 @@ module.exports = {
       },
       {
         campaign_id: 2,
-        contact_id: 102,
+        ContactId: 2,
         status: "sent",
         last_attempt_at: new Date(),
         error_message: null,
