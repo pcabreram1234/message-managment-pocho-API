@@ -42,12 +42,23 @@ const FailedMessageModel = {
     defaultValue: 0,
     allowNull: false,
   },
+  channel: {
+    type: DataTypes.ENUM("Email", "SMS", "WhatsApp"),
+    allowNull: false,
+    defaultValue: "Email",
+  },
   error_message: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
   status: {
-    type: DataTypes.ENUM("Pending", "Error", "Permanent Failure", "Retrying","Sended"),
+    type: DataTypes.ENUM(
+      "Pending",
+      "Error",
+      "Permanent Failure",
+      "Retrying",
+      "Sended"
+    ),
     allowNull: false,
     defaultValue: "Pending",
   },
@@ -62,7 +73,9 @@ const FailedMessageModel = {
 };
 
 class FailedMessage extends Model {
-  static associate(models) {}
+  static associate(models) {
+    this.belongsTo(models.Integration);
+  }
 
   static config(sequelize) {
     return {
