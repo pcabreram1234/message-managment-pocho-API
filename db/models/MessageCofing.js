@@ -9,15 +9,7 @@ const MessageConfigModel = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  // message_id: {
-  //   allowNull: false,
-  //   index: true,
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: "Message", // Nombre del modelo principal
-  //     key: "id", // Nombre del campo en el modelo principal
-  //   },
-  // },
+
   message: {
     type: DataTypes.TEXT,
   },
@@ -47,6 +39,11 @@ const MessageConfigModel = {
       return `${startChar}${remaingChars}`;
     },
   },
+  channel: {
+    type: DataTypes.ENUM("Email", "SMS", "WhatsApp"),
+    allowNull: false,
+    defaultValue: "Email",
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -66,6 +63,10 @@ class MessageConfig extends Model {
   static associate(models) {
     this.belongsTo(models.User);
     this.belongsTo(models.Message);
+    this.hasMany(models.FailedMessage, {
+      foreignKey: { name: "MessageConfig_Id" },
+    });
+    this.belongsTo(models.Integration);
   }
   static config(sequelize) {
     return {
