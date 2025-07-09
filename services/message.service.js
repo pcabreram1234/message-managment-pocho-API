@@ -50,14 +50,14 @@ class MessageService {
       UserId: userId,
     });
 
-    associateTo.forEach(async (contact) => {
+    associateTo?.forEach(async (contact) => {
       const rtaMessageContacts = await models.messages_contacts.create({
         MessageId: rta.getDataValue("id"),
         ContactId: contact.id,
       });
     });
 
-    categories.forEach(async (category) => {
+    categories?.forEach(async (category) => {
       const rtaInsertMessagesCategories =
         await models.messages_categories.create({
           CategoryId: category.id,
@@ -233,6 +233,22 @@ class MessageService {
       },
     });
     return rta;
+  }
+
+  async getCategoriesAsociate(id) {
+    const rta = await models.Message.findOne({
+      where: { id },
+      include: [
+        {
+          model: models.Category,
+          through: { attributes: [] }, // no incluir columnas de tabla intermedia
+          attributes: ["categorie_name"], // atributos de la tabla Category
+        },
+      ],
+    });
+
+    // Solo devolver los nombres si los necesitas en limpio
+    return rta?.Categories?.map((cat) => cat.categorie_name) ?? [];
   }
 }
 
