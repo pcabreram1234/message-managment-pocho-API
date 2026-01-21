@@ -22,7 +22,7 @@ const initMessageConfigHooks = async () => {
     // Comparar las fechas
     if (dateSelected < dateInServer) {
       throw new ValidationError(
-        "The date must be greater than the current date."
+        "The date must be greater than the current date.",
       );
     }
     // console.log(message);
@@ -51,19 +51,47 @@ const initMessageConfigHooks = async () => {
   });
 
   MessageConfig.addHook("afterCreate", async (message, options) => {
-    const userId = message.UserId;
+    console.log("Iniciando el hook AfterCreate");
+    if (message?.dataValues?.length === 1) {
+      const userId = message.UserId;
 
-    // Crear el registro en FailedMessage
-    await FailedMessage.create({
-      message_id: message.MessageId,
-      user_id: userId,
-      recipient: message.recipient,
-      message_content: message.message,
-      scheduled_date: message.scheduled_date,
-      MessageConfig_Id: message.id,
+      // Crear el registro en FailedMessage
+      await FailedMessage.create({
+        message_id: message.MessageId,
+        user_id: userId,
+        recipient: message.recipient,
+        message_content: message.message,
+        scheduled_date: message.scheduled_date,
+        MessageConfig_Id: message.id,
+      });
+
+      console.log("Registro creado en FailedMessage.");
+    } else {
+      return;
+    }
+    console.log("Finalizando el hook AfterCreate");
+  });
+
+  MessageConfig.addHook("afterBulkCreate", async (messages, options) => {
+    console.log("Activando hook afterBulkCreate en tabla MessageConfig");
+    const bulkFailedMessages = messages
+      ?.map((message) => ({
+        message_id: message.dataValues.MessageId,
+        user_id: message.dataValues.UserId,
+        recipient: message.dataValues.recipient,
+        message_content: message.dataValues.message,
+        scheduled_date: message.dataValues.scheduled_date,
+        MessageConfig_Id: message.dataValues.id,
+      }))
+      .filter((m) => m.message_id);
+    console.log(
+      "La cantidad de mensajes para ingresar son: " + bulkFailedMessages.length,
+    );
+    await FailedMessage.bulkCreate(bulkFailedMessages, {
+      ignoreDuplicates: true,
+      transaction: options.transaction,
     });
-
-    console.log("Registro creado en FailedMessage.");
+    console.log("Activando hook afterBulkCreate en tabla MessageConfig");
   });
 };
 

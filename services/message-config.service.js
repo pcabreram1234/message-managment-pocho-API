@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 const { Op, literal, fn } = require("sequelize");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
@@ -7,8 +7,14 @@ const path = require("path");
 const days = require("dayjs");
 
 class MessageConfigService {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
+
   async find(id) {
-    const rta = await models.MessageConfig.findAndCountAll({
+    const { MessageConfig } = await this._getModels();
+    const rta = await MessageConfig.findAndCountAll({
       where: { UserId: id },
       include: [{ all: true }],
     });
@@ -16,12 +22,14 @@ class MessageConfigService {
   }
 
   async findOne(id) {
-    const rta = await models.MessageConfig.findByPk(id);
+    const { MessageConfig } = await this._getModels();
+    const rta = await MessageConfig.findByPk(id);
     return rta;
   }
 
   async findSendedMessages(userId) {
-    const rta = await models.MessageConfig.findAndCountAll({
+    const { MessageConfig } = await this._getModels();
+    const rta = await MessageConfig.findAndCountAll({
       where: {
         UserId: userId,
       },
@@ -30,7 +38,8 @@ class MessageConfigService {
   }
 
   async findMessagesSendedPerWeek(userId) {
-    const rta = await models.MessageConfig.findAll({
+    const { MessageConfig } = await this._getModels();
+    const rta = await MessageConfig.findAll({
       where: {
         status: "sended",
         UserId: userId,
@@ -38,7 +47,7 @@ class MessageConfigService {
       attributes: [
         [
           literal(
-            `CONCAT(YEAR(scheduled_date), '-W', LPAD(WEEK(scheduled_date, 3), 2, '0'))`
+            `CONCAT(YEAR(scheduled_date), '-W', LPAD(WEEK(scheduled_date, 3), 2, '0'))`,
           ),
           "week",
         ],
@@ -46,7 +55,7 @@ class MessageConfigService {
       ],
       group: [
         literal(
-          `CONCAT(YEAR(scheduled_date), '-W', LPAD(WEEK(scheduled_date, 3), 2, '0'))`
+          `CONCAT(YEAR(scheduled_date), '-W', LPAD(WEEK(scheduled_date, 3), 2, '0'))`,
         ),
       ],
       order: [literal(`MIN(scheduled_date) ASC`)],
@@ -57,11 +66,12 @@ class MessageConfigService {
   }
 
   async findExistentMessage(data) {
+    const { MessageConfig } = await this._getModels();
     let result = { rows: [], count: 0 };
     const { MessageId, send_to, send_on_date } = data;
     const dateToCompare = send_on_date.toString().slice(0, 10);
     for (const contact of send_to) {
-      const rta = await models.MessageConfig.findAndCountAll({
+      const rta = await MessageConfig.findAndCountAll({
         where: {
           [Op.and]: [
             { MessageId: MessageId },
@@ -85,11 +95,12 @@ class MessageConfigService {
   }
 
   async findExistentMessages(messages) {
+    const { MessageConfig } = await this._getModels();
     let result = { rows: [], count: 0 };
     for (const message of messages) {
       const dateToCompare = message.send_on_date.toString().slice(0, 10);
       for (const contact of message.send_to) {
-        const rta = await models.MessageConfig.findAndCountAll({
+        const rta = await MessageConfig.findAndCountAll({
           where: {
             [Op.and]: [
               { MessageId: message.MessageId },
@@ -114,7 +125,6 @@ class MessageConfigService {
   }
 
   async addMessage(data) {
-    console.log(data);
     let result = {
       rowsInserted: 0,
     };
@@ -135,8 +145,9 @@ class MessageConfigService {
     }
 
     const { send_to } = data;
+    const { MessageConfig } = await this._getModels();
     for (const contact of send_to) {
-      const rta = await models.MessageConfig.create({
+      const rta = await MessageConfig.create({
         ...data,
         recipient: contact.email,
         scheduled_date: data.send_on_date,
@@ -157,7 +168,6 @@ class MessageConfigService {
     };
 
     for (const message of data.messages) {
-      console.log(data.messages);
       const isEmptyRecipient = message?.send_to?.length === 0;
 
       const isEmptyScheduledDate =
@@ -173,9 +183,10 @@ class MessageConfigService {
         throw new Error("The scheduled date is invalid.");
       }
       let rta;
+      const { MessageConfig } = await this._getModels();
       for (const contact of message.send_to) {
         result.contacts += 1;
-        rta = await models.MessageConfig.create({
+        rta = await MessageConfig.create({
           ...message,
           recipient: contact,
           UserId: data.UserId,
@@ -190,13 +201,16 @@ class MessageConfigService {
   }
 
   async returnRowCount(attr, rta) {
-    const row = await models.MessageConfig.findAndCountAll({
+    const { MessageConfig } = await this._getModels();
+    const row = await MessageConfig.findAndCountAll({
       where: { id: rta.getDataValue(attr) },
     });
     return row.count;
   }
 
   async getUserStatistics(id) {
+    const { MessageConfig, FailedMessage, Message, Contact, Campaign } =
+      await this._getModels();
     const [
       sendedMessages,
       scheduledMessages,
@@ -206,24 +220,24 @@ class MessageConfigService {
       activeCampaigns,
       pausedCampaigns,
     ] = await Promise.all([
-      models.MessageConfig.count({
+      MessageConfig.count({
         where: { status: "sended", UserId: id },
       }),
-      models.MessageConfig.count({
+      MessageConfig.count({
         where: { status: "pending", UserId: id },
       }),
-      models.FailedMessage.count({
+      FailedMessage.count({
         where: {
           status: { [Op.in]: ["Error", "Permanent Failure"] },
           user_id: id, // si aplica también el userId
         },
       }),
-      models.Message.count({
+      Message.count({
         where: { UserId: id },
       }),
-      models.Contact.count({ where: { UserId: id } }),
-      models.Campaign.count({ where: { status: "active", UserId: id } }),
-      models.Campaign.count({ where: { status: "paused", UserId: id } }),
+      Contact.count({ where: { UserId: id } }),
+      Campaign.count({ where: { status: "active", UserId: id } }),
+      Campaign.count({ where: { status: "paused", UserId: id } }),
     ]);
 
     return {
@@ -238,7 +252,8 @@ class MessageConfigService {
   }
 
   async findMessagesAboutToSent(userId) {
-    const rta = await models.MessageConfig.findAll({
+    const { MessageConfig } = await this._getModels();
+    const rta = await MessageConfig.findAll({
       where: {
         UserId: userId,
         status: "pending",
@@ -251,6 +266,7 @@ class MessageConfigService {
   }
 
   async scheduleMessages(data) {
+    const { MessageConfig, Contact, Message } = await this._getModels();
     let result = {
       rowsInserted: 0,
     };
@@ -270,10 +286,10 @@ class MessageConfigService {
         .millisecond(now.millisecond());
 
       for (const contact of contacts) {
-        const recipient = await models.Contact.findByPk(contact, {
+        const recipient = await Contact.findByPk(contact, {
           attributes: ["email"],
         });
-        const saveMessage = await models.Message.findAll({
+        const saveMessage = await Message.findAll({
           attributes: ["message", "id"],
           where: {
             id: message,
@@ -281,7 +297,7 @@ class MessageConfigService {
         });
 
         for (const m of saveMessage) {
-          const newScheduledMessage = await models.MessageConfig.create({
+          const newScheduledMessage = await MessageConfig.create({
             UserId: userId,
             message: m?.message,
             MessageId: m?.id,
@@ -317,8 +333,9 @@ class MessageConfigService {
 
     let messageId = null;
 
+    const { Message, Contact, MessageConfig } = await this._getModels();
     if (saveMessage) {
-      const messageToSave = models.Message.create({
+      const messageToSave = Message.create({
         UserId: userId,
         message: message,
       });
@@ -341,11 +358,11 @@ class MessageConfigService {
         .millisecond(now.millisecond());
 
       for (const contact of contacts) {
-        const recipient = await models.Contact.findByPk(contact, {
+        const recipient = await Contact.findByPk(contact, {
           attributes: ["email"],
         });
 
-        const newScheduledMessage = await models.MessageConfig.create(
+        const newScheduledMessage = await MessageConfig.create(
           {
             UserId: userId,
             message: message,
@@ -354,7 +371,7 @@ class MessageConfigService {
             scheduled_date: currentDateTime,
             categories: categories,
           },
-          { hooks: saveMessage }
+          { hooks: saveMessage },
         );
         const { id } = newScheduledMessage.dataValues;
         if (id) {
@@ -367,6 +384,7 @@ class MessageConfigService {
   }
 
   async sendMessage(data) {
+    const { FailedMessage, MessageConfig } = await this._getModels();
     const { failedMessageId, messageConfigId, userId } = data;
     const whereClause = {
       id: failedMessageId,
@@ -381,7 +399,7 @@ class MessageConfigService {
 
     console.log(whereClause);
 
-    const rta = await models.FailedMessage.findOne({
+    const rta = await FailedMessage.findOne({
       where: whereClause,
       attributes: [
         "id",
@@ -411,13 +429,13 @@ class MessageConfigService {
       __dirname,
       "..",
       "/templates/",
-      "mail_template.html"
+      "mail_template.html",
     );
     let emailTemplate = fs.readFileSync(templatePath, "utf8");
 
     emailTemplate = emailTemplate.replace(
       "{{MENSAJE_PROGRAMADO}}",
-      rta?.message_content
+      rta?.message_content,
     );
 
     // Enviar el correo de forma asincrónica
@@ -431,28 +449,29 @@ class MessageConfigService {
 
     if (info.messageId) {
       if (messageConfigId !== null && messageConfigId !== "null") {
-        const updateMessageConfig = await models.MessageConfig.update(
+        const updateMessageConfig = await MessageConfig.update(
           {
             status: "sended",
           },
-          { where: { id: messageConfigId } }
+          { where: { id: messageConfigId } },
         );
       }
-      const updateFailedMessage = await models.FailedMessage.update(
+      const updateFailedMessage = await FailedMessage.update(
         {
           status: "Sended",
           attempts: rta.attempts + 1,
         },
         {
           where: whereClause,
-        }
+        },
       );
       return { result: "Message Sended" };
     }
   }
 
   async scheduleMessagesToLaunchCamapign(messages) {
-    const rta = await models.MessageConfig.bulkCreate(messages, {
+    const { MessageConfig } = await this._getModels();
+    const rta = await MessageConfig.bulkCreate(messages, {
       validate: true,
     });
     return rta;

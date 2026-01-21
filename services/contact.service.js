@@ -1,10 +1,15 @@
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 const { Op } = require("sequelize");
 const boom = require("@hapi/boom");
 
 class ContactService {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
   async find(userId) {
-    const rta = await models.Contact.findAll({
+    const { Contact } = await this._getModels();
+    const rta = await Contact.findAll({
       where: {
         UserId: userId,
       },
@@ -13,12 +18,14 @@ class ContactService {
   }
 
   async findOne(id) {
-    const rta = await models.Contact.findByPk(id);
+    const { Contact } = await this._getModels();
+    const rta = await Contact.findByPk(id);
     return rta;
   }
 
   async findDistinctContacts(userId, contactsId) {
-    const rta = await models.Contact.findAll({
+    const { Contact } = await this._getModels();
+    const rta = await Contact.findAll({
       where: {
         id: {
           [Op.notIn]: [contactsId],
@@ -31,35 +38,40 @@ class ContactService {
   }
 
   async returnRowCount(attr, rta) {
-    const row = await models.Message.findAndCountAll({
+    const { Message } = await this._getModels();
+    const row = await Message.findAndCountAll({
       where: { id: rta.getDataValue(attr) },
     });
     return row.count;
   }
 
   async findByEmail(email, UserId) {
-    const rta = await models.Contact.findOne({
+    const { Contact } = await this._getModels();
+    const rta = await Contact.findOne({
       where: { email: email, UserId: UserId },
     });
     return rta;
   }
 
   async findInUserContact(UserId, ContactId) {
-    const rta = await models.UserContacts.findOne({
+    const { UserContacts } = await this._getModels();
+    const rta = await UserContacts.findOne({
       where: { UserId: UserId, ContactId: ContactId },
     });
     return rta;
   }
 
   async addContact(body) {
-    const newContact = await models.Contact.create(body);
+    const { Contact } = await this._getModels();
+    const newContact = await Contact.create(body);
     return newContact;
   }
 
   async editContact(body) {
     const { id, name, phone, categories, email } = body;
     if (this.findOne(id) !== null) {
-      const rta = await models.Contact.update(
+      const { Contact } = await this._getModels();
+      const rta = await Contact.update(
         {
           name: name,
           phone_number: phone,
@@ -69,7 +81,7 @@ class ContactService {
         {
           where: { id: id },
           individualHooks: true,
-        }
+        },
       );
       // const result = rta[0] == 1 ? 1 : boom.badData("Contact can not be modified");
       return rta[0];
@@ -79,16 +91,18 @@ class ContactService {
   }
 
   async deleteContact(id) {
-    const rta = await models.Contact.destroy({ where: { id: id } });
+    const { Contact } = await this._getModels();
+    const rta = await Contact.destroy({ where: { id: id } });
     return rta;
   }
 
   async deleteContacts(ids) {
-    const rta = await models.Contact.destroy({
+    const { Contact, UserContact } = await this._getModels();
+    const rta = await Contact.destroy({
       where: { id: { [Op.or]: ids } },
     });
 
-    const rtaContacts = await models.UserContact.destroy({
+    const rtaContacts = await UserContact.destroy({
       where: {
         ContactId: {
           [Op.in]: ids,
@@ -99,6 +113,7 @@ class ContactService {
   }
 
   async verifyExtingContacts(data, userId) {
+    const { Contact } = await this._getModels();
     const allNames = data.map((r) => r?.name).filter(Boolean);
     const allPhones = data.map((r) => r?.phone_number).filter(Boolean);
     const allEmails = data.map((r) => r?.email).filter(Boolean);
@@ -114,7 +129,7 @@ class ContactService {
       conditions.push({ email: { [Op.in]: allEmails } });
     }
 
-    const notToUpLoadContacts = await models.Contact.findAll({
+    const notToUpLoadContacts = await Contact.findAll({
       where: {
         UserId: userId,
         [Op.or]: conditions,
@@ -123,10 +138,10 @@ class ContactService {
 
     const namesFound = new Set((notToUpLoadContacts || []).map((n) => n.name));
     const phonesFound = new Set(
-      (notToUpLoadContacts || []).map((n) => n.phone_number)
+      (notToUpLoadContacts || []).map((n) => n.phone_number),
     );
     const emailsFound = new Set(
-      (notToUpLoadContacts || []).map((n) => n.email)
+      (notToUpLoadContacts || []).map((n) => n.email),
     );
 
     return data
@@ -134,7 +149,7 @@ class ContactService {
         (d) =>
           !namesFound.has(d.name) &&
           !phonesFound.has(d.phone_number) &&
-          !emailsFound.has(d.email)
+          !emailsFound.has(d.email),
       )
       .map((el) => ({
         name: el?.name,
@@ -145,8 +160,9 @@ class ContactService {
   }
 
   async uploadContacts(data, userId) {
+    const { Contact } = await this._getModels();
     const contactsToInsert = await this.verifyExtingContacts(data, userId);
-    const newContacts = await models.Contact.bulkCreate(contactsToInsert);
+    const newContacts = await Contact.bulkCreate(contactsToInsert);
     return { newContacts };
   }
 }

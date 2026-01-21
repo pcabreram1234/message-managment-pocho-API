@@ -1,23 +1,30 @@
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 const { MessageService } = require("../services/message.service");
 
 class CampaignsMessages {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
+
   async getCampaignMessagesToLaunch(campaign_id) {
-    const rta = await models.CampaignMessage.findAll({
+    const { CampaignMessage, Campaign, CampaignRecipient, Contact } =
+      await this._getModels();
+    const rta = await CampaignMessage.findAll({
       where: {
         campaign_id: campaign_id,
       },
       include: [
         {
-          model: models.Campaign,
+          model: Campaign,
           attributes: [],
           include: [
             {
-              model: models.CampaignRecipient,
+              model: CampaignRecipient,
               attributes: [],
               include: [
                 {
-                  model: models.Contact,
+                  model: Contact,
                   attributes: ["email"],
                   required: true,
                 },

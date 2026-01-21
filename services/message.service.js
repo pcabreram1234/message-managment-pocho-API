@@ -1,19 +1,25 @@
-const { models } = require("../libs/sequelize");
-const { Op, Model } = require("sequelize");
+const { initSequelize } = require("../libs/sequelize");
+const { Op } = require("sequelize");
 const boom = require("@hapi/boom");
 
 class MessageService {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
+
   async find(user_id) {
-    const rta = await models.Message.findAll({
+    const { Message, Category, Contact } = await this._getModels();
+    const rta = await Message.findAll({
       where: { UserId: user_id },
       include: [
         {
-          model: models.Category,
+          model: Category,
           attributes: ["categorie_name", "id"],
           through: { attributes: [] },
         },
         {
-          model: models.Contact,
+          model: Contact,
           attributes: ["email", "id"],
           through: { attributes: [] },
         },
@@ -23,16 +29,17 @@ class MessageService {
   }
 
   async findOne(id) {
-    const rta = await models.Message.findOne({
+    const { Message, Category, Contact } = await this._getModels();
+    const rta = await Message.findOne({
       where: { id: id },
       include: [
         {
-          model: models.Category,
+          model: Category,
           attributes: ["categorie_name", "id"],
           through: { attributes: [] },
         },
         {
-          model: models.Contact,
+          model: Contact,
           attributes: ["email", "id"],
           through: { attributes: [] },
         },
@@ -42,73 +49,74 @@ class MessageService {
   }
 
   async addMessage(body) {
+    const { Message, messages_contacts, messages_categories } =
+      await this._getModels();
     /* Ejecutamos la consulta para agregar la BD */
     const { message, categories, associateTo, userId } = body;
 
-    const rta = await models.Message.create({
+    const rta = await Message.create({
       message: message,
       UserId: userId,
     });
 
     associateTo?.forEach(async (contact) => {
-      const rtaMessageContacts = await models.messages_contacts.create({
+      const rtaMessageContacts = await messages_contacts.create({
         MessageId: rta.getDataValue("id"),
         ContactId: contact.id,
       });
     });
 
     categories?.forEach(async (category) => {
-      const rtaInsertMessagesCategories =
-        await models.messages_categories.create({
-          CategoryId: category.id,
-          MessageId: rta.getDataValue("id"),
-        });
+      const rtaInsertMessagesCategories = await messages_categories.create({
+        CategoryId: category.id,
+        MessageId: rta.getDataValue("id"),
+      });
     });
 
     return rta.getDataValue("id");
   }
 
   async returnRowCount(attr, rta) {
-    const row = await models.Message.findAndCountAll({
+    const { Message } = await this._getModels();
+    const row = await Message.findAndCountAll({
       where: { id: rta.getDataValue(attr) },
     });
     return row.count;
   }
 
   async updateMessage(id, data) {
+    const { Message, messages_contacts, messages_categories } =
+      await this._getModels();
     if ((await this.find(id)) !== null) {
-      const rta = await models.Message.update(
+      const rta = await Message.update(
         {
           message: data.message,
         },
-        { where: { id: id } }
+        { where: { id: id } },
       );
 
-      const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
+      const rtaDeleteMessagesContacts = await messages_contacts.destroy({
         where: { MessageId: id },
         force: true,
       });
 
-      const rtaInsertMessagesContacts =
-        await models.messages_contacts.bulkCreate(
-          data.Contacts.map((contact) => {
-            return { ContactId: contact.id, MessageId: id };
-          })
-        );
+      const rtaInsertMessagesContacts = await messages_contacts.bulkCreate(
+        data.Contacts.map((contact) => {
+          return { ContactId: contact.id, MessageId: id };
+        }),
+      );
 
-      const rtaDeleteMessagesCategories =
-        await models.messages_categories.destroy({
-          where: { MessageId: id },
-          force: true,
-        });
+      const rtaDeleteMessagesCategories = await messages_categories.destroy({
+        where: { MessageId: id },
+        force: true,
+      });
 
-      const rtaInsertMessagesCategories =
-        await models.messages_categories.bulkCreate(
-          data.Categories.map((category) => ({
-            CategoryId: category.id,
-            MessageId: id,
-          }))
-        );
+      const rtaInsertMessagesCategories = await messages_categories.bulkCreate(
+        data.Categories.map((category) => ({
+          CategoryId: category.id,
+          MessageId: id,
+        })),
+      );
       const result = rta == 1 ? 1 : boom.badData("Message can not be modified");
       return result;
     } else {
@@ -117,17 +125,19 @@ class MessageService {
   }
 
   async updateMessageCategories(id, categories) {
-    const rta = await models.Message.update(
+    const { Message } = await this._getModels();
+    const rta = await Message.update(
       { categories: categories },
       {
         where: { id: id },
-      }
+      },
     );
     return rta;
   }
 
   async getMesageAssociateAtCategory(id) {
-    const rta = await models.messages_categories.findAndCountAll({
+    const { messages_categories } = await this._getModels();
+    const rta = await messages_categories.findAndCountAll({
       where: {
         categories: {
           [Op.substring]: [id],
@@ -138,9 +148,10 @@ class MessageService {
   }
 
   async deleteMessage(ids) {
-    console.log(ids);
+    const { Message, messages_categories, messages_contacts } =
+      await this._getModels();
 
-    const deleteMessages = await models.Message.destroy({
+    const deleteMessages = await Message.destroy({
       where: {
         id: {
           [Op.in]: [ids],
@@ -148,14 +159,14 @@ class MessageService {
       },
     });
 
-    const deleteMessagesCategories = await models.messages_categories.destroy({
+    const deleteMessagesCategories = await messages_categories.destroy({
       where: {
         MessageId: ids.map((id) => id.toString()),
       },
       force: true,
     });
 
-    const deleteMessagesContacts = await models.messages_contacts.destroy({
+    const deleteMessagesContacts = await messages_contacts.destroy({
       where: { MessageId: ids.map((id) => id.toString()) },
       force: true,
     });
@@ -169,24 +180,25 @@ class MessageService {
   }
 
   async deleteMessages(ids) {
+    const { Message, messages_categories, messages_contacts } =
+      await this._getModels();
     if (!Array.isArray(ids)) {
       ids = [ids];
     }
-    const rta = await models.Message.destroy({
+    const rta = await Message.destroy({
       where: { id: { [Op.in]: ids } },
     });
 
-    const rtaDeleteMessagesCategories =
-      await models.messages_categories.destroy({
-        where: {
-          MessageId: {
-            [Op.in]: ids,
-          },
+    const rtaDeleteMessagesCategories = await messages_categories.destroy({
+      where: {
+        MessageId: {
+          [Op.in]: ids,
         },
-        force: true,
-      });
+      },
+      force: true,
+    });
 
-    const rtaDeleteMessagesContacts = await models.messages_contacts.destroy({
+    const rtaDeleteMessagesContacts = await messages_contacts.destroy({
       where: {
         MessageId: {
           [Op.in]: ids,
@@ -199,8 +211,9 @@ class MessageService {
   }
 
   async updateMessageAsociation(id, data) {
+    const { Message } = await this._getModels();
     if (this.find(id) !== null) {
-      const rta = await models.Message.update(
+      const rta = await Message.update(
         {
           associate_to: data,
         },
@@ -208,7 +221,7 @@ class MessageService {
           where: {
             id: id,
           },
-        }
+        },
       );
       const result = rta == 1 ? 1 : boom.badData("Message can not be modified");
       return result;
@@ -218,7 +231,8 @@ class MessageService {
   }
 
   async findAsociateTo(id) {
-    const rta = await models.Message.findAll({
+    const { Message } = await this._getModels();
+    const rta = await Message.findAll({
       attributes: ["associate_to"],
       where: { id: id },
     });
@@ -226,9 +240,10 @@ class MessageService {
   }
 
   async findMessagesAssociated(id) {
-    const rta = await models.Message.findAndCountAll({
+    const { Message, Contact } = await this._getModels();
+    const rta = await Message.findAndCountAll({
       include: {
-        model: models.Contact,
+        model: Contact,
         where: { id: { [Op.substring]: id } },
       },
     });
@@ -236,11 +251,12 @@ class MessageService {
   }
 
   async getCategoriesAsociate(id) {
-    const rta = await models.Message.findOne({
+    const { Message, Category } = await this._getModels();
+    const rta = await Message.findOne({
       where: { id },
       include: [
         {
-          model: models.Category,
+          model: Category,
           through: { attributes: [] }, // no incluir columnas de tabla intermedia
           attributes: ["categorie_name"], // atributos de la tabla Category
         },

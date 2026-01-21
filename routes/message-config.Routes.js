@@ -29,7 +29,7 @@ router.get("/getCurrentDate", verifyToken, async (req, resp, next) => {
     resp.send();
     handleLogs(
       file,
-      `${actualDate} sended as a date to verify the current date vs the date inputed by the user`
+      `${actualDate} sended as a date to verify the current date vs the date inputed by the user`,
     );
   } catch (error) {
     next(error);
@@ -47,13 +47,13 @@ router.post(
       const newMessage = await service.addMessage({ ...data, UserId: UserId });
       handleLogs(
         file,
-        `Message ${data.message} to be sended to ${data.send_to} on ${data.send_on_date} was sucessful configurated`
+        `Message ${data.message} to be sended to ${data.send_to} on ${data.send_on_date} was sucessful configurated`,
       );
       resp.jsonp({ result: newMessage });
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.post(
@@ -73,13 +73,13 @@ router.post(
       });
       handleLogs(
         file,
-        `Message ${data.message} to be sended to ${data.send_to} on ${data.send_on_date} was sucessful configurated`
+        `Message ${data.message} to be sended to ${data.send_to} on ${data.send_on_date} was sucessful configurated`,
       );
       resp.jsonp({ result: newMessage });
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.post(
@@ -96,7 +96,7 @@ router.post(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.post(
@@ -113,7 +113,7 @@ router.post(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.get("/getUserStatistics", verifyToken, async (req, resp, next) => {
@@ -147,12 +147,11 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.get("/findMessagesAboutToSent", verifyToken, async (req, resp, next) => {
   try {
-    console.log("hola");
     const { id } = req.user;
     const sendedMessages = await service.findMessagesAboutToSent(id);
     resp.json(sendedMessages);
@@ -206,7 +205,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 module.exports = router;

@@ -1,42 +1,71 @@
 const { Sequelize } = require("sequelize");
 const { config } = require("../config/config");
 const { setupModesl } = require("../db/models/index");
-const USER = encodeURIComponent(config.dbUser);
-const PASSWORD = encodeURIComponent(config.password);
 const { MandatoryData } = require("../db/data/MandatoryData");
 
 require("dotenv").config();
+let sequelizeInstance = null;
+function createSequelizeInstance() {
+  const USER = encodeURIComponent(config.dbUser);
+  const PASSWORD = encodeURIComponent(config.password);
+  const URI = `mysql://${USER}:${PASSWORD}@${config.host}:${config.port}/${config.database}`;
 
-const URI = `mysql://${config.host}:${config.port}/${config.database}`;
-
-const sequelize = new Sequelize(URI, {
-  username: USER,
-  password: PASSWORD,
-  dialect: config.dialect,
-  timezone: "-04:00",
-
-  define: {
-    timestamps: true,
-    createdAt: true,
-    updatedAt: true,
-  },
-});
-
-setupModesl(sequelize);
-
-const options = {
-  alter: false,
-  force: false,
-  logging: console.log,
-};
-// MandatoryData();
-sequelize
-  .sync(options)
-  .then((resp) => {
-    console.log(resp.models);
-  })
-  .catch((err) => {
-    console.log(err);
+  return new Sequelize(URI, {
+    dialect: config.dialect,
+    timezone: "-04:00",
+    logging: false,
+    pool: {
+      max: 1, // Ideal para Lambda: máximo 1 conexión por ejecución
+      min: 0,
+      idle: 10000,
+      evict: 15000,
+      acquire: 10000,
+    },
+    retry: {
+      max: 3,
+      match: [
+        /ECONNRESET/,
+        /SequelizeConnectionError/,
+        /ETIMEDOUT/,
+        /EHOSTUNREACH/,
+        /ESOCKETTIMEDOUT/,
+        /ECONNREFUSED/,
+      ],
+    },
+    define: {
+      timestamps: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
+}
 
-module.exports = sequelize;
+async function initSequelize() {
+  if (!sequelizeInstance) {
+    const sequelize = createSequelizeInstance();
+    setupModesl(sequelize);
+
+    try {
+      await sequelize.authenticate();
+      console.log("✅ Database connected.");
+    } catch (error) {
+      console.error("❌ Database connection error:", error);
+      throw error;
+    }
+
+    // Solo en desarrollo sincroniza los modelos automáticamente
+    if (process.env.NODE_ENV !== "production") {
+      await sequelize.sync({
+        alter: false,
+        force: false,
+        logging: console.log,
+      });
+    }
+
+    sequelizeInstance = sequelize;
+  }
+
+  return sequelizeInstance;
+}
+
+module.exports = { initSequelize };

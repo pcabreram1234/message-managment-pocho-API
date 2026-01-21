@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 const nodemailer = require("nodemailer");
 const path = require("path");
 const fs = require("fs");
@@ -41,7 +41,7 @@ class sendEmailToNewUserService {
         __dirname,
         "..",
         "/templates/",
-        "mail_template.html"
+        "mail_template.html",
       );
 
       let emailTemplate = fs
@@ -78,6 +78,7 @@ class sendEmailToNewUserService {
   }
 
   async saveTokenForUser(userId, token, expiresAt) {
+    const { models } = await initSequelize();
     const rta = await models.verification_token.create({
       token: token,
       expiresAt: expiresAt,

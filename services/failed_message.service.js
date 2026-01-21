@@ -1,9 +1,14 @@
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 const { Op } = require("sequelize");
 
 class FailedMessageService {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
   async findFailedMessages(userId) {
-    const rta = await models.FailedMessage.findAll({
+    const { FailedMessage } = await this._getModels();
+    const rta = await FailedMessage.findAll({
       where: {
         user_id: userId,
         status: {
@@ -23,7 +28,8 @@ class FailedMessageService {
   }
 
   async getShippmentHistory(userId) {
-    const rta = await models.FailedMessage.findAll({
+    const { FailedMessage } = await this._getModels();
+    const rta = await FailedMessage.findAll({
       where: {
         user_id: userId,
       },
@@ -43,7 +49,8 @@ class FailedMessageService {
   }
 
   async getFailedMessage(id) {
-    const rta = await models.FailedMessage.findByPk(id, {
+    const { FailedMessage } = await this._getModels();
+    const rta = await FailedMessage.findByPk(id, {
       attributes: ["message_content"],
     });
 
@@ -51,7 +58,8 @@ class FailedMessageService {
   }
 
   async getFailedMessagesToDownload(id, userId) {
-    const rta = await models.FailedMessage.findByPk(id, {
+    const { FailedMessage, Contact } = await this._getModels();
+    const rta = await FailedMessage.findByPk(id, {
       attributes: [
         "id",
         "recipient",
@@ -64,7 +72,7 @@ class FailedMessageService {
         "channel",
       ],
     });
-    const rtaContact = await models.Contact.findOne({
+    const rtaContact = await Contact.findOne({
       where: {
         email: rta.recipient,
         Userid: userId,
@@ -78,6 +86,7 @@ class FailedMessageService {
   }
 
   async stopMessageSent(data) {
+    const { FailedMessage, MessageConfig } = await this._getModels();
     const { failedMessageId, messageConfigId, userId } = data;
 
     const whereClause = {
@@ -89,12 +98,12 @@ class FailedMessageService {
       whereClause.MessageConfig_Id = messageConfigId;
     }
 
-    const rtaFailedMessage = await models.FailedMessage.destroy({
+    const rtaFailedMessage = await FailedMessage.destroy({
       where: whereClause,
     });
 
     if (whereClause.MessageConfig_Id) {
-      const rtaMessageConfig = await models.MessageConfig.destroy({
+      const rtaMessageConfig = await MessageConfig.destroy({
         where: {
           id: whereClause.MessageConfig_Id,
         },

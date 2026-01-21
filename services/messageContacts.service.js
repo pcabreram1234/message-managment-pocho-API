@@ -1,13 +1,19 @@
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 
 class MessageContactsService {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
+
   async find(userId) {
-    const rta = await models.Message.findAll({
+    const { Message, Contact } = await this._getModels();
+    const rta = await Message.findAll({
       where: { UserId: userId, id: 1 },
       attributes: [],
       include: [
         {
-          model: models.Contact,
+          model: Contact,
           attributes: ["name", "id", "email"],
           through: { attributes: [] },
         },

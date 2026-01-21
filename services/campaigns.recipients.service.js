@@ -1,11 +1,16 @@
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 const { Op } = require("sequelize");
 
 class CampaignsRecipients {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
   async syncCamapignsRecipients(data) {
-    const { recipients, id, status } = data;
+    const { CampaignRecipient } = await this._getModels();
+    const { recipients, id } = data;
     const newIds = recipients?.map((c) => c.value);
-    const existingRecipients = await models.CampaignRecipient.findAll({
+    const existingRecipients = await CampaignRecipient.findAll({
       attributes: ["ContactId", "status"],
       where: {
         campaign_id: id,
@@ -28,7 +33,7 @@ class CampaignsRecipients {
     }));
     console.log(existingRecipients[0]?.status);
 
-    const recipientsDeleted = await models.CampaignRecipient.destroy({
+    const recipientsDeleted = await CampaignRecipient.destroy({
       attributes: ["ContactId"],
       where: {
         campaign_id: id,
@@ -39,9 +44,8 @@ class CampaignsRecipients {
       },
     });
 
-    const recipientsInserted = await models.CampaignRecipient.bulkCreate(
-      recordsToInsert
-    );
+    const recipientsInserted =
+      await CampaignRecipient.bulkCreate(recordsToInsert);
 
     return {
       recipientsDeleted: recipientsDeleted,

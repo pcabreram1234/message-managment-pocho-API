@@ -1,9 +1,15 @@
 require("dotenv").config();
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 
 class VerifyTokenService {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
+
   async verifyToken(token) {
-    const rta = await models.verification_token.findOne({
+    const { verification_token } = await this._getModels();
+    const rta = await verification_token.findOne({
       attributes: ["expiresAt", "userId"],
       where: { token: token },
     });
@@ -11,7 +17,8 @@ class VerifyTokenService {
   }
 
   async verifyUser(userId) {
-    const rta = await models.User.update(
+    const { User } = await this._getModels();
+    const rta = await User.update(
       {
         active: true,
       },
@@ -19,14 +26,15 @@ class VerifyTokenService {
         where: {
           id: userId,
         },
-      }
+      },
     );
     return rta;
   }
 
   async updateVerifyToken(token) {
+    const { verification_token } = await this._getModels();
     console.log("El token a actualizar es " + token);
-    const rta = await models.verification_token.update(
+    const rta = await verification_token.update(
       {
         verified: true,
       },
@@ -34,7 +42,7 @@ class VerifyTokenService {
         where: {
           token: token,
         },
-      }
+      },
     );
     return rta;
   }

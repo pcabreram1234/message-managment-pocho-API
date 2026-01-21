@@ -1,10 +1,21 @@
-const sequelize = require("../libs/sequelize");
-const { models } = require("../libs/sequelize");
+// const sequelize = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 const { fn, literal, col, Op } = require("sequelize");
 
 class Campaign {
+  async _getModels() {
+    const sequelize = await initSequelize();
+    return sequelize.models;
+  }
+
+  async _getSequielizeInstace() {
+    const sequelize = await initSequelize();
+    return sequelize;
+  }
+
   async getCamapignId(campaign_id, userId) {
-    const rta = await models.Campaign.findOne({
+    const { Campaign } = await this._getModels();
+    const rta = await Campaign.findOne({
       where: {
         id: campaign_id,
         UserId: userId,
@@ -14,11 +25,12 @@ class Campaign {
   }
 
   async findTopCampaignsByMessagesSended(userId) {
-    const rta = await models.CampaignMessage.findAll({
+    const { CampaignMessage, Campaign } = await this._getModels();
+    const rta = await CampaignMessage.findAll({
       attributes: [[fn("COUNT", col("CampaignMessage.id")), "messagesSent"]],
       include: [
         {
-          model: models.Campaign,
+          model: Campaign,
           where: {
             UserId: userId,
             status: "completed",
@@ -37,6 +49,7 @@ class Campaign {
 
   async getSuccessErrorRateByCampaign(userId) {
     try {
+      const sequelize = await this._getSequielizeInstace();
       const results = await sequelize.query(`
         SELECT
         c.name,
@@ -55,14 +68,15 @@ class Campaign {
   }
 
   async getCampaignsAboutToSent(userId) {
-    const rta = await models.Campaign.findAll({
+    const { Campaign, CampaignRecipient, Contact } = await this._getModels();
+    const rta = await Campaign.findAll({
       where: { UserId: userId, status: { [Op.or]: ["pending"] } },
       attributes: ["start_date", "name", "end_date", "status"],
       include: [
         {
-          model: models.CampaignRecipient,
+          model: CampaignRecipient,
           attributes: ["ContactId"],
-          include: [{ model: models.Contact, attributes: ["name", "email"] }],
+          include: [{ model: Contact, attributes: ["name", "email"] }],
         },
       ],
       order: [["start_date", "DESC"]],
@@ -71,7 +85,9 @@ class Campaign {
   }
 
   async create(data) {
-    const rta = await models.Campaign.create(data);
+    const { Campaign, CampaignRecipient, Message, CampaignMessage } =
+      await this._getModels();
+    const rta = await Campaign.create(data);
     if (data?.recipients) {
       const { recipients, status } = data;
       const newRecipients = recipients?.map((contact) => ({
@@ -79,12 +95,12 @@ class Campaign {
         campaign_id: rta?.id,
         ContactId: contact?.key,
       }));
-      await models.CampaignRecipient.bulkCreate(newRecipients, {
+      await CampaignRecipient.bulkCreate(newRecipients, {
         hooks: false,
       });
     }
     if (data?.messages) {
-      const campaingMessages = await models.Message.findAll({
+      const campaingMessages = await Message.findAll({
         where: {
           id: data?.messages,
         },
@@ -102,22 +118,23 @@ class Campaign {
         channel: "Email",
       }));
 
-      const addMessagesToCampaign = await models.CampaignMessage.bulkCreate(
-        messagesToadd
-      );
+      const addMessagesToCampaign =
+        await CampaignMessage.bulkCreate(messagesToadd);
     }
     return { ...rta?.dataValues, contacts: data?.recipients?.length };
   }
 
   async update(data) {
-    const rta = await models.Campaign.update(data, {
+    const { Campaign } = await this._getModels();
+    const rta = await Campaign.update(data, {
       where: { id: data?.id },
     });
     return rta;
   }
 
   async getCampaingsAndRecipients(userId) {
-    const rta = await models.Campaign.findAll({
+    const { Campaign, CampaignRecipient, Contact } = await this._getModels();
+    const rta = await Campaign.findAll({
       where: { UserId: userId },
 
       attributes: {
@@ -125,11 +142,11 @@ class Campaign {
       },
       include: [
         {
-          model: models.CampaignRecipient,
+          model: CampaignRecipient,
           attributes: [[fn("COUNT", col("ContactId")), "contacts"]],
           include: [
             {
-              model: models.Contact,
+              model: Contact,
               attributes: [],
             },
           ],
@@ -152,12 +169,13 @@ class Campaign {
   }
 
   async getSelectedRecipientsByCampaign(campaign_id, userId) {
-    const rta = await models.Contact.findAll({
+    const { Contact, CampaignRecipient } = await this._getModels();
+    const rta = await Contact.findAll({
       where: { UserId: userId },
       attributes: ["name", "email", "id"],
       include: [
         {
-          model: models.CampaignRecipient,
+          model: CampaignRecipient,
           where: { campaign_id: campaign_id },
           attributes: [],
         },

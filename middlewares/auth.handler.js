@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { models } = require("../libs/sequelize");
+const { initSequelize } = require("../libs/sequelize");
 
 async function verifyToken(req, res, next) {
   const token =
@@ -14,8 +14,13 @@ async function verifyToken(req, res, next) {
     return res.status(403).send("A token is required for authentication");
   }
   try {
+    const models = await initSequelize().then((sequelize) => {
+      return sequelize.models;
+    });
+    const { User } = models;
+
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-    const user = await models.User.findOne({
+    const user = await User.findOne({
       where: { email: decoded.email, id: decoded.id, active: true },
       attributes: ["email", "user_name", "type_user", "id", "updatedAt"],
     });
@@ -27,7 +32,7 @@ async function verifyToken(req, res, next) {
         updatedAt: user.dataValues.updatedAt,
       },
       process.env.TOKEN_KEY,
-      { expiresIn: "24h" }
+      { expiresIn: "24h" },
     );
     req.user = user.dataValues;
     req.token = tokenUpdated;
