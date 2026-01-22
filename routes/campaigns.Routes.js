@@ -20,7 +20,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.get(
@@ -34,7 +34,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.get("/getCampaignsAboutToSent", verifyToken, async (req, res, next) => {
@@ -69,7 +69,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.get(
@@ -81,13 +81,13 @@ router.get(
       const { campaign_id } = req.params;
       const result = await service.getSelectedRecipientsByCampaign(
         campaign_id,
-        id
+        id,
       );
       res.json(result);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.post("/updateCampaign", verifyToken, async (req, res, next) => {
@@ -95,8 +95,8 @@ router.post("/updateCampaign", verifyToken, async (req, res, next) => {
     const { data } = req.body;
     const services = new CampaignsRecipients();
     const rta = await services.syncCamapignsRecipients(data);
-    const campaignUpdate = await service.update(data);
-    res.json(campaignUpdate[0]);
+    const campaignUpdate = await service.updateCampaign(data);
+    res.json(campaignUpdate?.dataValues ? 1 : 0);
   } catch (error) {
     next(error);
   }
@@ -116,9 +116,8 @@ router.get(
         throw new Error("This Camapign does not exist");
       }
 
-      const messages = await camapignMessages.getCampaignMessagesToLaunch(
-        campaign_id
-      );
+      const messages =
+        await camapignMessages.getCampaignMessagesToLaunch(campaign_id);
 
       if (!messages || messages.length === 0) {
         throw new Error("This Camapign does not have messages associate");
@@ -127,7 +126,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.post("/queueCampaignMessages", verifyToken, async (req, res, next) => {
@@ -144,9 +143,8 @@ router.post("/queueCampaignMessages", verifyToken, async (req, res, next) => {
       chanel: m?.channel,
     }));
     const service = new MessageConfigService();
-    const rta = await service.scheduleMessagesToLaunchCamapign(
-      messagesToSchedule
-    );
+    const rta =
+      await service.scheduleMessagesToLaunchCamapign(messagesToSchedule);
     res.json({ result: rta?.length });
   } catch (error) {
     next(error);

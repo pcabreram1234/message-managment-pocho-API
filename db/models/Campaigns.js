@@ -10,13 +10,39 @@ const CampaignModel = {
       "active",
       "paused",
       "completed",
-      "cancelled"
+      "cancelled",
     ),
     defaultValue: "pending",
   },
   category: DataTypes.STRING,
   start_date: DataTypes.DATE,
   end_date: DataTypes.DATE,
+  send_strategy: {
+    type: DataTypes.ENUM(
+      "ONCE", // una sola vez dentro de la vigencia
+      "DAILY", // una vez por día
+      "INTERVAL", // cada N horas/días
+      "CUSTOM", // reglas avanzadas (futuro)
+    ),
+    allowNull: false,
+    defaultValue: "ONCE",
+  },
+  send_interval_value: {
+    type: DataTypes.INTEGER,
+    allowNull: true, // ej: 1, 2, 3
+  },
+  send_interval_unit: {
+    type: DataTypes.ENUM("HOUR", "DAY"),
+    allowNull: true,
+  },
+  max_retries: {
+    type: DataTypes.INTEGER,
+    defaultValue: 3,
+  },
+  retry_delay_minutes: {
+    type: DataTypes.INTEGER,
+    defaultValue: 15,
+  },
   createdAt: {
     allowNull: false,
     type: "timestamp",

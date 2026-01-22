@@ -43,7 +43,7 @@ function createSequelizeInstance() {
 async function initSequelize() {
   if (!sequelizeInstance) {
     const sequelize = createSequelizeInstance();
-    setupModesl(sequelize);
+    await setupModesl(sequelize);
 
     try {
       await sequelize.authenticate();

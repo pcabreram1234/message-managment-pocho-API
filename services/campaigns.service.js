@@ -53,8 +53,8 @@ class Campaign {
       const results = await sequelize.query(`
         SELECT
         c.name,
-        SUM(CASE WHEN status = 'sent' THEN 1 ELSE 0 END) AS totalSuccess,
-        SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) AS totalErrors,
+        SUM(CASE WHEN cm.status = 'sent' THEN 1 ELSE 0 END) AS totalSuccess,
+        SUM(CASE WHEN cm.status = 'failed' THEN 1 ELSE 0 END) AS totalErrors,
         COUNT(*) AS totalSent
         FROM campaign_messages cm join campaigns c 
         on c.id =cm.campaign_id
@@ -102,7 +102,7 @@ class Campaign {
     if (data?.messages) {
       const campaingMessages = await Message.findAll({
         where: {
-          id: data?.messages,
+          id: { [Op.in]: [data?.messages] },
         },
         attributes: [
           ["id", "MessageId"],
@@ -116,6 +116,7 @@ class Campaign {
         content: cm.content,
         campaign_id: rta?.id,
         channel: "Email",
+        max_retries: data?.max_retries,
       }));
 
       const addMessagesToCampaign =
@@ -124,12 +125,14 @@ class Campaign {
     return { ...rta?.dataValues, contacts: data?.recipients?.length };
   }
 
-  async update(data) {
+  async updateCampaign(data) {
     const { Campaign } = await this._getModels();
-    const rta = await Campaign.update(data, {
-      where: { id: data?.id },
-    });
-    return rta;
+    const campaign = await Campaign.findByPk(data.id);
+    if (!campaign) throw new Error("Campaign not found");
+
+    await campaign.update(data); // 🔥 AQUÍ sí dispara afterUpdate
+
+    return campaign;
   }
 
   async getCampaingsAndRecipients(userId) {

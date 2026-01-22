@@ -6,7 +6,36 @@ const CampaignMessageModel = {
   content: DataTypes.TEXT,
   send_time: DataTypes.DATE,
   channel: DataTypes.ENUM("SMS", "WhatsApp", "Email"),
-  delay_type: DataTypes.ENUM("fixed", "relative"),
+  attempts: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  max_retries: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+
+  last_attempt_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+
+  next_retry_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+
+  status: {
+    type: DataTypes.ENUM(
+      "pending",
+      "sending",
+      "sent",
+      "failed",
+      "retrying",
+      "dead",
+    ),
+    defaultValue: "pending",
+  },
   createdAt: {
     allowNull: false,
     type: "timestamp",

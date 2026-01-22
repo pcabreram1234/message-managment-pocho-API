@@ -471,9 +471,7 @@ class MessageConfigService {
 
   async scheduleMessagesToLaunchCamapign(messages) {
     const { MessageConfig } = await this._getModels();
-    const rta = await MessageConfig.bulkCreate(messages, {
-      validate: true,
-    });
+    const rta = await MessageConfig.bulkCreate(messages, {});
     return rta;
   }
 }
