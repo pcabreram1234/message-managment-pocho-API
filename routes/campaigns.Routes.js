@@ -1,11 +1,16 @@
 const express = require("express");
 const { verifyToken } = require("../middlewares/auth.handler");
+const {
+  validateCampaignLaunch,
+} = require("../middlewares/validateCampaignToLaunch");
 const { Campaign } = require("../services/campaigns.service");
 const {
   CampaignsRecipients,
 } = require("../services/campaigns.recipients.service");
 const { CampaignsMessages } = require("../services/campaigs_messages.service");
-const { MessageConfigService } = require("../services/message-config.service");
+const {
+  CampaignDuplicateService,
+} = require("../services/campaign-duplicate.service");
 const router = express.Router();
 const service = new Campaign();
 
@@ -103,51 +108,100 @@ router.post("/updateCampaign", verifyToken, async (req, res, next) => {
 });
 
 router.get(
-  "/getCampaignMessages/:campaign_id",
+  "/getCampaignMessages/:campaignId",
   verifyToken,
   async (req, res, next) => {
     try {
       const camapignMessages = new CampaignsMessages();
-      const { campaign_id } = req.params;
+      const { campaignId } = req.params;
       const userId = req.user.id;
-      const existCampaign = await service.getCamapignId(campaign_id, userId);
+      const existCampaign = await service.getCamapignId(campaignId, userId);
 
       if (!existCampaign) {
         throw new Error("This Camapign does not exist");
       }
 
       const messages =
-        await camapignMessages.getCampaignMessagesToLaunch(campaign_id);
+        await camapignMessages.getCampaignMessagesToLaunch(campaignId);
 
-      if (!messages || messages.length === 0) {
-        throw new Error("This Camapign does not have messages associate");
-      }
-      res.json(messages);
+      res.json({ result: messages });
     } catch (error) {
       next(error);
     }
   },
 );
 
-router.post("/queueCampaignMessages", verifyToken, async (req, res, next) => {
+router.post(
+  "/launchCampaign",
+  verifyToken,
+  validateCampaignLaunch,
+  async (req, res, next) => {
+    try {
+      const data = req?.body?.data;
+      const { campaignId } = data;
+      const rta = await service.updateCampaign({
+        id: campaignId,
+        status: "active",
+      });
+      res.json({ result: rta });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.post("/duplicate/:id", verifyToken, async (req, res) => {
   try {
-    const data = req?.body?.data;
+    const { id } = req.params;
     const userId = req.user.id;
-    const messagesToSchedule = data?.map((m) => ({
-      UserId: userId,
-      message: m?.message_content,
-      recipient: m?.recipient,
-      scheduled_date: new Date(),
-      categories: m?.categories,
-      MessageId: m?.MessageId,
-      chanel: m?.channel,
-    }));
-    const service = new MessageConfigService();
-    const rta =
-      await service.scheduleMessagesToLaunchCamapign(messagesToSchedule);
-    res.json({ result: rta?.length });
+    const service = new CampaignDuplicateService();
+    const campaign = await service.duplicateCampaign(id, userId);
+
+    res.status(201).json({
+      success: true,
+      result: campaign,
+    });
   } catch (error) {
-    next(error);
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.post("/addMessagesToCampaign/:id", verifyToken, async (req, res) => {
+  try {
+    const { id: campaign_id } = req.params;
+    const { messageIds } = req.body.data;
+    const userId = req.user.id;
+
+    console.log(req.body);
+    if (!Array.isArray(messageIds) || messageIds.length === 0) {
+      return res.status(400).json({
+        message: "messageIds must be a non-empty array",
+      });
+    }
+
+    const service = new CampaignsMessages();
+
+    const result = await service.addMessagesToCampaign(
+      {
+        campaign_id,
+        messageIds,
+      },
+      userId,
+    );
+
+    return res.status(201).json({
+      message: "Messages added to campaign successfully",
+      result: result,
+    });
+  } catch (error) {
+    console.error("Add messages to campaign error:", error);
+
+    return res.status(400).json({
+      message: error.message || "Error adding messages to campaign",
+    });
   }
 });
 
