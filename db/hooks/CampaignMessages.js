@@ -17,6 +17,28 @@ const initCampaignMessageHooks = () => {
       );
     }
   });
+
+  CampaignMessage.addHook("beforeDestroy", async (campaignMessage, options) => {
+    const campaign = await Campaign.findByPk(campaignMessage.campaign_id, {
+      transaction: options.transaction,
+    });
+
+    if (!campaign) {
+      throw new Error("Campaign not found");
+    }
+
+    if (campaign.status !== "pending") {
+      throw new Error(
+        "Messages cannot be removed from a campaign that is already active or completed",
+      );
+    }
+
+    if (["sending", "sent"].includes(campaignMessage.status)) {
+      throw new Error(
+        "Messages that are already sent or in progress cannot be deleted",
+      );
+    }
+  });
 };
 
 module.exports = { initCampaignMessageHooks };

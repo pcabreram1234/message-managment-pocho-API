@@ -205,4 +205,21 @@ router.post("/addMessagesToCampaign/:id", verifyToken, async (req, res) => {
   }
 });
 
+router.delete("/messages", verifyToken, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const service = new CampaignsMessages();
+    const result = await service.deleteMessagesFromCampaign(req.body.data, userId);
+    res.json({
+      success: true,
+      result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Error deleting message to campaign",
+    });
+  }
+});
+
 module.exports = router;
