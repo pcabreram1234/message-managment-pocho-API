@@ -209,7 +209,10 @@ router.delete("/messages", verifyToken, async (req, res, next) => {
   try {
     const userId = req.user.id;
     const service = new CampaignsMessages();
-    const result = await service.deleteMessagesFromCampaign(req.body.data, userId);
+    const result = await service.deleteMessagesFromCampaign(
+      req.body.data,
+      userId,
+    );
     res.json({
       success: true,
       result,
@@ -219,6 +222,46 @@ router.delete("/messages", verifyToken, async (req, res, next) => {
       success: false,
       message: error.message || "Error deleting message to campaign",
     });
+  }
+});
+
+router.get("/getCampaignStats", verifyToken, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const rta = await service.getCampaignStatsByUser(userId);
+    res.json({
+      success: true,
+      result: rta,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/getCamapignsDetails", verifyToken, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const rta = await service.getCamapignsDetails(userId);
+    res.json({
+      success: true,
+      result: rta,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/simulate/:id", verifyToken, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+    const rta = await service.simulateCampaign(id, userId);
+    res.json({
+      success: true,
+      result: rta,
+    });
+  } catch (error) {
+    next(error);
   }
 });
 
