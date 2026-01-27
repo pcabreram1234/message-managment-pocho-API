@@ -142,6 +142,69 @@ class CampaignsMessages {
       };
     });
   }
+  async getFailedCampaignMessages(userId) {
+    const sequelize = await initSequelize();
+    const {
+      Campaign,
+      CampaignMessage,
+      CampaignRecipient,
+      Contact,
+      MessageLog,
+    } = sequelize.models;
+
+    const results = await MessageLog.findAll({
+      where: {
+        status: "failed",
+      },
+      attributes: [
+        "error_message",
+        "created_at",
+        "CampaignMessageId",
+        "CampaignRecipientId",
+      ],
+      include: [
+        {
+          model: CampaignMessage,
+          attributes: ["id", "content", "attempts"],
+          include: [
+            {
+              model: Campaign,
+              where: { UserId: userId },
+              attributes: ["id", "name", "status"],
+            },
+          ],
+        },
+        {
+          model: CampaignRecipient,
+          attributes: ["ContactId"],
+          include: [
+            {
+              model: Contact,
+              attributes: ["id", "email"],
+            },
+          ],
+        },
+      ],
+      order: [["created_at", "DESC"]],
+      raw: true,
+    });
+
+    return results.map((r) => ({
+      campaignId: r["CampaignMessage.Campaign.id"],
+      campaignName: r["CampaignMessage.Campaign.name"],
+      campaignStatus: r["CampaignMessage.Campaign.status"],
+
+      messageId: r["CampaignMessage.id"],
+      messageContent: r["CampaignMessage.content"],
+
+      contactId: r["CampaignRecipient.Contact.id"],
+      contactEmail: r["CampaignRecipient.Contact.email"],
+
+      errorMessage: r.error_message,
+      attempts: r["CampaignMessage.attempts"],
+      failedAt: r.created_at,
+    }));
+  }
 }
 
 module.exports = { CampaignsMessages };

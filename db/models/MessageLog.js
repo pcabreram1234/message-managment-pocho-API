@@ -3,8 +3,7 @@ const MESSAGE_LOG_TABLE = "message_logs";
 
 const MessageLogModel = {
   campaign_id: DataTypes.INTEGER,
-  contact_id: DataTypes.INTEGER,
-  message_id: DataTypes.INTEGER,
+  CampaignMessageId: DataTypes.INTEGER,
   sent_at: DataTypes.DATE,
   status: DataTypes.ENUM("success", "failed", "retrying"),
   attempts: DataTypes.INTEGER,
@@ -27,7 +26,10 @@ const MessageLogModel = {
 class MessageLog extends Model {
   static associate(models) {
     this.belongsTo(models.Campaign, { foreignKey: "campaign_id" });
-    this.belongsTo(models.CampaignMessage, { foreignKey: "message_id" });
+    this.belongsTo(models.CampaignMessage, { foreignKey: "CampaignMessageId" });
+    this.belongsTo(models.CampaignRecipient, {
+      foreignKey: "CampaignRecipientId",
+    });
   }
   static config(sequelize) {
     return {

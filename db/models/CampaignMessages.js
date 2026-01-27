@@ -54,7 +54,7 @@ const CampaignMessageModel = {
 class CampaignMessage extends Model {
   static associate(models) {
     this.belongsTo(models.Campaign, { foreignKey: "campaign_id" });
-    this.hasMany(models.MessageLog, { foreignKey: "message_id" });
+    this.hasMany(models.MessageLog, { foreignKey: "CampaignMessageId" });
     this.belongsTo(models.Message);
   }
   static config(sequelize) {

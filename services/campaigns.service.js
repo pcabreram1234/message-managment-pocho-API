@@ -460,6 +460,33 @@ class Campaign {
       errors,
     };
   }
+
+  async deleteCampaign(campaignId, userId) {
+    const sequelize = await initSequelize();
+    const { Campaign } = sequelize.models;
+
+    return sequelize.transaction(async (transaction) => {
+      const campaign = await Campaign.findOne({
+        where: {
+          id: campaignId,
+          UserId: userId,
+        },
+        transaction,
+      });
+
+      if (!campaign) {
+        throw new Error("Campaign not found or not authorized");
+      }
+
+      // 🔥 Aquí se disparan TODOS los hooks
+      await campaign.destroy({ transaction });
+
+      return {
+        success: true,
+        campaignId,
+      };
+    });
+  }
 }
 
 module.exports = { Campaign };

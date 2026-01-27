@@ -72,6 +72,38 @@ const initCampaignHooks = async () => {
       },
     );
   });
+
+  Campaign.addHook("beforeDestroy", async (campaign, options) => {
+    if (["active", "completed"].includes(campaign.status)) {
+      throw new Error(
+        `Campaign in status "${campaign.status}" cannot be deleted`,
+      );
+    }
+
+    const sentMessagesCount = await CampaignMessage.count({
+      where: {
+        campaign_id: campaign.id,
+        status: "sent",
+      },
+      transaction: options.transaction,
+    });
+
+    if (sentMessagesCount > 0) {
+      throw new Error("Campaign with sent messages cannot be deleted");
+    }
+  });
+
+  Campaign.addHook("afterDestroy", async (campaign, options) => {
+    await CampaignMessage.destroy({
+      where: { campaign_id: campaign.id },
+      transaction: options.transaction,
+    });
+
+    await CampaignRecipient.destroy({
+      where: { campaign_id: campaign.id },
+      transaction: options.transaction,
+    });
+  });
 };
 
 module.exports = { initCampaignHooks };

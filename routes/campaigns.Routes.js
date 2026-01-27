@@ -265,4 +265,30 @@ router.get("/simulate/:id", verifyToken, async (req, res, next) => {
   }
 });
 
+router.delete("/delete/:id", verifyToken, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+    const rta = await service.deleteCampaign(id, userId);
+    res.json({
+      success: true,
+      result: rta,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/failedMessages", verifyToken, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const service = new CampaignsMessages();
+    const result = await service.getFailedCampaignMessages(userId);
+
+    res.json({ success: true, result });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

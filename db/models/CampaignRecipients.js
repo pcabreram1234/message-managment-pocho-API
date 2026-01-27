@@ -8,7 +8,7 @@ const CampaignRecipientModel = {
     "active",
     "paused",
     "completed",
-    "cancelled"
+    "cancelled",
   ),
   last_attempt_at: DataTypes.DATE,
   error_message: DataTypes.STRING,
@@ -31,6 +31,7 @@ class CampaignRecipient extends Model {
   static associate(models) {
     this.belongsTo(models.Campaign, { foreignKey: "campaign_id" });
     this.belongsTo(models.Contact);
+    this.hasMany(models.MessageLog, { foreignKey: "CampaignRecipientId" });
   }
   static config(sequelize) {
     return {
