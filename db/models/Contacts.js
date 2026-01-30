@@ -18,6 +18,27 @@ const ContactModel = {
     type: DataTypes.STRING,
     length: 50,
   },
+  email_status: {
+    type: DataTypes.ENUM(
+      "pending",
+      "valid",
+      "invalid",
+      "soft_bounce",
+      "hard_bounce",
+      "blocked",
+    ),
+    defaultValue: "pending",
+  },
+  email_verified_at: { type: "timestamp", allowNull: true },
+  email_validation_source: {
+    type: DataTypes.ENUM(
+      "user",
+      "import",
+      "external_service",
+      "campaign_runtime",
+    ),
+    allowNull: false,
+  },
   phone_number: {
     allowNull: true,
     type: DataTypes.CHAR,

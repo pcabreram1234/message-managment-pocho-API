@@ -25,7 +25,7 @@ router.get("/contactsEmail", verifyToken, async (req, resp, next) => {
     resp.json(
       contacts.map((contact) => {
         return contact.email;
-      })
+      }),
     );
   } catch (error) {
     next(error);
@@ -37,7 +37,7 @@ router.post("/distinctContacts", verifyToken, async (req, resp, next) => {
     const contactsId = req.body.data.map((contact) => contact.id);
     const contacts = await service.findDistinctContacts(
       req.user.id,
-      contactsId
+      contactsId,
     );
 
     return resp.json({ contacts });
@@ -60,7 +60,7 @@ router.post(
       resp.status(400);
       next(error);
     }
-  }
+  },
 );
 
 router.post(
@@ -76,7 +76,7 @@ router.post(
       next(error);
       resp.status(400);
     }
-  }
+  },
 );
 
 router.delete(
@@ -92,7 +92,7 @@ router.delete(
       next(error);
       resp.status(422);
     }
-  }
+  },
 );
 
 router.delete(
@@ -108,15 +108,22 @@ router.delete(
       next(error);
       resp.status(422);
     }
-  }
+  },
 );
 
 router.post("/uploadContacts", verifyToken, async (req, resp, next) => {
   try {
     const id = req.user.id;
     const data = req.body.data;
-    const uploadedContacts = await service.uploadContacts(data, id);
-    resp.json(uploadedContacts);
+    const contactsToUpLoad = data?.map((c) => ({
+      name: c.name,
+      email: c.email,
+      email_validation_source: "import",
+      phone_number: c.phone_number,
+    }));
+    console.log(contactsToUpLoad);
+    const uploadedContacts = await service.uploadContacts(contactsToUpLoad, id);
+    resp.json({ success: true, result: uploadedContacts });
   } catch (error) {
     next(error);
   }

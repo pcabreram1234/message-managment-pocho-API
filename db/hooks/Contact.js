@@ -1,11 +1,16 @@
 const { Op } = require("sequelize");
 const { Contact } = require("../models/Contacts");
-const { User } = require("../models/Users");
+const { validateEmailDomain } = require("../../utils/mailValidation");
 
 const initContactHooks = async () => {
   Contact.addHook("beforeCreate", async (contact, options) => {
     const { dataValues } = contact;
     const { name, UserId, email, phone_number } = dataValues;
+
+    const isValidDomain = await validateEmailDomain(email);
+
+    contact.email_domain_valid = isValidDomain;
+    contact.email_status = isValidDomain ? "pending" : "invalid";
 
     const digitsOnly = phone_number.replace(/\D/g, "");
 
@@ -15,7 +20,7 @@ const initContactHooks = async () => {
 
     contact.phone_number = `${digitsOnly.substring(
       0,
-      3
+      3,
     )}-${digitsOnly.substring(3, 6)}-${digitsOnly.substring(6)}`;
 
     const existName = await Contact.findOne({
@@ -45,14 +50,13 @@ const initContactHooks = async () => {
     }
   });
 
-  Contact.addHook("afterCreate", async (contact, options) => {
-    const { dataValues } = contact;
-    const { id, UserId } = dataValues;
-    const user = await User.findByPk(UserId);
-    console.log(options);
-    console.log(UserId);
-    await contact.addUser(user);
-    console.log(contact);
+  Contact.addHook("beforeBulkCreate", async (contacts) => {
+    console.log("Hook beforeBulkCreate de Contacts");
+    for (const contact of contacts) {
+      const isValid = await validateEmailDomain(contact.email);
+      contact.email_domain_valid = isValid;
+      contact.email_status = isValid ? "pending" : "invalid";
+    }
   });
 
   Contact.addHook("beforeUpdate", async (contact, optios) => {
@@ -72,7 +76,15 @@ const initContactHooks = async () => {
 
     const updates = {};
     if (name !== existingContact.name) updates.name = name;
-    if (email !== existingContact.email) updates.email = email;
+    if (email !== existingContact.email) {
+      const isValidDomain = await validateEmailDomain(email);
+      const email_domain_valid = isValidDomain;
+      const email_status = isValidDomain ? "pending" : "invalid";
+      updates.email = email;
+      updates.email_domain_valid = email_domain_valid;
+      updates.email_status = email_status;
+    }
+
     if (phone_number !== existingContact.phone_number)
       updates.phone_number = phone_number;
 

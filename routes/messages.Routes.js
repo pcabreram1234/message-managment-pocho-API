@@ -12,6 +12,7 @@ const { file } = require("../utils/globals");
 const { verifyToken } = require("../middlewares/auth.handler");
 const router = express.Router();
 const service = new MessageService();
+const { MessageLogService } = require("../services/message-log.service");
 require("dotenv").config();
 
 router.get("/", verifyToken, async (req, resp, next) => {
@@ -47,7 +48,7 @@ router.post(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.patch(
@@ -66,7 +67,7 @@ router.patch(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.patch(
@@ -78,18 +79,18 @@ router.patch(
       const { id, categories } = req.body.data;
       const messageToUpdate = await service.updateMessageCategories(
         id,
-        categories
+        categories,
       );
       handleLogs(
         file,
-        `Updating the category of the message with id:${id} to these ones:${categories.toString()}`
+        `Updating the category of the message with id:${id} to these ones:${categories.toString()}`,
       );
       resp.setHeader("token", req.token);
       resp.json({ result: messageToUpdate });
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.delete(
@@ -103,14 +104,14 @@ router.delete(
       const messageToDelete = await service.deleteMessage(id);
       handleLogs(
         file,
-        `Message with the id:${id} was marked as inactive or destroyed`
+        `Message with the id:${id} was marked as inactive or destroyed`,
       );
       resp.setHeader("token", req.token);
       resp.jsonp({ result: messageToDelete });
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.delete(
@@ -124,14 +125,14 @@ router.delete(
       const messageToDelete = await service.deleteMessages(id);
       handleLogs(
         file,
-        `Messages with the id:${id} were marked as inactives or destroyed`
+        `Messages with the id:${id} were marked as inactives or destroyed`,
       );
       resp.setHeader("token", req.token);
       resp.jsonp({ result: messageToDelete });
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.patch(
@@ -144,18 +145,18 @@ router.patch(
       const { id, asociateTo } = body;
       const messageUpdated = await service.updateMessageAsociation(
         id,
-        asociateTo
+        asociateTo,
       );
       handleLogs(
         file,
-        `Message with the id:${id} was successful associate to ${asociateTo}`
+        `Message with the id:${id} was successful associate to ${asociateTo}`,
       );
       resp.setHeader("token", req.token);
       resp.jsonp(messageUpdated);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.get(
@@ -173,7 +174,7 @@ router.get(
       next(error);
       resp.status(422);
     }
-  }
+  },
 );
 
 router.get(
@@ -190,7 +191,7 @@ router.get(
       next(error);
       resp.status(422);
     }
-  }
+  },
 );
 
 router.get(
@@ -207,7 +208,7 @@ router.get(
       next(error);
       resp.status(422);
     }
-  }
+  },
 );
 
 router.get(
@@ -219,14 +220,29 @@ router.get(
       const { id, name } = req.params;
       const messageToUpdate = await service.getMesageAssociateAtCategory(
         id,
-        name
+        name,
       );
       resp.setHeader("token", req.token);
       resp.json({ result: messageToUpdate });
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
+
+router.get("/by-contact/:contactId", verifyToken, async (req, res, next) => {
+  try {
+    const { contactId } = req.params;
+    const userId = req.user.id;
+    const service = new MessageLogService();
+    const result = await service.getMessagesByContact(contactId, userId);
+    res.json({
+      success: true,
+      result: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
