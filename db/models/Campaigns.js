@@ -14,7 +14,6 @@ const CampaignModel = {
     ),
     defaultValue: "pending",
   },
-  category: DataTypes.STRING,
   start_date: DataTypes.DATE,
   end_date: DataTypes.DATE,
   send_strategy: {
@@ -64,6 +63,9 @@ class Campaign extends Model {
     this.hasMany(models.CampaignMessage, { foreignKey: "campaign_id" });
     this.hasMany(models.CampaignRecipient, { foreignKey: "campaign_id" });
     this.hasMany(models.MessageLog, { foreignKey: "campaign_id" });
+    this.belongsTo(models.Category, {
+      foreignKey: "CategoryId",
+    });
   }
   static config(sequelize) {
     return {

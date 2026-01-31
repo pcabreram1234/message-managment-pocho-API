@@ -37,6 +37,9 @@ class Category extends Model {
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
+    this.hasMany(models.Campaign, {
+      foreignKey: "CategoryId",
+    });
   }
 
   static config(sequelize) {

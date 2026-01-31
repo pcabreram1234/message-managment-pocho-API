@@ -1,18 +1,67 @@
 const { initSequelize } = require("../libs/sequelize");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 class CategoryService {
   async _getModels() {
     const sequelize = await initSequelize();
     return sequelize.models;
   }
-  async find(id) {
+  async find(userId) {
+    const sequelize = await initSequelize();
     const { Category } = await this._getModels();
-    const rta = await Category.findAll({
+
+    const categories = await Category.findAll({
       where: {
-        UserId: id,
+        UserId: userId,
       },
+      attributes: {
+        include: [
+          // Count Messages via messages_categories
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM messages_categories mc
+              WHERE mc.CategoryId = Category.id
+            )`),
+            "messages_count",
+          ],
+
+          // Count Campaigns via CategoryId
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM campaigns c
+              WHERE c.CategoryId = Category.id
+            )`),
+            "campaigns_count",
+          ],
+        ],
+      },
+      order: [["categorie_name", "ASC"]],
     });
-    return rta;
+
+    return categories.map((category) => {
+      const messagesCount = Number(category.getDataValue("messages_count"));
+      const campaignsCount = Number(category.getDataValue("campaigns_count"));
+
+      let associate_to = "none";
+
+      if (messagesCount > 0 && campaignsCount > 0) {
+        associate_to = "both";
+      } else if (messagesCount > 0) {
+        associate_to = "message";
+      } else if (campaignsCount > 0) {
+        associate_to = "campaign";
+      }
+
+      return {
+        id: category.id,
+        categorie_name: category.categorie_name,
+        associate_to,
+        messages_count: messagesCount,
+        campaigns_count: campaignsCount,
+        createdAt: category.createdAt,
+      };
+    });
   }
 
   async findAsociateTo(id) {
@@ -88,6 +137,15 @@ class CategoryService {
         attributes: ["categorie_name", "id"],
       });
     }
+    return rta;
+  }
+
+  async getSimpleCategories(userId) {
+    const { Category } = await this._getModels();
+    const rta = await Category.findAll({
+      where: { userId: userId },
+      attributes: ["id", "categorie_name"],
+    });
     return rta;
   }
 }
