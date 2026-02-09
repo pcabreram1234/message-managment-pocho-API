@@ -7,6 +7,7 @@ const userRouter = require("../routes/users.Routes");
 const messageContactsRouter = require("./messagesContacts.Routes");
 const campaingRouter = require("./campaigns.Routes");
 const failedMessagesRouter = require("./failed-messages.Routes");
+const sendMessagesRouter = require("./sendMessages.Routes");
 
 function routerApi(app) {
   const router = express.Router();
@@ -19,6 +20,7 @@ function routerApi(app) {
   router.use("/messageContacts", messageContactsRouter);
   router.use("/campaigns", campaingRouter);
   router.use("/failedMessages", failedMessagesRouter);
+  router.use("/sendMessages",sendMessagesRouter)
 }
 
 module.exports = routerApi;

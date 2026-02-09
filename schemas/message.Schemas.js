@@ -20,4 +20,14 @@ const getMessageSchema = {
   id: id.required,
 };
 
-module.exports = { creteMessageSchema, updateMessageSchema, getMessageSchema };
+const sendMessageSchema = {
+  message: message.required(),
+  recipients: associate_to.required(),
+};
+
+module.exports = {
+  creteMessageSchema,
+  updateMessageSchema,
+  getMessageSchema,
+  sendMessageSchema,
+};

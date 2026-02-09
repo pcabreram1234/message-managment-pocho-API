@@ -4,8 +4,8 @@ const path = require("path");
 require("dotenv").config();
 
 class SendEmailService {
-  async sendEmail(message) {
-    const { recipient, message_content } = message;
+  async sendEmail(data) {
+    const { recipient, message } = data;
 
     try {
       const templatePath = path.join(
@@ -18,7 +18,7 @@ class SendEmailService {
 
       emailTemplate = emailTemplate.replace(
         "{{MENSAJE_PROGRAMADO}}",
-        message_content
+        message
       );
       console.log("Conexión exitosa con el servidor SMTP");
       // Enviar el correo de forma asincrónica
@@ -26,7 +26,7 @@ class SendEmailService {
         from: process.env.NODEMAILER_FROM, // Dirección del remitente
         to: recipient, // Dirección de destino
         subject: "PMMS - Pocho`s Messages Managment System", // Asunto del correo
-        text: message_content.toString(), // Mensaje en texto plano
+        text: message.toString(), // Mensaje en texto plano
         html: emailTemplate,
       });
       return info;

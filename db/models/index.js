@@ -4,6 +4,7 @@ const { Message, MessageModel } = require("./Messages");
 const { Category, CategoryModel } = require("./Categories");
 const { MessageConfig, MessageConfigModel } = require("./MessageCofing");
 const { User, UserModel } = require("./Users");
+const { RiskWord, RiskWordModel } = require("./RiskWords");
 
 const {
   VerificationToken,
@@ -41,24 +42,25 @@ async function setupModesl(sequelize) {
   // MessageContacts.init(MessageContactsModel, MessageContacts.config(sequelize));
   MessageCategories.init(
     MessageCategoriesModel,
-    MessageCategories.config(sequelize)
+    MessageCategories.config(sequelize),
   );
   MessageConfig.init(MessageConfigModel, MessageConfig.config(sequelize));
 
   FailedMessage.init(FailedMessageModel, FailedMessage.config(sequelize));
   VerificationToken.init(
     VerificationTokenModel,
-    VerificationToken.config(sequelize)
+    VerificationToken.config(sequelize),
   );
 
   Campaign.init(CampaignModel, Campaign.config(sequelize));
   CampaignMessage.init(CampaignMessageModel, CampaignMessage.config(sequelize));
   CampaignRecipient.init(
     CampaignRecipientModel,
-    CampaignRecipient.config(sequelize)
+    CampaignRecipient.config(sequelize),
   );
   MessageLog.init(MessageLogModel, MessageLog.config(sequelize));
   Integration.init(IntegrationModel, Integration.config(sequelize));
+  RiskWord.init(RiskWordModel, RiskWord.config(sequelize));
 
   /* Relations setup */
   User.associate(sequelize.models);

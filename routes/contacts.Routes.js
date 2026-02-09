@@ -19,6 +19,15 @@ router.get("/", verifyToken, async (req, resp, next) => {
   }
 });
 
+router.get("/simple", verifyToken, async (req, res, next) => {
+  try {
+    const contacts = await service.findSimpleContacts(req.user.id);
+    res.json(contacts);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/contactsEmail", verifyToken, async (req, resp, next) => {
   try {
     const contacts = await service.find(req.user.id);

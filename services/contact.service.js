@@ -7,6 +7,18 @@ class ContactService {
     const sequelize = await initSequelize();
     return sequelize.models;
   }
+
+  async findSimpleContacts(userId) {
+    const { Contact } = await this._getModels();
+    const rta = await Contact.findAll({
+      where: {
+        UserId: userId,
+      },
+      attributes: ["id", "email"],
+    });
+    return rta;
+  }
+
   async find(userId) {
     const { Contact } = await this._getModels();
     const rta = await Contact.findAll({
